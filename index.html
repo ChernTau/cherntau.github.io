@@ -99,6 +99,56 @@
         
           <section id="main">
   
+    <article id="post-Install-R-and-RStudio-in-Ubuntu"  class="article article-type-post" itemscope itemprop="blogPost" >
+  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="thumb" itemprop="name">
+      <a class="article-title" href="/2017/08/07/Install-R-and-RStudio-in-Ubuntu/">Install R and RStudio in Ubuntu</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-meta">
+      
+	<a href="/2017/08/07/Install-R-and-RStudio-in-Ubuntu/" class="article-date">
+	  <time datetime="2017-08-07T04:48:03.000Z" itemprop="datePublished">August 7, 2017</time>
+	</a>
+
+       
+      
+    </div>
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="1-Install-R"><a href="#1-Install-R" class="headerlink" title="1. Install R"></a>1. Install R</h1><p>1.1 Add Mirror source</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo gedit /etc/apt/sources.list</div><div class="line">deb http://cran.rstudio.com/bin/linux/ubuntu trusty/  <span class="comment"># Add the code in the end of sources.list</span></div></pre></td></tr></table></figure>
+<p>1.2 Run command of downloading public key</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 51716619E084DAB9</div><div class="line">sudo apt-get update   <span class="comment"># Update</span></div></pre></td></tr></table></figure>
+<p>1.3 Install R</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install r-base</div><div class="line">R  <span class="comment"># Verify whether it succeed</span></div></pre></td></tr></table></figure>
+<h1 id="2-Install-RStudio"><a href="#2-Install-RStudio" class="headerlink" title="2. Install RStudio"></a>2. Install RStudio</h1><p>2.1 Visit <a href="http://www.rstudio.com/products/rstudio/download/" target="_blank" rel="external">http://www.rstudio.com/products/rstudio/download/</a> download related file</p>
+<p>2.2 Input code in Terminal</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install gdebi-core</div><div class="line">sudo apt-get install libapparmor1  <span class="comment"># Required only for Ubuntu, not Debian</span></div><div class="line">sudo gdebi *  <span class="comment"># Downloaded RStudio*.deb file</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="entry-meta entry-footer">
+      
+      
+      
+    </footer>
+    <hr class="entry-footer-hr">
+  </div>
+  
+</article>
+
+<!-- Table of Contents -->
+
+  
     <article id="post-Install Hadoop on Ubuntu"  class="article article-type-post" itemscope itemprop="blogPost" >
   <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
     
@@ -243,56 +293,6 @@
 <!-- Table of Contents -->
 
   
-    <article id="post-Install R and RStudio in Ubuntu"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/03/28/Install R and RStudio in Ubuntu/">Install R and RStudio in Ubuntu</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/03/28/Install R and RStudio in Ubuntu/" class="article-date">
-	  <time datetime="2017-03-28T03:29:15.000Z" itemprop="datePublished">March 28, 2017</time>
-	</a>
-
-       
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="1-Install-R"><a href="#1-Install-R" class="headerlink" title="1. Install R"></a>1. Install R</h1><p>1.1 Add Mirror source</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo gedit /etc/apt/sources.list</div><div class="line">deb http://cran.rstudio.com/bin/linux/ubuntu trusty/  <span class="comment"># Add the code in the end of sources.list</span></div></pre></td></tr></table></figure>
-<p>1.2 Run command of downloading public key</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 51716619E084DAB9</div><div class="line">sudo apt-get update   <span class="comment"># Update</span></div></pre></td></tr></table></figure>
-<p>1.3 Install R</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install r-base</div><div class="line">R  <span class="comment"># Verify whether it succeed</span></div></pre></td></tr></table></figure>
-<h1 id="2-Install-RStudio"><a href="#2-Install-RStudio" class="headerlink" title="2. Install RStudio"></a>2. Install RStudio</h1><p>2.1 Visit <a href="http://www.rstudio.com/products/rstudio/download/" target="_blank" rel="external">http://www.rstudio.com/products/rstudio/download/</a> download related file</p>
-<p>2.2 Input code in Terminal</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install gdebi-core</div><div class="line">sudo apt-get install libapparmor1  <span class="comment"># Required only for Ubuntu, not Debian</span></div><div class="line">sudo gdebi *  <span class="comment"># Downloaded RStudio*.deb file</span></div></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-      
-    </footer>
-    <hr class="entry-footer-hr">
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
 
 
 </section>
@@ -398,6 +398,18 @@
               <div class="widget-entry-summary" style="margin: 0;">
             
 
+              <h6 style="margin: 0;"><a href="/2017/08/07/Install-R-and-RStudio-in-Ubuntu/">Install R and RStudio in Ubuntu</a></h6>
+              <span>August 7, 2017</span>
+            </div>
+
+          </li>
+        
+          <li class="clearfix">
+
+            
+              <div class="widget-entry-summary" style="margin: 0;">
+            
+
               <h6 style="margin: 0;"><a href="/2017/08/07/Install Hadoop on Ubuntu/">Install Hadoop on Ubuntu</a></h6>
               <span>August 7, 2017</span>
             </div>
@@ -412,18 +424,6 @@
 
               <h6 style="margin: 0;"><a href="/2017/08/07/hello-world/">Hello World</a></h6>
               <span>August 7, 2017</span>
-            </div>
-
-          </li>
-        
-          <li class="clearfix">
-
-            
-              <div class="widget-entry-summary" style="margin: 0;">
-            
-
-              <h6 style="margin: 0;"><a href="/2017/03/28/Install R and RStudio in Ubuntu/">Install R and RStudio in Ubuntu</a></h6>
-              <span>March 28, 2017</span>
             </div>
 
           </li>
@@ -446,7 +446,7 @@
     <h3 class="widget-title">Archiv</h3>
 
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a><span class="archive-list-count">1</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">3</span></li></ul>
     </div>
   </div>
 
