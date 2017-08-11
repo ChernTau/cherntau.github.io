@@ -1,136 +1,135 @@
-<!DOCTYPE html>
-<html>
+
+
+
+
+
+
+
+<!doctype html>
+<html lang="">
 <head>
-  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   
-  <title>Install Hadoop on Ubuntu | Knowledge Has NO Limit</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  
-  
+  <meta name="author" content="Chern Tau">
   
   
-  <meta name="description" content="Install JDKVisit http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html and download jre-8u121-linux-x64.tar.gz file to Home. Open terminal, get root and create new folder">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Install Hadoop on Ubuntu">
-<meta property="og:url" content="http://yoursite.com/2017/08/07/Install Hadoop on Ubuntu/index.html">
-<meta property="og:site_name" content="Knowledge Has NO Limit">
-<meta property="og:description" content="Install JDKVisit http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html and download jre-8u121-linux-x64.tar.gz file to Home. Open terminal, get root and create new folder">
-<meta property="og:updated_time" content="2017-08-08T12:54:04.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Install Hadoop on Ubuntu">
-<meta name="twitter:description" content="Install JDKVisit http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html and download jre-8u121-linux-x64.tar.gz file to Home. Open terminal, get root and create new folder">
   
-    <link rel="alternate" href="/atom.xml" title="Knowledge Has NO Limit" type="application/atom+xml">
   
-  <link rel="icon" href="/css/images/favicon.ico">
+    <meta name="description" content="Install JDKVisit http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html and download jre-8u121-linux-x64.tar.gz file to Home.
+Open terminal, get root and create new fol...">
   
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <title>Install Hadoop on Ubuntu [ Knowledge Has NO Limit ]</title>
   
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
-  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-  <style type="text/css">
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
-    
-  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
-
-  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
-  <link rel="stylesheet" href="/css/style.css">
-
-  <script src="/js/jquery-3.1.1.min.js"></script>
-
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="/css/bootstrap.css" >
-  <link rel="stylesheet" href="/css/fashion.css" >
-  <link rel="stylesheet" href="/css/glyphs.css" >
-
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+  <link rel="stylesheet" href="/css/random.css">
+<link rel="stylesheet" href="/css/vegas.min.css">
+<link rel="stylesheet" href="/css/highlight-railscasts.css">
+<link rel="stylesheet" href="/css/jquery.fancybox.css">
+<link rel="stylesheet" href="/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/jquery.fancybox-thumbs.css">
+<link rel="stylesheet" href="/css/plyr.css">
+  
 </head>
 
-
-
-  <body data-spy="scroll" data-target="#toc" data-offset="50">
-
-
+<body>
+<div class="side-navigate hide-area">
   
-
-
-<header id="allheader" class="site-header" role="banner" 
-   >
-  <div class="clearfix container">
-      <div class="site-branding">
-
-          <h1 class="site-title">
-            
-              <a href="/" title="Knowledge Has NO Limit" rel="home"> Knowledge Has NO Limit </a>
-            
-          </h1>
-          
-          
-            
-          <nav id="main-navigation" class="main-navigation" role="navigation">
-            <a class="nav-open">Menu</a>
-            <a class="nav-close">Close</a>
-
-            <div class="clearfix sf-menu">
-              <ul id="main-nav" class="menu sf-js-enabled sf-arrows"  style="touch-action: pan-y;">
-                    
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">Home</a> </li>
-                    
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">Archives</a> </li>
-                    
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">Kategorien</a> </li>
-                    
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">Tags</a> </li>
-                    
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">About</a> </li>
-                    
-              </ul>
-            </div>
-          </nav>
-
+    <div class="item prev">
+      <a href="/2017/08/07/Install-R-and-RStudio-in-Ubuntu/">
+        <div class="item-icon"></div>
+      </a>
+      <div class="item-title">
+        Install R and RStudio in Ubuntu
       </div>
-  </div>
-</header>
-
-
-  <div id="container">
-    <div id="wrap">
-            
-      <div id="content" class="outer">
-        
-          <section id="main" style="float:none;"><article id="post-Install Hadoop on Ubuntu" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" class="article-title" itemprop="name">
-      Install Hadoop on Ubuntu
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/08/07/Install Hadoop on Ubuntu/" class="article-date">
-	  <time datetime="2017-08-07T04:48:03.000Z" itemprop="datePublished">August 7, 2017</time>
-	</a>
-
-       
-      
-	<span id="busuanzi_container_page_pv">
-	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
-	</span>
-
     </div>
-    <div class="article-entry" itemprop="articleBody">
+  
+  
+</div>
+<div id="outer-container" class="hide-area">
+<div id="container">
+  <div id="menu-outer" class="slide-down">
+    <div id="menu-inner">
+      <div id="brand">
+        
+        <a onClick="openUserCard()">
+          <img id="avatar" src="/Users/chan/Desktop/Blog/blog/IMG_0171.jpg"/>
+          <div id="homelink">Knowledge Has NO Limit</div>
+        </a>
+      </div>
+      <div id="menu-list">
+        <ul>
+        
+        
+          
+            <li>
+          
+            <a href="/">Home</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/archives">Archives</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/tags">Tags</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/categories">Categories</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/about">About</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="https://github.com/stiekel/hexo-theme-random">Github</a>
+            
+          </li>
+        
+        </ul>
+      </div>
+      <div id="show-menu">
+        <button>Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="content-outer">
+    <div id="content-inner">
       
-        <h2 id="Install-JDK"><a href="#Install-JDK" class="headerlink" title="Install JDK"></a>Install JDK</h2><p>Visit <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html and download jre-8u121-linux-x64.tar.gz" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html and download jre-8u121-linux-x64.tar.gz</a> file to Home.</p>
+      
+  <article id="post">
+    <h1>Install Hadoop on Ubuntu</h1>
+    <p class="page-title-sub">
+      <span id = "post-title-date">Created at 2017-08-07</span>
+      
+        <span id = "post-title-updated">Updated at 2017-08-08</span>
+      
+      
+      
+    </p>
+    
+    <h2 id="Install-JDK"><a href="#Install-JDK" class="headerlink" title="Install JDK"></a>Install JDK</h2><p>Visit <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html and download jre-8u121-linux-x64.tar.gz" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html and download jre-8u121-linux-x64.tar.gz</a> file to Home.</p>
 <h3 id="Open-terminal-get-root-and-create-new-folder-on-the-home"><a href="#Open-terminal-get-root-and-create-new-folder-on-the-home" class="headerlink" title="Open terminal, get root and create new folder on the home"></a>Open terminal, get root and create new folder on the home</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sudo passwd root # set root password</div><div class="line">su      # get root</div><div class="line">gedit /etc/sudoers  # add chan ALL(ALL) ALL to behind root line</div><div class="line">sudo mkdir hadoop  # create new folder</div></pre></td></tr></table></figure>
 <h3 id="Copy-jre-8u121-linux-x64-tar-gz-file-to-hadoop-folder"><a href="#Copy-jre-8u121-linux-x64-tar-gz-file-to-hadoop-folder" class="headerlink" title="Copy jre-8u121-linux-x64.tar.gz file to hadoop folder"></a>Copy jre-8u121-linux-x64.tar.gz file to hadoop folder</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cp jre-8u121-linux-x64.tar.gz /home/chan/hadoop   # chan is user name</div></pre></td></tr></table></figure>
 <h3 id="Explode-jre-8u121-linux-x64-tar-gz-file"><a href="#Explode-jre-8u121-linux-x64-tar-gz-file" class="headerlink" title="Explode jre-8u121-linux-x64.tar.gz file"></a>Explode jre-8u121-linux-x64.tar.gz file</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd home/chan/hadoop</div><div class="line">tar -zxvf jre-8u121-linux-x64.tar.gz  # explode</div><div class="line">rm jre-8u121-linux-x64.tar.gz  # delete</div></pre></td></tr></table></figure>
@@ -159,189 +158,207 @@
 <h3 id="Start-cluster"><a href="#Start-cluster" class="headerlink" title="Start cluster"></a>Start cluster</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd</div><div class="line">cd hadoop/hadoop-2.6.4</div><div class="line">bin/hdfs namenode -format     # format namenode</div><div class="line">sbin/start-all.sh</div></pre></td></tr></table></figure>
 <h3 id="Check-cluster"><a href="#Check-cluster" class="headerlink" title="Check cluster"></a>Check cluster</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jps   # maybe need install</div></pre></td></tr></table></figure>
 
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-      
-        
-	<div id="comment">
-		<!-- 来必力City版安装代码 -->
-		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
-		<script type="text/javascript">
-		   (function(d, s) {
-		       var j, e = d.getElementsByTagName(s)[0];
-
-		       if (typeof LivereTower === 'function') { return; }
-
-		       j = d.createElement(s);
-		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-		       j.async = true;
-
-		       e.parentNode.insertBefore(j, e);
-		   })(document, 'script');
-		</script>
-		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
-		</div>
-		<!-- City版安装代码已完成 -->
-	</div>
-
-
-
-      
-    </footer>
-    <hr class="entry-footer-hr">
+  </article>
+  <div class="random-toc-area">
+  <button class="btn-hide-toc btn-hide-toc-show" style="display: none" onclick="TOCToggle()">Show TOC</button>
+  <button class="btn-hide-toc btn-hide-toc-hide" onclick="TOCToggle()">Hide TOC</button>
+  <div class="random-toc">
+    <h2>Table of Content</h2>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Install-JDK"><span class="toc-text">Install JDK</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Open-terminal-get-root-and-create-new-folder-on-the-home"><span class="toc-text">Open terminal, get root and create new folder on the home</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Copy-jre-8u121-linux-x64-tar-gz-file-to-hadoop-folder"><span class="toc-text">Copy jre-8u121-linux-x64.tar.gz file to hadoop folder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Explode-jre-8u121-linux-x64-tar-gz-file"><span class="toc-text">Explode jre-8u121-linux-x64.tar.gz file</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Set-JDK-environment-variable"><span class="toc-text">Set JDK environment variable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Add-codes-at-the-end-of-profile"><span class="toc-text">Add codes at the end of profile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Check"><span class="toc-text">Check</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Configure-hosts-file"><span class="toc-text">Configure hosts file</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Revise-hostname"><span class="toc-text">Revise hostname</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Check-IP-address"><span class="toc-text">Check IP address</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Configure-host"><span class="toc-text">Configure host</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Copy-configured-host-to-slaves"><span class="toc-text">Copy configured host to slaves</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSH-login-without-password"><span class="toc-text">SSH login without password</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Turn-off-firewall"><span class="toc-text">Turn off firewall</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Configure-SSH-in-master"><span class="toc-text">Configure SSH in master</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Check-for-success"><span class="toc-text">Check for success</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Install-and-configure-Hadoop-in-master"><span class="toc-text">Install and configure Hadoop in master</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Copy-hadoop-2-6-4-tar-gz-to-hadoop-folder"><span class="toc-text">Copy hadoop-2.6.4.tar.gz to hadoop folder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Configure-files-of-Hadoop"><span class="toc-text">Configure files of Hadoop</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Configure-hadoop-env-sh"><span class="toc-text">Configure hadoop-env.sh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Configure-core-site-xml"><span class="toc-text">Configure core-site.xml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Configure-hdfs-site-xml"><span class="toc-text">Configure hdfs-site.xml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Configure-mapred-site-xml"><span class="toc-text">Configure mapred-site.xml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Configure-yarn-site-xml"><span class="toc-text">Configure yarn-site.xml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Configure-master"><span class="toc-text">Configure master</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Configure-slaves"><span class="toc-text">Configure slaves</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Copy-configured-files-to-slaves"><span class="toc-text">Copy configured files to slaves</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Start-cluster"><span class="toc-text">Start cluster</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Check-cluster"><span class="toc-text">Check cluster</span></a></li></ol></li></ol>
   </div>
+</div>
+
   
-    
-<nav id="article-nav">
+<nav id="pagination">
   
-    <a href="/2017/08/07/Install-R-and-RStudio-in-Ubuntu/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Neuer</strong>
-      <div class="article-nav-title">
-        
-          Install R and RStudio in Ubuntu
-        
-      </div>
-    </a>
+    <a href="/2017/08/07/Install-R-and-RStudio-in-Ubuntu/" class="prev">&larr; Prev post Install R and RStudio in Ubuntu</a>
   
+
+  
+
   
 </nav>
 
-  
-</article>
+  <!-- JiaThis Button BEGIN -->
 
-<!-- Table of Contents -->
+<!-- JiaThis Button END -->
 
-  <aside id="sidebar">
-    <div id="toc" class="toc-article">
-    <strong class="toc-title">Contents</strong>
-    
-      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-JDK"><span class="nav-number">1.</span> <span class="nav-text">Install JDK</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Open-terminal-get-root-and-create-new-folder-on-the-home"><span class="nav-number">1.1.</span> <span class="nav-text">Open terminal, get root and create new folder on the home</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Copy-jre-8u121-linux-x64-tar-gz-file-to-hadoop-folder"><span class="nav-number">1.2.</span> <span class="nav-text">Copy jre-8u121-linux-x64.tar.gz file to hadoop folder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Explode-jre-8u121-linux-x64-tar-gz-file"><span class="nav-number">1.3.</span> <span class="nav-text">Explode jre-8u121-linux-x64.tar.gz file</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set-JDK-environment-variable"><span class="nav-number">1.4.</span> <span class="nav-text">Set JDK environment variable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Add-codes-at-the-end-of-profile"><span class="nav-number">1.5.</span> <span class="nav-text">Add codes at the end of profile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Check"><span class="nav-number">1.6.</span> <span class="nav-text">Check</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Configure-hosts-file"><span class="nav-number">2.</span> <span class="nav-text">Configure hosts file</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Revise-hostname"><span class="nav-number">2.1.</span> <span class="nav-text">Revise hostname</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Check-IP-address"><span class="nav-number">2.2.</span> <span class="nav-text">Check IP address</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Configure-host"><span class="nav-number">2.3.</span> <span class="nav-text">Configure host</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Copy-configured-host-to-slaves"><span class="nav-number">2.4.</span> <span class="nav-text">Copy configured host to slaves</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSH-login-without-password"><span class="nav-number">3.</span> <span class="nav-text">SSH login without password</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Turn-off-firewall"><span class="nav-number">3.1.</span> <span class="nav-text">Turn off firewall</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Configure-SSH-in-master"><span class="nav-number">3.2.</span> <span class="nav-text">Configure SSH in master</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Check-for-success"><span class="nav-number">3.3.</span> <span class="nav-text">Check for success</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-and-configure-Hadoop-in-master"><span class="nav-number">4.</span> <span class="nav-text">Install and configure Hadoop in master</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Copy-hadoop-2-6-4-tar-gz-to-hadoop-folder"><span class="nav-number">4.1.</span> <span class="nav-text">Copy hadoop-2.6.4.tar.gz to hadoop folder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Configure-files-of-Hadoop"><span class="nav-number">4.2.</span> <span class="nav-text">Configure files of Hadoop</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Configure-hadoop-env-sh"><span class="nav-number">4.2.1.</span> <span class="nav-text">Configure hadoop-env.sh</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Configure-core-site-xml"><span class="nav-number">4.2.2.</span> <span class="nav-text">Configure core-site.xml</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Configure-hdfs-site-xml"><span class="nav-number">4.2.3.</span> <span class="nav-text">Configure hdfs-site.xml</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Configure-mapred-site-xml"><span class="nav-number">4.2.4.</span> <span class="nav-text">Configure mapred-site.xml</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Configure-yarn-site-xml"><span class="nav-number">4.2.5.</span> <span class="nav-text">Configure yarn-site.xml</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Configure-master"><span class="nav-number">4.2.6.</span> <span class="nav-text">Configure master</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Configure-slaves"><span class="nav-number">4.2.7.</span> <span class="nav-text">Configure slaves</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Copy-configured-files-to-slaves"><span class="nav-number">4.3.</span> <span class="nav-text">Copy configured files to slaves</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Start-cluster"><span class="nav-number">4.4.</span> <span class="nav-text">Start cluster</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Check-cluster"><span class="nav-number">4.5.</span> <span class="nav-text">Check cluster</span></a></li></ol></li></ol>
-    
+
+      
+      
     </div>
-  </aside>
-</section>
-        
-      </div>
-
-    </div>
-    <!-- <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-    <a href="/categories" class="mobile-nav-link">Categories</a>
-  
-    <a href="/tags" class="mobile-nav-link">Tags</a>
-  
-    <a href="/about" class="mobile-nav-link">About</a>
-  
-</nav> -->
-    <footer id="footer" class="site-footer">
-  
-
-  <div class="clearfix container">
-      <div class="site-info">
-	      &copy; 2017 Knowledge Has NO Limit All Rights Reserved.
-        
-            <span id="busuanzi_container_site_uv">
-              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
-              本站总访问量<span id="busuanzi_value_site_pv"></span>次
-            </span>
-          
-      </div>
-      <div class="site-credit">
-        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
-      </div>
   </div>
-</footer>
 
-
-<!-- min height -->
-
-<script>
-    var wrapdiv = document.getElementById("wrap");
-    var contentdiv = document.getElementById("content");
-
-    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
-    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
-
-
-    <!-- headerblur min height -->
-    
-    
-</script>
-    
-<div style="display: none;">
-  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  <div id="bottom-outer">
+    <div id="bottom-inner">
+      Site by Chern Tau using
+      <a href="http://hexo.io">Hexo</a> & <a href="https://github.com/stiekel/hexo-theme-random">Random</a>
+      <br>
+      
+    </div>
+  </div>
 </div>
 
-<!-- mathjax config similar to math.stackexchange -->
+</div>
 
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
+
+<div id="user-card">
+  <div class="center-field">
+    <img class="avatar" src="/Users/chan/Desktop/Blog/blog/IMG_0171.jpg">
+    <p id="description"></p>
+    <ul class="social-icon">
+  
+  
+    <li>
+      <a href="https://github.com/stiekel/hexo-theme-random">
+        
+          <i class="icon iconfont github">&#xe606;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="https://coding.net/u/Stiekel">
+        
+          <i class="icon iconfont coding">&#xe607;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="https://twitter.com/SidCN">
+        
+          <i class="icon iconfont twitter">&#xe600;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="http://weibo.com/sidcn">
+        
+          <i class="icon iconfont weibo">&#xe602;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="http://www.douban.com/people/Stiekel/">
+        
+          <i class="icon iconfont douban">&#xe60f;</i>
+        
+      </a>
+    </li>
+  
+</ul>
+  </div>
+</div>
+
+
+<div id="btn-view">Hide</div>
+
+<script>
+// is trigger analytics / tongji script
+var isIgnoreHost = false;
+
+if(window && window.location && window.location.host) {
+  isIgnoreHost = ["localhost","127.0.0.1"].some(function(address){
+    return 0 === window.location.host.indexOf(address);
   });
+}
+
+var isTriggerAnalytics = !( true && isIgnoreHost );
+
 </script>
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      }
+
+
+
+  
+  
+    <script src="/js/jquery-2.2.3.min.js"></script>
+  
+    <script src="/js/vegas.min.js"></script>
+  
+    <script src="/js/random.js"></script>
+  
+    <script src="/js/highlight.pack.js"></script>
+  
+    <script src="/js/jquery.mousewheel.pack.js"></script>
+  
+    <script src="/js/jquery.fancybox.pack.js"></script>
+  
+    <script src="/js/jquery.fancybox-thumbs.js"></script>
+  
+    <script src="/js/plyr.js"></script>
+  
+
+<script>
+
+  // fancybox
+  var backgroundImages = [];
+  
+  $('#post').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox') || $(this).parent().hasClass('fancybox-thumb')) return;
+      var alt = this.alt || this.title;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
     });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'post' + i);
     });
+  });
+  $(".fancybox").fancybox();
+
+var vegasConfig = {"preload­Image":true,"transition":["slideLeft2","slideRight2","flash2"],"timer":true,"delay":5000,"shuffle":true,"count":28};
+var unsplashConfig = {"gravity":"north"};
+// is show background images
+var turnoffBackgroundImage = false;
+
+
+
+  turnoffBackgroundImage = true;
+
+
+var backgroundColor = "34495E";
+
+$(".fancybox-thumb").fancybox({
+  prevEffect: 'none',
+  nextEffect: 'none',
+  helpers: {
+    title: {
+      type: 'outside'
+    },
+    thumbs: {
+      width: 50,
+      height: 50
+    }
+  }
+});
+
+// show video with plyr
+$(".video-container iframe").each(function(i){
+  var url = $(this).attr('src');
+  var id = url.split('/').pop();
+  var plyrContainer = document.createElement('div');
+  plyrContainer.className = 'plyr';
+  var plyrElement = document.createElement('div');
+  plyrElement.dataset.videoId = id;
+  switch(true) {
+    case url.search('youtube.com') >= 0:
+      plyrElement.dataset.type = 'youtube';
+      break;
+    case url.search('vimeo.com') >= 0:
+      plyrElement.dataset.type = 'vimeo';
+      break;
+    default:
+      return;
+  };
+  plyrContainer.appendChild(plyrElement);
+  $(this).parent().html(plyrContainer);
+});
+plyr.setup('.plyr', {iconUrl: '/css/sprite.svg'});
 </script>
-
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
-<script src="/js/bootstrap.js"></script>
-<script src="/js/main.js"></script>
-
-
-
-
-
-
-
-  <div style="display: none;">
-    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
-  </div>
-
-
-
-	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-	</script>
-
-
-
-
-
-
-  </div>
-
-  <a id="rocket" href="#top" class=""></a>
-  <script type="text/javascript" src="/js/totop.js" async=""></script>
 </body>
 </html>
+

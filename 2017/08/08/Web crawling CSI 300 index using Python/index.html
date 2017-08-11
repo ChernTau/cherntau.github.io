@@ -1,319 +1,340 @@
-<!DOCTYPE html>
-<html>
+
+
+
+
+
+
+
+<!doctype html>
+<html lang="">
 <head>
-  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   
-  <title>Web crawling CSI 300 index using Python | Knowledge Has NO Limit</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  
-  
+  <meta name="author" content="Chern Tau">
   
   
-  <meta name="description" content="Simulating browser loginYou must make sure that you have installed firefox browser. 123456789from selenium import webdriverfrom selenium.webdriver.common.keys import Keysimport timeimport pandas as pd">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Web crawling CSI 300 index using Python">
-<meta property="og:url" content="http://yoursite.com/2017/08/08/Web crawling CSI 300 index using Python/index.html">
-<meta property="og:site_name" content="Knowledge Has NO Limit">
-<meta property="og:description" content="Simulating browser loginYou must make sure that you have installed firefox browser. 123456789from selenium import webdriverfrom selenium.webdriver.common.keys import Keysimport timeimport pandas as pd">
-<meta property="og:updated_time" content="2017-08-08T12:54:17.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Web crawling CSI 300 index using Python">
-<meta name="twitter:description" content="Simulating browser loginYou must make sure that you have installed firefox browser. 123456789from selenium import webdriverfrom selenium.webdriver.common.keys import Keysimport timeimport pandas as pd">
   
-    <link rel="alternate" href="/atom.xml" title="Knowledge Has NO Limit" type="application/atom+xml">
   
-  <link rel="icon" href="/css/images/favicon.ico">
+    <meta name="description" content="Simulating browser loginYou must make sure that you have installed firefox browser.
+123456789from selenium import webdriverfrom selenium.webdriver.common.keys import Keysimport timeimport pandas as...">
   
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <title>Web crawling CSI 300 index using Python [ Knowledge Has NO Limit ]</title>
   
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
-  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-  <style type="text/css">
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
-    
-  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Yanone+Kaffeesatz%3A200%2C300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
-
-  <link rel="stylesheet" id="athemes-headings-fonts-css" href="//fonts.googleapis.com/css?family=Oswald%3A300%2C400%2C700&amp;ver=4.6.1" type="text/css" media="all">
-  <link rel="stylesheet" href="/css/style.css">
-
-  <script src="/js/jquery-3.1.1.min.js"></script>
-
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="/css/bootstrap.css" >
-  <link rel="stylesheet" href="/css/fashion.css" >
-  <link rel="stylesheet" href="/css/glyphs.css" >
-
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+  <link rel="stylesheet" href="/css/random.css">
+<link rel="stylesheet" href="/css/vegas.min.css">
+<link rel="stylesheet" href="/css/highlight-railscasts.css">
+<link rel="stylesheet" href="/css/jquery.fancybox.css">
+<link rel="stylesheet" href="/css/iconfont/iconfont.css">
+<link rel="stylesheet" href="/css/jquery.fancybox-thumbs.css">
+<link rel="stylesheet" href="/css/plyr.css">
+  
 </head>
 
-
-
-  <body data-spy="scroll" data-target="#toc" data-offset="50">
-
-
+<body>
+<div class="side-navigate hide-area">
   
-
-
-<header id="allheader" class="site-header" role="banner" 
-   >
-  <div class="clearfix container">
-      <div class="site-branding">
-
-          <h1 class="site-title">
-            
-              <a href="/" title="Knowledge Has NO Limit" rel="home"> Knowledge Has NO Limit </a>
-            
-          </h1>
-          
-          
-            
-          <nav id="main-navigation" class="main-navigation" role="navigation">
-            <a class="nav-open">Menu</a>
-            <a class="nav-close">Close</a>
-
-            <div class="clearfix sf-menu">
-              <ul id="main-nav" class="menu sf-js-enabled sf-arrows"  style="touch-action: pan-y;">
-                    
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/">Home</a> </li>
-                    
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/archives">Archives</a> </li>
-                    
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/categories">Kategorien</a> </li>
-                    
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/tags">Tags</a> </li>
-                    
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-1663"> <a class="" href="/about">About</a> </li>
-                    
-              </ul>
-            </div>
-          </nav>
-
+  
+    <div class="item next">
+      <a href="/2017/08/07/Install-R-and-RStudio-in-Ubuntu/">
+        <div class="item-icon"></div>
+      </a>
+      <div class="item-title">
+        Install R and RStudio in Ubuntu
       </div>
-  </div>
-</header>
-
-
-  <div id="container">
-    <div id="wrap">
-            
-      <div id="content" class="outer">
-        
-          <section id="main" style="float:none;"><article id="post-Web crawling CSI 300 index using Python" style="width: 66%; float:left;" class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="clearfix post-1016 post type-post status-publish format-standard has-post-thumbnail hentry category-template-2 category-uncategorized tag-codex tag-edge-case tag-featured-image tag-image tag-template">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" class="article-title" itemprop="name">
-      Web crawling CSI 300 index using Python
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/08/08/Web crawling CSI 300 index using Python/" class="article-date">
-	  <time datetime="2017-08-08T04:48:03.000Z" itemprop="datePublished">August 8, 2017</time>
-	</a>
-
-       
-      
-	<span id="busuanzi_container_page_pv">
-	  本文总阅读量<span id="busuanzi_value_page_pv"></span>次
-	</span>
-
     </div>
-    <div class="article-entry" itemprop="articleBody">
+  
+</div>
+<div id="outer-container" class="hide-area">
+<div id="container">
+  <div id="menu-outer" class="slide-down">
+    <div id="menu-inner">
+      <div id="brand">
+        
+        <a onClick="openUserCard()">
+          <img id="avatar" src="/Users/chan/Desktop/Blog/blog/IMG_0171.jpg"/>
+          <div id="homelink">Knowledge Has NO Limit</div>
+        </a>
+      </div>
+      <div id="menu-list">
+        <ul>
+        
+        
+          
+            <li>
+          
+            <a href="/">Home</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/archives">Archives</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/tags">Tags</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/categories">Categories</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="/about">About</a>
+            
+          </li>
+        
+          
+            <li>
+          
+            <a href="https://github.com/stiekel/hexo-theme-random">Github</a>
+            
+          </li>
+        
+        </ul>
+      </div>
+      <div id="show-menu">
+        <button>Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="content-outer">
+    <div id="content-inner">
       
-        <h2 id="Simulating-browser-login"><a href="#Simulating-browser-login" class="headerlink" title="Simulating browser login"></a>Simulating browser login</h2><p>You must make sure that you have installed firefox browser.</p>
+      
+  <article id="post">
+    <h1>Web crawling CSI 300 index using Python</h1>
+    <p class="page-title-sub">
+      <span id = "post-title-date">Created at 2017-08-08</span>
+      
+        <span id = "post-title-updated">Updated at 2017-08-08</span>
+      
+      
+      
+    </p>
+    
+    <h2 id="Simulating-browser-login"><a href="#Simulating-browser-login" class="headerlink" title="Simulating browser login"></a>Simulating browser login</h2><p>You must make sure that you have installed firefox browser.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">from selenium import webdriver</div><div class="line">from selenium.webdriver.common.keys import Keys</div><div class="line">import time</div><div class="line">import pandas as pd</div><div class="line">import re</div><div class="line">import numpy as np</div><div class="line">from bs4 import BeautifulSoup</div><div class="line"></div><div class="line">driver = webdriver.Firefox()</div></pre></td></tr></table></figure>
 <h2 id="Finding-the-CSI-300-index-url-in-Google-Finance"><a href="#Finding-the-CSI-300-index-url-in-Google-Finance" class="headerlink" title="Finding the CSI 300 index url in Google Finance"></a>Finding the CSI 300 index url in Google Finance</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">var = [&apos;Date&apos;, &apos;Open&apos;, &apos;High&apos;, &apos;Low&apos;, &apos;Close&apos;, &apos;Volume&apos;]</div><div class="line"></div><div class="line">csi = &#123;&#125;</div><div class="line">for j in range(0,29):</div><div class="line">    urll = &quot;https://www.google.com/finance/historical?cid=1979150&amp;startdate=Jan%201%2C%202014&amp;enddate=Jul%2010%2C%202017&amp;num=30&amp;ei=BxBkWdGLK5DijAHogaDwCg&quot;+&quot;&amp;start=%s&quot; % (j*30)</div><div class="line">    driver.get(urll)</div><div class="line">    html = BeautifulSoup(driver.page_source,&apos;lxml&apos;)</div><div class="line">    info = html.find_all(&apos;table&apos;, class_=&quot;gf-table historical_price&quot;)</div><div class="line">    info1 = info[0]</div><div class="line">    info3 = info1.find_all(&quot;td&quot;)</div><div class="line">    for i in range(len(info3)-1):</div><div class="line">        if i % 6 == 0:</div><div class="line">            valuetag = info3[i] </div><div class="line">            value = valuetag.string</div><div class="line">            value = value.replace(&quot;\n&quot;,&quot;&quot;)</div><div class="line">            csi.setdefault(var[0],[]).append(value)</div><div class="line">        elif i % 6 == 1:</div><div class="line">            valuetag = info3[i] </div><div class="line">            value = valuetag.string</div><div class="line">            value = value.replace(&quot;\n&quot;,&quot;&quot;)</div><div class="line">            csi.setdefault(var[1],[]).append(value)</div><div class="line">        elif i % 6 == 2:</div><div class="line">            valuetag = info3[i] </div><div class="line">            value = valuetag.string</div><div class="line">            value = value.replace(&quot;\n&quot;,&quot;&quot;)</div><div class="line">            csi.setdefault(var[2],[]).append(value)</div><div class="line">        elif i % 6 == 3:</div><div class="line">            valuetag = info3[i] </div><div class="line">            value = valuetag.string</div><div class="line">            value = value.replace(&quot;\n&quot;,&quot;&quot;)</div><div class="line">            csi.setdefault(var[3],[]).append(value)</div><div class="line">        elif i % 6 == 4:</div><div class="line">            valuetag = info3[i] </div><div class="line">            value = valuetag.string</div><div class="line">            value = value.replace(&quot;\n&quot;,&quot;&quot;)</div><div class="line">            csi.setdefault(var[4],[]).append(value)</div><div class="line">        else:</div><div class="line">            valuetag = info3[i] </div><div class="line">            value = valuetag.string</div><div class="line">            value = value.replace(&quot;\n&quot;,&quot;&quot;)</div><div class="line">            csi.setdefault(var[5],[]).append(value)</div></pre></td></tr></table></figure>
 <h2 id="Writing-file-in-local-folder"><a href="#Writing-file-in-local-folder" class="headerlink" title="Writing file in local folder"></a>Writing file in local folder</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">data = pd.DataFrame.from_dict(csi,orient=&apos;index&apos;).T</div><div class="line"></div><div class="line">data.to_csv(&apos;data.csv&apos;,header = True,encoding=&quot;utf_8_sig&quot;)</div></pre></td></tr></table></figure>
 
-      
-    </div>
-    <footer class="entry-meta entry-footer">
-      
-      
-      
-        
-	<div id="comment">
-		<!-- 来必力City版安装代码 -->
-		<div id="lv-container" data-id="city" data-uid="MTAyMC8yOTQ4MS82MDQ5">
-		<script type="text/javascript">
-		   (function(d, s) {
-		       var j, e = d.getElementsByTagName(s)[0];
-
-		       if (typeof LivereTower === 'function') { return; }
-
-		       j = d.createElement(s);
-		       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-		       j.async = true;
-
-		       e.parentNode.insertBefore(j, e);
-		   })(document, 'script');
-		</script>
-		<noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
-		</div>
-		<!-- City版安装代码已完成 -->
-	</div>
-
-
-
-      
-    </footer>
-    <hr class="entry-footer-hr">
+  </article>
+  <div class="random-toc-area">
+  <button class="btn-hide-toc btn-hide-toc-show" style="display: none" onclick="TOCToggle()">Show TOC</button>
+  <button class="btn-hide-toc btn-hide-toc-hide" onclick="TOCToggle()">Hide TOC</button>
+  <div class="random-toc">
+    <h2>Table of Content</h2>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Simulating-browser-login"><span class="toc-text">Simulating browser login</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Finding-the-CSI-300-index-url-in-Google-Finance"><span class="toc-text">Finding the CSI 300 index url in Google Finance</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Writing-file-in-local-folder"><span class="toc-text">Writing file in local folder</span></a></li></ol>
   </div>
+</div>
+
   
-    
-<nav id="article-nav">
+<nav id="pagination">
   
+
   
-    <a href="/2017/08/07/Install-R-and-RStudio-in-Ubuntu/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Älter</strong>
-      <div class="article-nav-title">Install R and RStudio in Ubuntu</div>
-    </a>
+
+  
+    <a href="/2017/08/07/Install-R-and-RStudio-in-Ubuntu/" class="next">Next post Install R and RStudio in Ubuntu &rarr;</a>
   
 </nav>
 
-  
-</article>
+  <!-- JiaThis Button BEGIN -->
 
-<!-- Table of Contents -->
+<!-- JiaThis Button END -->
 
-  <aside id="sidebar">
-    <div id="toc" class="toc-article">
-    <strong class="toc-title">Contents</strong>
-    
-      <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Simulating-browser-login"><span class="nav-number">1.</span> <span class="nav-text">Simulating browser login</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Finding-the-CSI-300-index-url-in-Google-Finance"><span class="nav-number">2.</span> <span class="nav-text">Finding the CSI 300 index url in Google Finance</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Writing-file-in-local-folder"><span class="nav-number">3.</span> <span class="nav-text">Writing file in local folder</span></a></li></ol>
-    
+
+      
+      
     </div>
-  </aside>
-</section>
-        
-      </div>
-
-    </div>
-    <!-- <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-    <a href="/categories" class="mobile-nav-link">Categories</a>
-  
-    <a href="/tags" class="mobile-nav-link">Tags</a>
-  
-    <a href="/about" class="mobile-nav-link">About</a>
-  
-</nav> -->
-    <footer id="footer" class="site-footer">
-  
-
-  <div class="clearfix container">
-      <div class="site-info">
-	      &copy; 2017 Knowledge Has NO Limit All Rights Reserved.
-        
-            <span id="busuanzi_container_site_uv">
-              本站访客数<span id="busuanzi_value_site_uv"></span>人次  
-              本站总访问量<span id="busuanzi_value_site_pv"></span>次
-            </span>
-          
-      </div>
-      <div class="site-credit">
-        Theme by <a href="https://github.com/iTimeTraveler/hexo-theme-hipaper" target="_blank">hipaper</a>
-      </div>
   </div>
-</footer>
 
-
-<!-- min height -->
-
-<script>
-    var wrapdiv = document.getElementById("wrap");
-    var contentdiv = document.getElementById("content");
-
-    wrapdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
-    contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("allheader").offsetHeight - document.getElementById("footer").offsetHeight + "px";
-
-
-    <!-- headerblur min height -->
-    
-    
-</script>
-    
-<div style="display: none;">
-  <script src="https://s11.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
+  <div id="bottom-outer">
+    <div id="bottom-inner">
+      Site by Chern Tau using
+      <a href="http://hexo.io">Hexo</a> & <a href="https://github.com/stiekel/hexo-theme-random">Random</a>
+      <br>
+      
+    </div>
+  </div>
 </div>
 
-<!-- mathjax config similar to math.stackexchange -->
+</div>
 
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
+
+<div id="user-card">
+  <div class="center-field">
+    <img class="avatar" src="/Users/chan/Desktop/Blog/blog/IMG_0171.jpg">
+    <p id="description"></p>
+    <ul class="social-icon">
+  
+  
+    <li>
+      <a href="https://github.com/stiekel/hexo-theme-random">
+        
+          <i class="icon iconfont github">&#xe606;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="https://coding.net/u/Stiekel">
+        
+          <i class="icon iconfont coding">&#xe607;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="https://twitter.com/SidCN">
+        
+          <i class="icon iconfont twitter">&#xe600;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="http://weibo.com/sidcn">
+        
+          <i class="icon iconfont weibo">&#xe602;</i>
+        
+      </a>
+    </li>
+  
+    <li>
+      <a href="http://www.douban.com/people/Stiekel/">
+        
+          <i class="icon iconfont douban">&#xe60f;</i>
+        
+      </a>
+    </li>
+  
+</ul>
+  </div>
+</div>
+
+
+<div id="btn-view">Hide</div>
+
+<script>
+// is trigger analytics / tongji script
+var isIgnoreHost = false;
+
+if(window && window.location && window.location.host) {
+  isIgnoreHost = ["localhost","127.0.0.1"].some(function(address){
+    return 0 === window.location.host.indexOf(address);
   });
+}
+
+var isTriggerAnalytics = !( true && isIgnoreHost );
+
 </script>
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      }
+
+
+
+  
+  
+    <script src="/js/jquery-2.2.3.min.js"></script>
+  
+    <script src="/js/vegas.min.js"></script>
+  
+    <script src="/js/random.js"></script>
+  
+    <script src="/js/highlight.pack.js"></script>
+  
+    <script src="/js/jquery.mousewheel.pack.js"></script>
+  
+    <script src="/js/jquery.fancybox.pack.js"></script>
+  
+    <script src="/js/jquery.fancybox-thumbs.js"></script>
+  
+    <script src="/js/plyr.js"></script>
+  
+
+<script>
+
+  // fancybox
+  var backgroundImages = [];
+  
+  $('#post').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox') || $(this).parent().hasClass('fancybox-thumb')) return;
+      var alt = this.alt || this.title;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
     });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'post' + i);
     });
+  });
+  $(".fancybox").fancybox();
+
+var vegasConfig = {"preload­Image":true,"transition":["slideLeft2","slideRight2","flash2"],"timer":true,"delay":5000,"shuffle":true,"count":28};
+var unsplashConfig = {"gravity":"north"};
+// is show background images
+var turnoffBackgroundImage = false;
+
+
+
+  turnoffBackgroundImage = true;
+
+
+var backgroundColor = "34495E";
+
+$(".fancybox-thumb").fancybox({
+  prevEffect: 'none',
+  nextEffect: 'none',
+  helpers: {
+    title: {
+      type: 'outside'
+    },
+    thumbs: {
+      width: 50,
+      height: 50
+    }
+  }
+});
+
+// show video with plyr
+$(".video-container iframe").each(function(i){
+  var url = $(this).attr('src');
+  var id = url.split('/').pop();
+  var plyrContainer = document.createElement('div');
+  plyrContainer.className = 'plyr';
+  var plyrElement = document.createElement('div');
+  plyrElement.dataset.videoId = id;
+  switch(true) {
+    case url.search('youtube.com') >= 0:
+      plyrElement.dataset.type = 'youtube';
+      break;
+    case url.search('vimeo.com') >= 0:
+      plyrElement.dataset.type = 'vimeo';
+      break;
+    default:
+      return;
+  };
+  plyrContainer.appendChild(plyrElement);
+  $(this).parent().html(plyrContainer);
+});
+plyr.setup('.plyr', {iconUrl: '/css/sprite.svg'});
 </script>
-
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
-<script src="/js/bootstrap.js"></script>
-<script src="/js/main.js"></script>
-
-
-
-
-
-
-
-  <div style="display: none;">
-    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
-  </div>
-
-
-
-	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-	</script>
-
-
-
-
-
-
-  </div>
-
-  <a id="rocket" href="#top" class=""></a>
-  <script type="text/javascript" src="/js/totop.js" async=""></script>
 </body>
 </html>
+
