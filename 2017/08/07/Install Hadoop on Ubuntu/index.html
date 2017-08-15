@@ -130,9 +130,9 @@ Open terminal, get root and create new fol...">
   <article id="post">
     <h1>Install Hadoop on Ubuntu</h1>
     <p class="page-title-sub">
-      <span id = "post-title-date">撰写于 2017-08-07</span>
+      <span id = "post-title-date">Created at 2017-08-07</span>
       
-        <span id = "post-title-updated">修改于 2017-08-08</span>
+        <span id = "post-title-updated">Updated at 2017-08-08</span>
       
       
       
@@ -169,10 +169,10 @@ Open terminal, get root and create new fol...">
 
   </article>
   <div class="random-toc-area">
-  <button class="btn-hide-toc btn-hide-toc-show" style="display: none" onclick="TOCToggle()">显示目录</button>
-  <button class="btn-hide-toc btn-hide-toc-hide" onclick="TOCToggle()">隐藏目录</button>
+  <button class="btn-hide-toc btn-hide-toc-show" style="display: none" onclick="TOCToggle()">Show TOC</button>
+  <button class="btn-hide-toc btn-hide-toc-hide" onclick="TOCToggle()">Hide TOC</button>
   <div class="random-toc">
-    <h2>目录</h2>
+    <h2>Table of Content</h2>
     <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Install-JDK"><span class="toc-text">Install JDK</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Open-terminal-get-root-and-create-new-folder-on-the-home"><span class="toc-text">Open terminal, get root and create new folder on the home</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Copy-jre-8u121-linux-x64-tar-gz-file-to-hadoop-folder"><span class="toc-text">Copy jre-8u121-linux-x64.tar.gz file to hadoop folder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Explode-jre-8u121-linux-x64-tar-gz-file"><span class="toc-text">Explode jre-8u121-linux-x64.tar.gz file</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Set-JDK-environment-variable"><span class="toc-text">Set JDK environment variable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Add-codes-at-the-end-of-profile"><span class="toc-text">Add codes at the end of profile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Check"><span class="toc-text">Check</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Configure-hosts-file"><span class="toc-text">Configure hosts file</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Revise-hostname"><span class="toc-text">Revise hostname</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Check-IP-address"><span class="toc-text">Check IP address</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Configure-host"><span class="toc-text">Configure host</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Copy-configured-host-to-slaves"><span class="toc-text">Copy configured host to slaves</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSH-login-without-password"><span class="toc-text">SSH login without password</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Turn-off-firewall"><span class="toc-text">Turn off firewall</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Configure-SSH-in-master"><span class="toc-text">Configure SSH in master</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Check-for-success"><span class="toc-text">Check for success</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Install-and-configure-Hadoop-in-master"><span class="toc-text">Install and configure Hadoop in master</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Copy-hadoop-2-6-4-tar-gz-to-hadoop-folder"><span class="toc-text">Copy hadoop-2.6.4.tar.gz to hadoop folder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Configure-files-of-Hadoop"><span class="toc-text">Configure files of Hadoop</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Configure-hadoop-env-sh"><span class="toc-text">Configure hadoop-env.sh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Configure-core-site-xml"><span class="toc-text">Configure core-site.xml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Configure-hdfs-site-xml"><span class="toc-text">Configure hdfs-site.xml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Configure-mapred-site-xml"><span class="toc-text">Configure mapred-site.xml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Configure-yarn-site-xml"><span class="toc-text">Configure yarn-site.xml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Configure-master"><span class="toc-text">Configure master</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Configure-slaves"><span class="toc-text">Configure slaves</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Copy-configured-files-to-slaves"><span class="toc-text">Copy configured files to slaves</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Start-cluster"><span class="toc-text">Start cluster</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Check-cluster"><span class="toc-text">Check cluster</span></a></li></ol></li></ol>
   </div>
 </div>
@@ -180,13 +180,13 @@ Open terminal, get root and create new fol...">
   
 <nav id="pagination">
   
-    <a href="/2017/08/08/Web crawling CSI 300 index using Python/" class="prev">&larr; 上一篇 Web crawling CSI 300 index using Python</a>
+    <a href="/2017/08/08/Web crawling CSI 300 index using Python/" class="prev">&larr; Prev post Web crawling CSI 300 index using Python</a>
   
 
   
 
   
-    <a href="/2017/08/07/Install-R-and-RStudio-in-Ubuntu/" class="next">下一篇 Install R and RStudio in Ubuntu &rarr;</a>
+    <a href="/2017/08/07/Install-R-and-RStudio-in-Ubuntu/" class="next">Next post Install R and RStudio in Ubuntu &rarr;</a>
   
 </nav>
 
