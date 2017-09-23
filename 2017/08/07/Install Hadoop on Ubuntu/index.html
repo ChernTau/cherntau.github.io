@@ -1,135 +1,134 @@
-
-
-
-
-
-
-
-<!doctype html>
-<html lang="">
-<head>
-  <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  <meta name="author" content="Chern Tau">
-  
-  
-  
-  
-    <meta name="description" content="Install JDKVisit http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html and download jre-8u121-linux-x64.tar.gz file to Home.
-Open terminal, get root and create new fol...">
-  
-  <title>Install Hadoop on Ubuntu [ Knowledge Has NO Limit ]</title>
-  
-  
-    <link rel="shortcut icon" href="/favicon.ico">
-  
-  
-  <link rel="stylesheet" href="/css/random.css">
-<link rel="stylesheet" href="/css/vegas.min.css">
-<link rel="stylesheet" href="/css/highlight-railscasts.css">
-<link rel="stylesheet" href="/css/jquery.fancybox.css">
-<link rel="stylesheet" href="/css/iconfont/iconfont.css">
-<link rel="stylesheet" href="/css/jquery.fancybox-thumbs.css">
-<link rel="stylesheet" href="/css/plyr.css">
-  
-</head>
-
-<body>
-<div class="side-navigate hide-area">
-  
-    <div class="item prev">
-      <a href="/2017/08/07/Install-R-and-RStudio-in-Ubuntu/">
-        <div class="item-icon"></div>
-      </a>
-      <div class="item-title">
-        Install R and RStudio in Ubuntu
-      </div>
-    </div>
-  
-  
-</div>
-<div id="outer-container" class="hide-area">
-<div id="container">
-  <div id="menu-outer" class="slide-down">
-    <div id="menu-inner">
-      <div id="brand">
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <title>
         
-        <a onClick="openUserCard()">
-          <img id="avatar" src="http://bbs.pcbeta.com/data/attachment/forum/201708/11/123549h2ji3nx66w9rjji8.jpg"/>
-          <div id="homelink">Knowledge Has NO Limit</div>
-        </a>
-      </div>
-      <div id="menu-list">
-        <ul>
+        Install Hadoop on Ubuntu · fi3ework&#39;s Studio
+        
+    </title>
+    <link rel="icon" href= /assests/favicon.ico>
+    <!-- 提前加载place holder  -->
+    <style>
+        @font-face {
+            font-family: 'Oswald-Regular';
+            src: url('/font/Oswald-Regular.ttf');
+        }
+        @font-face {
+            font-family: 'Source Sans Pro';
+            src: url('/font/Source Sans Pro.woff'),
+            url('/font/Source Sans Pro.woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Source Code Pro';
+            src: url('/font/SourceCodePro-Regular.ttf.woff'),
+            url('/font/SourceCodePro-Regular.ttf.woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
         
         
-          
-            <li>
-          
-            <a href="/">Home</a>
-            
-          </li>
-        
-          
-            <li>
-          
-            <a href="/archives">Archives</a>
-            
-          </li>
-        
-          
-            <li>
-          
-            <a href="/tags">Tags</a>
-            
-          </li>
-        
-          
-            <li>
-          
-            <a href="/categories">Categories</a>
-            
-          </li>
-        
-          
-            <li>
-          
-            <a href="/about">About</a>
-            
-          </li>
-        
-          
-            <li>
-          
-            <a href="https://github.com/stiekel/hexo-theme-random">Github</a>
-            
-          </li>
-        
-        </ul>
-      </div>
-      <div id="show-menu">
-        <button>Menu</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="content-outer">
-    <div id="content-inner">
-      
-      
-  <article id="post">
-    <h1>Install Hadoop on Ubuntu</h1>
-    <p class="page-title-sub">
-      <span id = "post-title-date">Created at 2017-08-07</span>
-      
-        <span id = "post-title-updated">Updated at 2017-08-08</span>
-      
-      
-      
-    </p>
+        .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0px;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2s ease-out 0s 1;
+        }
+        @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        99% {
+            transform: translate3d(0, 0, 0);
+        }
+        99.1% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(-226px, 0, 0);
+        }
+    }
+    </style>
+    <link rel="stylesheet" href = "/css/style.css?v=20170912" />
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
     
-    <h2 id="Install-JDK"><a href="#Install-JDK" class="headerlink" title="Install JDK"></a>Install JDK</h2><p>Visit <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html and download jre-8u121-linux-x64.tar.gz" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html and download jre-8u121-linux-x64.tar.gz</a> file to Home.</p>
+    <script src="/scripts/main.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >fi3ework&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">Install Hadoop on Ubuntu</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>fi3ework's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(http://oumn0o088.bkt.clouddn.com/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            Install Hadoop on Ubuntu
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+        </p>
+        <!-- 404 -->
+        
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2017/08/07</span>
+            </div>
+        
+    </div>
+</div>
+        <div class="container">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="Install-JDK"><a href="#Install-JDK" class="headerlink" title="Install JDK"></a>Install JDK</h2><p>Visit <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html and download jre-8u121-linux-x64.tar.gz" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html and download jre-8u121-linux-x64.tar.gz</a> file to Home.</p>
 <h3 id="Open-terminal-get-root-and-create-new-folder-on-the-home"><a href="#Open-terminal-get-root-and-create-new-folder-on-the-home" class="headerlink" title="Open terminal, get root and create new folder on the home"></a>Open terminal, get root and create new folder on the home</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sudo passwd root # set root password</div><div class="line">su      # get root</div><div class="line">gedit /etc/sudoers  # add chan ALL(ALL) ALL to behind root line</div><div class="line">sudo mkdir hadoop  # create new folder</div></pre></td></tr></table></figure>
 <h3 id="Copy-jre-8u121-linux-x64-tar-gz-file-to-hadoop-folder"><a href="#Copy-jre-8u121-linux-x64-tar-gz-file-to-hadoop-folder" class="headerlink" title="Copy jre-8u121-linux-x64.tar.gz file to hadoop folder"></a>Copy jre-8u121-linux-x64.tar.gz file to hadoop folder</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cp jre-8u121-linux-x64.tar.gz /home/chan/hadoop   # chan is user name</div></pre></td></tr></table></figure>
 <h3 id="Explode-jre-8u121-linux-x64-tar-gz-file"><a href="#Explode-jre-8u121-linux-x64-tar-gz-file" class="headerlink" title="Explode jre-8u121-linux-x64.tar.gz file"></a>Explode jre-8u121-linux-x64.tar.gz file</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd home/chan/hadoop</div><div class="line">tar -zxvf jre-8u121-linux-x64.tar.gz  # explode</div><div class="line">rm jre-8u121-linux-x64.tar.gz  # delete</div></pre></td></tr></table></figure>
@@ -158,207 +157,171 @@ Open terminal, get root and create new fol...">
 <h3 id="Start-cluster"><a href="#Start-cluster" class="headerlink" title="Start cluster"></a>Start cluster</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd</div><div class="line">cd hadoop/hadoop-2.6.4</div><div class="line">bin/hdfs namenode -format     # format namenode</div><div class="line">sbin/start-all.sh</div></pre></td></tr></table></figure>
 <h3 id="Check-cluster"><a href="#Check-cluster" class="headerlink" title="Check cluster"></a>Check cluster</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jps   # maybe need install</div></pre></td></tr></table></figure>
 
-  </article>
-  <div class="random-toc-area">
-  <button class="btn-hide-toc btn-hide-toc-show" style="display: none" onclick="TOCToggle()">Show TOC</button>
-  <button class="btn-hide-toc btn-hide-toc-hide" onclick="TOCToggle()">Hide TOC</button>
-  <div class="random-toc">
-    <h2>Table of Content</h2>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Install-JDK"><span class="toc-text">Install JDK</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Open-terminal-get-root-and-create-new-folder-on-the-home"><span class="toc-text">Open terminal, get root and create new folder on the home</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Copy-jre-8u121-linux-x64-tar-gz-file-to-hadoop-folder"><span class="toc-text">Copy jre-8u121-linux-x64.tar.gz file to hadoop folder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Explode-jre-8u121-linux-x64-tar-gz-file"><span class="toc-text">Explode jre-8u121-linux-x64.tar.gz file</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Set-JDK-environment-variable"><span class="toc-text">Set JDK environment variable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Add-codes-at-the-end-of-profile"><span class="toc-text">Add codes at the end of profile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Check"><span class="toc-text">Check</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Configure-hosts-file"><span class="toc-text">Configure hosts file</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Revise-hostname"><span class="toc-text">Revise hostname</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Check-IP-address"><span class="toc-text">Check IP address</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Configure-host"><span class="toc-text">Configure host</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Copy-configured-host-to-slaves"><span class="toc-text">Copy configured host to slaves</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SSH-login-without-password"><span class="toc-text">SSH login without password</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Turn-off-firewall"><span class="toc-text">Turn off firewall</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Configure-SSH-in-master"><span class="toc-text">Configure SSH in master</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Check-for-success"><span class="toc-text">Check for success</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Install-and-configure-Hadoop-in-master"><span class="toc-text">Install and configure Hadoop in master</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Copy-hadoop-2-6-4-tar-gz-to-hadoop-folder"><span class="toc-text">Copy hadoop-2.6.4.tar.gz to hadoop folder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Configure-files-of-Hadoop"><span class="toc-text">Configure files of Hadoop</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Configure-hadoop-env-sh"><span class="toc-text">Configure hadoop-env.sh</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Configure-core-site-xml"><span class="toc-text">Configure core-site.xml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Configure-hdfs-site-xml"><span class="toc-text">Configure hdfs-site.xml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Configure-mapred-site-xml"><span class="toc-text">Configure mapred-site.xml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Configure-yarn-site-xml"><span class="toc-text">Configure yarn-site.xml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Configure-master"><span class="toc-text">Configure master</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Configure-slaves"><span class="toc-text">Configure slaves</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Copy-configured-files-to-slaves"><span class="toc-text">Copy configured files to slaves</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Start-cluster"><span class="toc-text">Start cluster</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Check-cluster"><span class="toc-text">Check cluster</span></a></li></ol></li></ol>
-  </div>
-</div>
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-pager">
+        
+            <li class="next">
+                <a href= "/2017/08/07/Install-R-and-RStudio-in-Ubuntu/" title= Install R and RStudio in Ubuntu >
+                    <span>Next Post</span>
+                    <span>Install R and RStudio in Ubuntu</span>
+                </a>
+            </li>
+        
+        
+    </ul>
+    <!-- 来必力City版安装代码 -->
 
-  
-<nav id="pagination">
-  
-    <a href="/2017/08/07/Install-R-and-RStudio-in-Ubuntu/" class="prev">&larr; Prev post Install R and RStudio in Ubuntu</a>
-  
+    
 
-  
+<!-- City版安装代码已完成 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="emailto:12345@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/fi3ework" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+    
 
-  
-</nav>
-
-  <!-- JiaThis Button BEGIN -->
-
-<!-- JiaThis Button END -->
-
-
-      
-      
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span>
+        <span
+            id="theme-info">Theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+</footer>
+    </div>
+    <div class="back-top">&#xe639;</div>
+    <div class="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-category">
+            <span class="sidebar-archive-link"><span class="iconfont-archer">&#xe67d;</span>Archive</span>
+            <span class="sidebar-tags-link"><span class="iconfont-archer">&#xe610;</span>Tag</span>
+        </div>
+    </div>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-archive">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 3 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/08</span><a class="archive-post-title" href= "/2017/08/08/Web crawling CSI 300 index using Python/" >Web crawling CSI 300 index using Python</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2017/08/07/Install Hadoop on Ubuntu/" >Install Hadoop on Ubuntu</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2017/08/07/Install-R-and-RStudio-in-Ubuntu/" >Install R and RStudio in Ubuntu</a>
+        </li>
+    
     </div>
   </div>
-
-  <div id="bottom-outer">
-    <div id="bottom-inner">
-      Site by Chern Tau using
-      <a href="http://hexo.io">Hexo</a> & <a href="https://github.com/stiekel/hexo-theme-random">Random</a>
-      <br>
-      
+        <div class="sidebar-tags">
+    <div class="sidebar-tags-name">
+    
     </div>
-  </div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #888; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: false
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tag-list"></div>
 </div>
-
-</div>
-
-
-<div id="user-card">
-  <div class="center-field">
-    <img class="avatar" src="http://bbs.pcbeta.com/data/attachment/forum/201708/11/123549h2ji3nx66w9rjji8.jpg">
-    <p id="description"></p>
-    <ul class="social-icon">
-  
-  
-    <li>
-      <a href="https://github.com/stiekel/hexo-theme-random">
-        
-          <i class="icon iconfont github">&#xe606;</i>
-        
-      </a>
-    </li>
-  
-    <li>
-      <a href="https://coding.net/u/Stiekel">
-        
-          <i class="icon iconfont coding">&#xe607;</i>
-        
-      </a>
-    </li>
-  
-    <li>
-      <a href="https://twitter.com/SidCN">
-        
-          <i class="icon iconfont twitter">&#xe600;</i>
-        
-      </a>
-    </li>
-  
-    <li>
-      <a href="http://weibo.com/sidcn">
-        
-          <i class="icon iconfont weibo">&#xe602;</i>
-        
-      </a>
-    </li>
-  
-    <li>
-      <a href="http://www.douban.com/people/Stiekel/">
-        
-          <i class="icon iconfont douban">&#xe60f;</i>
-        
-      </a>
-    </li>
-  
-</ul>
-  </div>
-</div>
-
-
-<div id="btn-view">Hide</div>
-
-<script>
-// is trigger analytics / tongji script
-var isIgnoreHost = false;
-
-if(window && window.location && window.location.host) {
-  isIgnoreHost = ["localhost","127.0.0.1"].some(function(address){
-    return 0 === window.location.host.indexOf(address);
-  });
-}
-
-var isTriggerAnalytics = !( true && isIgnoreHost );
-
-</script>
-
-
-
-
-  
-  
-    <script src="/js/jquery-2.2.3.min.js"></script>
-  
-    <script src="/js/vegas.min.js"></script>
-  
-    <script src="/js/random.js"></script>
-  
-    <script src="/js/highlight.pack.js"></script>
-  
-    <script src="/js/jquery.mousewheel.pack.js"></script>
-  
-    <script src="/js/jquery.fancybox.pack.js"></script>
-  
-    <script src="/js/jquery.fancybox-thumbs.js"></script>
-  
-    <script src="/js/plyr.js"></script>
-  
-
-<script>
-
-  // fancybox
-  var backgroundImages = [];
-  
-  $('#post').each(function(i){
-    $(this).find('img').each(function(){
-      if ($(this).parent().hasClass('fancybox') || $(this).parent().hasClass('fancybox-thumb')) return;
-      var alt = this.alt || this.title;
-      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
-      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
-    });
-    $(this).find('.fancybox').each(function(){
-      $(this).attr('rel', 'post' + i);
-    });
-  });
-  $(".fancybox").fancybox();
-
-var vegasConfig = {"preload­Image":true,"transition":["slideLeft2","slideRight2","flash2"],"timer":true,"delay":5000,"shuffle":true,"count":28};
-var unsplashConfig = {"gravity":"north"};
-// is show background images
-var turnoffBackgroundImage = false;
-
-
-
-  turnoffBackgroundImage = true;
-
-
-var backgroundColor = "34495E";
-
-$(".fancybox-thumb").fancybox({
-  prevEffect: 'none',
-  nextEffect: 'none',
-  helpers: {
-    title: {
-      type: 'outside'
-    },
-    thumbs: {
-      width: 50,
-      height: 50
+    </div>
+</div> 
+    <script>
+    var jsInfo = {
+        root: '/'
     }
-  }
-});
-
-// show video with plyr
-$(".video-container iframe").each(function(i){
-  var url = $(this).attr('src');
-  var id = url.split('/').pop();
-  var plyrContainer = document.createElement('div');
-  plyrContainer.className = 'plyr';
-  var plyrElement = document.createElement('div');
-  plyrElement.dataset.videoId = id;
-  switch(true) {
-    case url.search('youtube.com') >= 0:
-      plyrElement.dataset.type = 'youtube';
-      break;
-    case url.search('vimeo.com') >= 0:
-      plyrElement.dataset.type = 'vimeo';
-      break;
-    default:
-      return;
-  };
-  plyrContainer.appendChild(plyrElement);
-  $(this).parent().html(plyrContainer);
-});
-plyr.setup('.plyr', {iconUrl: '/css/sprite.svg'});
 </script>
-</body>
+    <!-- 不蒜子  -->
+    
+    <!-- CNZZ统计  -->
+    
+    </div>
+    </body>
 </html>
+
 
