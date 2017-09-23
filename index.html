@@ -1,614 +1,389 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  
-  <title>Knowledge Has NO Limit</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  
-  
-  
-  
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Knowledge Has NO Limit">
-<meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="Knowledge Has NO Limit">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Knowledge Has NO Limit">
-  
-    <link rel="alternate" href="/atom.xml" title="Knowledge Has NO Limit" type="application/atom+xml">
-  
-
-  
-
-  <link rel="icon" href="/css/images/mylogo.jpg">
-  <link rel="apple-touch-icon" href="/css/images/mylogo.jpg">
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Montserrat:700" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,300italic,400italic" rel="stylesheet" type="text/css">
-  <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-  <style type="text/css">
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9749f0/00000000000000000001008f/27/l?subset_id=2&fvd=n5) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/90cf9f/000000000000000000010091/27/l?subset_id=2&fvd=n7) format("woff2");font-weight:500;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/8a5494/000000000000000000013365/27/l?subset_id=2&fvd=n4) format("woff2");font-weight:lighter;font-style:normal;}
-    @font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/d337d8/000000000000000000010095/27/l?subset_id=2&fvd=i4) format("woff2");font-weight:400;font-style:italic;}</style>
-  <link rel="stylesheet" href="/css/style.css">
-
-  <script src="/js/jquery-3.1.1.min.js"></script>
-  <script src="/js/bootstrap.js"></script>
-
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="/css/bootstrap.css" >
-
-  
-    <link rel="stylesheet" href="/css/home.css" >
-  
-
-  
-
-  
-
-  
-  
-  
-    <link rel="stylesheet" href="/css/vdonate.css" >
-  
-
+    <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <title>
+        
+        fi3ework&#39;s Studio
+        
+    </title>
+    <link rel="icon" href= /assests/favicon.ico>
+    <!-- 提前加载place holder  -->
+    <style>
+        @font-face {
+            font-family: 'Oswald-Regular';
+            src: url('/font/Oswald-Regular.ttf');
+        }
+        @font-face {
+            font-family: 'Source Sans Pro';
+            src: url('/font/Source Sans Pro.woff'),
+            url('/font/Source Sans Pro.woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Source Code Pro';
+            src: url('/font/SourceCodePro-Regular.ttf.woff'),
+            url('/font/SourceCodePro-Regular.ttf.woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        
+        .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0px;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2s ease-out 0s 1;
+        }
+        @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        99% {
+            transform: translate3d(0, 0, 0);
+        }
+        99.1% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(-226px, 0, 0);
+        }
+    }
+    </style>
+    <link rel="stylesheet" href = "/css/style.css?v=20170912" />
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    
+    <script src="/scripts/main.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
 </head>
-
-
-
-  <body>
-
-
-  
-    <header id="header">
-
-	<!-- 背景图模式 -->
-	
-
     
-      <div id="intrologo" class="intro-logo" style="background-position:center; background-repeat:no-repeat; background-image: url(); background-size: auto 100%;">
-
-      <!-- Support rolling -->  
-        
-        <section class="awSlider">
-          <div class="carousel slide carousel-fade " data-ride="carousel">
-
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner">
-               
-                  
-                    <div class="item active">
-                  
-                    <img id="carousel-img0" src="/css/images/home-bg.jpg">
-                  </div>
-
-                  <!-- 自适应大图 -->
-                  <script>
-                      var img0 = new Image();
-                      var imageTag0 = document.getElementById("carousel-img0");
-                      img0.src = imageTag0.src;
-                      img0.onload=function(){
-                        if (img0.width / img0.height <= document.body.clientWidth / document.body.clientHeight) {
-                          imageTag0.style.width = document.body.clientWidth + "px";
-                        } else {
-                          imageTag0.style.height = document.body.clientHeight + "px";
-                          imageTag0.style.marginLeft = -(document.body.clientHeight * img0.width / img0.height - document.body.clientWidth) / 2 + "px";
-                        }
-                      };
-                  </script>
-                
-                  
-                    <div class="item">
-                  
-                    <img id="carousel-img1" src="/css/images/sample.jpg">
-                  </div>
-
-                  <!-- 自适应大图 -->
-                  <script>
-                      var img1 = new Image();
-                      var imageTag1 = document.getElementById("carousel-img1");
-                      img1.src = imageTag1.src;
-                      img1.onload=function(){
-                        if (img1.width / img1.height <= document.body.clientWidth / document.body.clientHeight) {
-                          imageTag1.style.width = document.body.clientWidth + "px";
-                        } else {
-                          imageTag1.style.height = document.body.clientHeight + "px";
-                          imageTag1.style.marginLeft = -(document.body.clientHeight * img1.width / img1.height - document.body.clientWidth) / 2 + "px";
-                        }
-                      };
-                  </script>
-                
-                  
-                    <div class="item">
-                  
-                    <img id="carousel-img2" src="https://source.unsplash.com/collection/954550/1920x1080">
-                  </div>
-
-                  <!-- 自适应大图 -->
-                  <script>
-                      var img2 = new Image();
-                      var imageTag2 = document.getElementById("carousel-img2");
-                      img2.src = imageTag2.src;
-                      img2.onload=function(){
-                        if (img2.width / img2.height <= document.body.clientWidth / document.body.clientHeight) {
-                          imageTag2.style.width = document.body.clientWidth + "px";
-                        } else {
-                          imageTag2.style.height = document.body.clientHeight + "px";
-                          imageTag2.style.marginLeft = -(document.body.clientHeight * img2.width / img2.height - document.body.clientWidth) / 2 + "px";
-                        }
-                      };
-                  </script>
-                
-            </div>
-
-            <!-- Controls -->
-            <a class="left carousel-control" href=".carousel" role="button" data-slide="prev">
-              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-              <span class="sr-only">Geri</span>
-            </a>
-            <a class="right carousel-control" href=".carousel" role="button" data-slide="next">
-              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-              <span class="sr-only">İleri</span>
-            </a>
-          </div>
-        </section>
-        <script>
-          $('section.awSlider .carousel').carousel({
-              pause: '',
-              interval: 5000
-          });
-          var startImage = $('section.awSlider .item.active > img').attr('src');
-          $('section.awSlider .carousel').on('slid.bs.carousel', function () {
-              var bscn = $(this).find('.item.active > img').attr('src');
-              $('section.awSlider > img').attr('src', bscn);
-          });
-        </script>
-      
-
+        <body class="home-body">
     
- 
-
-
-    <canvas width="100%" height="100%"></canvas>
-    <script>
-      var c = document.getElementsByTagName('canvas')[0],
-          x = c.getContext('2d'),
-          w = window.innerWidth,
-          h = window.innerHeight,
-          pr = window.devicePixelRatio || 1,
-          f = 90,
-          q,
-          m = Math,
-          r = 0,
-          u = m.PI*2,
-          v = m.cos,
-          z = m.random
-      c.width = w*pr
-      c.height = h*pr
-      x.scale(pr, pr)
-      x.globalAlpha = 0.6
-
-      <!-- 折线Polyline背景 -->
-      
-		 function redraw(){
-		 	var pattern = Trianglify({
-				width: window.innerWidth,
-				height: window.innerHeight
-			});
-            pattern.canvas(c)
-        }
-        document.getElementById("intrologo").onclick = redraw
-        document.getElementById("intrologo").ontouchstart = redraw
-		redraw()
-      
-    </script>
     
+<header class="header index-header">
 
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
     
-      <div id="homelogo" class="homelogo" style="background: rgba(255,255,255,1);"> 
-    
-
-        
-          <div class="homelogoback"  style="border: 1px solid #404040;" >
-            <h1><a href="#content" id="logo">Knowledge Has NO Limit</a></h1>
-            <h3></h3>
-            <h5>Chern Tau</h5>
-            <!-- <p><a href="https://github.com/iTimeTraveler" target="_blank">Github</a></p> -->
-          </div>
-        
-    
-    </div>
-  </div>
-
-  <!-- 自适应主页背景大图 -->
-  
-
- <!-- home_logo_image居中 -->
- 
-    <script>
-        var homelogodiv = document.getElementById("homelogo");
-        if (document.all.homelogo.offsetWidth > document.body.clientWidth) {
-          homelogodiv.style.width = document.body.clientWidth + "px";
-          homelogodiv.style.marginLeft = document.body.clientWidth * -0.5 + "px";
-        } else {
-          homelogodiv.style.width = homelogodiv.clientWidth  + "px";
-          homelogodiv.style.marginLeft = (homelogodiv.clientWidth)  * -0.5 + "px";
-        }
-    </script>
-  
-
-  <div class="intro-navigate">
-      <p class="navigater-list">
-        
-          <a id="beautifont" class="main-nav-link" href="/">Startseite</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/archives">Archive</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/categories">Kategorien</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/tags">Tags</a>
-        
-          <a id="beautifont" class="main-nav-link" href="/about">About</a>
-        
-      </p>
-  </div>
-
+    <a class="home-link" href=/>fi3ework's Studio.</a>
 </header>
-  
-  <div id="container">
-    <div id="wrap">
-      
+    <div class="wrapper">
+        <div class="site-intro">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 文章页  -->
             
-      <div id="content" class="outer">
+    <div class="site-intro-img" style="background-image: url(http://oumn0o088.bkt.clouddn.com/intro-desktop.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            fi3ework's Studio.
+            <!-- 文章页  -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+                it's better to burn out than to fade away
+            
+            <!-- 文章页  -->
+            
+        <!-- 文章页meta -->
         
-          <section id="main" style="float:none;">
-  
-    <article id="post-Web crawling CSI 300 index using Python"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/08/Web crawling CSI 300 index using Python/">Web crawling CSI 300 index using Python</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/08/08/Web crawling CSI 300 index using Python/" class="article-date">
-	  <time datetime="2017-08-08T04:48:03.000Z" itemprop="datePublished">2017-08-08</time>
-	</a>
-
-      
-      
     </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Simulating-browser-login"><a href="#Simulating-browser-login" class="headerlink" title="Simulating browser login"></a>Simulating browser login</h2><p>You must make sure that you have installed firefox browser.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">from selenium import webdriver</div><div class="line">from selenium.webdriver.common.keys import Keys</div><div class="line">import time</div><div class="line">import pandas as pd</div><div class="line">import re</div><div class="line">import numpy as np</div><div class="line">from bs4 import BeautifulSoup</div><div class="line"></div><div class="line">driver = webdriver.Firefox()</div></pre></td></tr></table></figure>
-<h2 id="Finding-the-CSI-300-index-url-in-Google-Finance"><a href="#Finding-the-CSI-300-index-url-in-Google-Finance" class="headerlink" title="Finding the CSI 300 index url in Google Finance"></a>Finding the CSI 300 index url in Google Finance</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">var = [&apos;Date&apos;, &apos;Open&apos;, &apos;High&apos;, &apos;Low&apos;, &apos;Close&apos;, &apos;Volume&apos;]</div><div class="line"></div><div class="line">csi = &#123;&#125;</div><div class="line">for j in range(0,29):</div><div class="line">    urll = &quot;https://www.google.com/finance/historical?cid=1979150&amp;startdate=Jan%201%2C%202014&amp;enddate=Jul%2010%2C%202017&amp;num=30&amp;ei=BxBkWdGLK5DijAHogaDwCg&quot;+&quot;&amp;start=%s&quot; % (j*30)</div><div class="line">    driver.get(urll)</div><div class="line">    html = BeautifulSoup(driver.page_source,&apos;lxml&apos;)</div><div class="line">    info = html.find_all(&apos;table&apos;, class_=&quot;gf-table historical_price&quot;)</div><div class="line">    info1 = info[0]</div><div class="line">    info3 = info1.find_all(&quot;td&quot;)</div><div class="line">    for i in range(len(info3)-1):</div><div class="line">        if i % 6 == 0:</div><div class="line">            valuetag = info3[i] </div><div class="line">            value = valuetag.string</div><div class="line">            value = value.replace(&quot;\n&quot;,&quot;&quot;)</div><div class="line">            csi.setdefault(var[0],[]).append(value)</div><div class="line">        elif i % 6 == 1:</div><div class="line">            valuetag = info3[i] </div><div class="line">            value = valuetag.string</div><div class="line">            value = value.replace(&quot;\n&quot;,&quot;&quot;)</div><div class="line">            csi.setdefault(var[1],[]).append(value)</div><div class="line">        elif i % 6 == 2:</div><div class="line">            valuetag = info3[i] </div><div class="line">            value = valuetag.string</div><div class="line">            value = value.replace(&quot;\n&quot;,&quot;&quot;)</div><div class="line">            csi.setdefault(var[2],[]).append(value)</div><div class="line">        elif i % 6 == 3:</div><div class="line">            valuetag = info3[i] </div><div class="line">            value = valuetag.string</div><div class="line">            value = value.replace(&quot;\n&quot;,&quot;&quot;)</div><div class="line">            csi.setdefault(var[3],[]).append(value)</div><div class="line">        elif i % 6 == 4:</div><div class="line">            valuetag = info3[i] </div><div class="line">            value = valuetag.string</div><div class="line">            value = value.replace(&quot;\n&quot;,&quot;&quot;)</div><div class="line">            csi.setdefault(var[4],[]).append(value)</div><div class="line">        else:</div><div class="line">            valuetag = info3[i] </div><div class="line">            value = valuetag.string</div><div class="line">            value = value.replace(&quot;\n&quot;,&quot;&quot;)</div><div class="line">            csi.setdefault(var[5],[]).append(value)</div></pre></td></tr></table></figure>
-<h2 id="Writing-file-in-local-folder"><a href="#Writing-file-in-local-folder" class="headerlink" title="Writing file in local folder"></a>Writing file in local folder</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">data = pd.DataFrame.from_dict(csi,orient=&apos;index&apos;).T</div><div class="line"></div><div class="line">data.to_csv(&apos;data.csv&apos;,header = True,encoding=&quot;utf_8_sig&quot;)</div></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <article id="post-Install-R-and-RStudio-in-Ubuntu"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/07/Install-R-and-RStudio-in-Ubuntu/">Install R and RStudio in Ubuntu</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/08/07/Install-R-and-RStudio-in-Ubuntu/" class="article-date">
-	  <time datetime="2017-08-07T04:48:03.000Z" itemprop="datePublished">2017-08-07</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Install-R"><a href="#Install-R" class="headerlink" title="Install R"></a>Install R</h2><h3 id="Add-Mirror-source"><a href="#Add-Mirror-source" class="headerlink" title="Add Mirror source"></a>Add Mirror source</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo gedit /etc/apt/sources.list</div><div class="line">deb http://cran.rstudio.com/bin/linux/ubuntu trusty/  # Add the code in the end of sources.list</div></pre></td></tr></table></figure>
-<h3 id="Run-command-of-downloading-public-key"><a href="#Run-command-of-downloading-public-key" class="headerlink" title="Run command of downloading public key"></a>Run command of downloading public key</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 51716619E084DAB9</div><div class="line">sudo apt-get update   # Update</div></pre></td></tr></table></figure>
-<h3 id="Install-R-1"><a href="#Install-R-1" class="headerlink" title="Install R"></a>Install R</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install r-base</div><div class="line">R  # Verify whether it succeed</div></pre></td></tr></table></figure>
-<h2 id="Install-RStudio"><a href="#Install-RStudio" class="headerlink" title="Install RStudio"></a>Install RStudio</h2><p>Visit <a href="http://www.rstudio.com/products/rstudio/download/" target="_blank" rel="external">http://www.rstudio.com/products/rstudio/download/</a> download related file</p>
-<h3 id="Input-code-in-Terminal"><a href="#Input-code-in-Terminal" class="headerlink" title="Input code in Terminal"></a>Input code in Terminal</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install gdebi-core</div><div class="line">sudo apt-get install libapparmor1  # Required only for Ubuntu, not Debian</div><div class="line">sudo gdebi *  # Downloaded RStudio*.deb file</div></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-    <article id="post-Install Hadoop on Ubuntu"  class="article article-type-post" itemscope itemprop="blogPost" >
-  <div id="articleInner" class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="thumb" itemprop="name">
-      <a class="article-title" href="/2017/08/07/Install Hadoop on Ubuntu/">Install Hadoop on Ubuntu</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-meta">
-      
-	<a href="/2017/08/07/Install Hadoop on Ubuntu/" class="article-date">
-	  <time datetime="2017-08-07T04:48:03.000Z" itemprop="datePublished">2017-08-07</time>
-	</a>
-
-      
-      
-    </div>
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="Install-JDK"><a href="#Install-JDK" class="headerlink" title="Install JDK"></a>Install JDK</h2><p>Visit <a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html and download jre-8u121-linux-x64.tar.gz" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html and download jre-8u121-linux-x64.tar.gz</a> file to Home.</p>
-<h3 id="Open-terminal-get-root-and-create-new-folder-on-the-home"><a href="#Open-terminal-get-root-and-create-new-folder-on-the-home" class="headerlink" title="Open terminal, get root and create new folder on the home"></a>Open terminal, get root and create new folder on the home</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sudo passwd root # set root password</div><div class="line">su      # get root</div><div class="line">gedit /etc/sudoers  # add chan ALL(ALL) ALL to behind root line</div><div class="line">sudo mkdir hadoop  # create new folder</div></pre></td></tr></table></figure>
-<h3 id="Copy-jre-8u121-linux-x64-tar-gz-file-to-hadoop-folder"><a href="#Copy-jre-8u121-linux-x64-tar-gz-file-to-hadoop-folder" class="headerlink" title="Copy jre-8u121-linux-x64.tar.gz file to hadoop folder"></a>Copy jre-8u121-linux-x64.tar.gz file to hadoop folder</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cp jre-8u121-linux-x64.tar.gz /home/chan/hadoop   # chan is user name</div></pre></td></tr></table></figure>
-<h3 id="Explode-jre-8u121-linux-x64-tar-gz-file"><a href="#Explode-jre-8u121-linux-x64-tar-gz-file" class="headerlink" title="Explode jre-8u121-linux-x64.tar.gz file"></a>Explode jre-8u121-linux-x64.tar.gz file</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd home/chan/hadoop</div><div class="line">tar -zxvf jre-8u121-linux-x64.tar.gz  # explode</div><div class="line">rm jre-8u121-linux-x64.tar.gz  # delete</div></pre></td></tr></table></figure>
-<h3 id="Set-JDK-environment-variable"><a href="#Set-JDK-environment-variable" class="headerlink" title="Set JDK environment variable"></a>Set JDK environment variable</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo gedit /etc/profile</div></pre></td></tr></table></figure>
-<h3 id="Add-codes-at-the-end-of-profile"><a href="#Add-codes-at-the-end-of-profile" class="headerlink" title="Add codes at the end of profile"></a>Add codes at the end of profile</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">export JAVA_HOME=/home/name(user)/hadoop/jre1.8.0_121   # the name of the JDK folder</div><div class="line">export PATH=$JAVA_HOME/bin:$PATH</div><div class="line">export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</div></pre></td></tr></table></figure>
-<h3 id="Check"><a href="#Check" class="headerlink" title="Check"></a>Check</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">source /etc/profile   # make JDK effective</div><div class="line">java -version # showing java version &quot;xxxx&quot;, it succeed</div></pre></td></tr></table></figure>
-<h2 id="Configure-hosts-file"><a href="#Configure-hosts-file" class="headerlink" title="Configure hosts file"></a>Configure hosts file</h2><h3 id="Revise-hostname"><a href="#Revise-hostname" class="headerlink" title="Revise hostname"></a>Revise hostname</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">su</div><div class="line">gedit etc/hostname   # revise hostname to &quot;master&quot; and input slave1, slave2 in others</div><div class="line">reboot</div></pre></td></tr></table></figure>
-<h3 id="Check-IP-address"><a href="#Check-IP-address" class="headerlink" title="Check IP address"></a>Check IP address</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ifconfig  # copy IP address</div></pre></td></tr></table></figure>
-<h3 id="Configure-host"><a href="#Configure-host" class="headerlink" title="Configure host"></a>Configure host</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">su</div><div class="line">gedit /etc/hosts   #paste IP address and input &quot;master&quot;, &quot;slave1&quot;, &quot;slave2&quot;</div></pre></td></tr></table></figure>
-<h3 id="Copy-configured-host-to-slaves"><a href="#Copy-configured-host-to-slaves" class="headerlink" title="Copy configured host to slaves"></a>Copy configured host to slaves</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">scp /etc/hosts root@slave1:/etc/</div><div class="line">scp /etc/hosts root@slave2:/etc/</div></pre></td></tr></table></figure>
-<p>2.5 Check slavers whether connected</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ping slave1   # must input in master</div><div class="line">ping slave2</div></pre></td></tr></table></figure>
-<h2 id="SSH-login-without-password"><a href="#SSH-login-without-password" class="headerlink" title="SSH login without password"></a>SSH login without password</h2><h3 id="Turn-off-firewall"><a href="#Turn-off-firewall" class="headerlink" title="Turn off firewall"></a>Turn off firewall</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">su</div><div class="line">sysv-rc-conf iptables off   # need install sys-rc-conf</div><div class="line">reboot</div></pre></td></tr></table></figure>
-<h3 id="Configure-SSH-in-master"><a href="#Configure-SSH-in-master" class="headerlink" title="Configure SSH in master"></a>Configure SSH in master</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa  # press ENTER</div><div class="line">cd .ssh</div><div class="line">cat id_rsa.pub &gt;&gt; authorized_keys</div><div class="line">chmod 600 authorized_keys</div><div class="line">scp authorized_keys chan@slave1:~/.ssh/</div><div class="line">scp authorized_keys chan(user)@slave2:~/.ssh/</div></pre></td></tr></table></figure>
-<h3 id="Check-for-success"><a href="#Check-for-success" class="headerlink" title="Check for success"></a>Check for success</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ssh slave1</div><div class="line">ssh slave2</div><div class="line">shh master</div></pre></td></tr></table></figure>
-<h2 id="Install-and-configure-Hadoop-in-master"><a href="#Install-and-configure-Hadoop-in-master" class="headerlink" title="Install and configure Hadoop in master"></a>Install and configure Hadoop in master</h2><p>Visit <a href="http://apache.fayea.com/hadoop/common/" target="_blank" rel="external">http://apache.fayea.com/hadoop/common/</a> and download hadoop-2.6.4.tar.gz</p>
-<h3 id="Copy-hadoop-2-6-4-tar-gz-to-hadoop-folder"><a href="#Copy-hadoop-2-6-4-tar-gz-to-hadoop-folder" class="headerlink" title="Copy hadoop-2.6.4.tar.gz to hadoop folder"></a>Copy hadoop-2.6.4.tar.gz to hadoop folder</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd hadoop</div><div class="line">tar -zxvf hadoop-2.6.4.tar.gz</div></pre></td></tr></table></figure>
-<h3 id="Configure-files-of-Hadoop"><a href="#Configure-files-of-Hadoop" class="headerlink" title="Configure files of Hadoop"></a>Configure files of Hadoop</h3><h4 id="Configure-hadoop-env-sh"><a href="#Configure-hadoop-env-sh" class="headerlink" title="Configure hadoop-env.sh"></a>Configure hadoop-env.sh</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cd hadoop/hadoop-2.6.4</div><div class="line">cd etc/hadoop</div><div class="line">gedit hadoop-env.sh</div><div class="line"># add this code at end of hadoop-env.sh</div><div class="line">export JAVA_HOME=/home/chan/hadoop/jre1.8.0_121</div></pre></td></tr></table></figure>
-<h4 id="Configure-core-site-xml"><a href="#Configure-core-site-xml" class="headerlink" title="Configure core-site.xml"></a>Configure core-site.xml</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">gedit core-site.xml</div><div class="line"># add this code between configuration</div><div class="line">&lt;property&gt;</div><div class="line">  &lt;name&gt;fs.default.name&lt;/name&gt;</div><div class="line">  &lt;value&gt;hdfs://master:9000&lt;/value&gt;</div><div class="line">  &lt;final&gt;true&lt;/final&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">  &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</div><div class="line">  &lt;value&gt;/home/chan/hadoop/tmp&lt;/value&gt;  # user name</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">&lt;name&gt;fs.default.name&lt;/name&gt;</div><div class="line">  &lt;value&gt;hdfs://master:54310&lt;/value&gt;</div><div class="line">  &lt;final&gt;true&lt;/final&gt;</div><div class="line">&lt;/property&gt;</div></pre></td></tr></table></figure>
-<h4 id="Configure-hdfs-site-xml"><a href="#Configure-hdfs-site-xml" class="headerlink" title="Configure hdfs-site.xml"></a>Configure hdfs-site.xml</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">gedit hdfs-site.xml</div><div class="line"><span class="comment"># add this code between configuration</span></div><div class="line">&lt;property&gt;</div><div class="line">  &lt;name&gt;fs.default.name&lt;/name&gt;</div><div class="line">  &lt;value&gt;file:/home/chan/hadoop/dfs/name&lt;/value&gt;  <span class="comment"># user name</span></div><div class="line">  &lt;final&gt;<span class="literal">true</span>&lt;/final&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">&lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;</div><div class="line">  &lt;value&gt;file:/home/chan/hadoop/dfs/data&lt;/value&gt;  <span class="comment">#user name</span></div><div class="line">  &lt;final&gt;<span class="literal">true</span>&lt;/final&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">&lt;name&gt;dfs.replication&lt;/name&gt;</div><div class="line">  &lt;value&gt;2&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div></pre></td></tr></table></figure>
-<h4 id="Configure-mapred-site-xml"><a href="#Configure-mapred-site-xml" class="headerlink" title="Configure mapred-site.xml"></a>Configure mapred-site.xml</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">mv mapred-site.xml.template mapred-site.xml  <span class="comment"># rename</span></div><div class="line">gedit mapred-site.xml</div><div class="line"><span class="comment"># add this code between configuration</span></div><div class="line">&lt;property&gt;</div><div class="line">  &lt;name&gt;mapreduce.framework.name&lt;/name&gt;</div><div class="line">  &lt;value&gt;yarn&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">&lt;name&gt;mapreduce.jobhistory.address&lt;/name&gt;</div><div class="line">  &lt;value&gt;master:10020&lt;/value&gt;</div><div class="line">  &lt;final&gt;<span class="literal">true</span>&lt;/final&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">  &lt;name&gt;mapreduce.jobhistory.webapp.address&lt;/name&gt;</div><div class="line">  &lt;value&gt;master:19888&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div></pre></td></tr></table></figure>
-<h4 id="Configure-yarn-site-xml"><a href="#Configure-yarn-site-xml" class="headerlink" title="Configure yarn-site.xml"></a>Configure yarn-site.xml</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">gedit yarn-site.xml</div><div class="line"><span class="comment"># add this code between configuration</span></div><div class="line">&lt;property&gt;</div><div class="line">  &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</div><div class="line">  &lt;value&gt;mapreduce_shuffle&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">&lt;name&gt;yarn.nodemanager.aux-serivces.mapreduce.shuffle.class&lt;/name&gt;</div><div class="line">  &lt;value&gt;org.apache.hadoop.mapred.ShuffleHandler&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">  &lt;name&gt;yarn.resourcemanager.address&lt;/name&gt;</div><div class="line">  &lt;value&gt;master:8032&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">  &lt;name&gt;yarn.resourcemanager.scheduler.address&lt;/name&gt;</div><div class="line">  &lt;value&gt;master:8030&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">&lt;name&gt;yarn.resourcemanager.resource-tracker.address&lt;/name&gt;</div><div class="line">  &lt;value&gt;master:8031&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">  &lt;name&gt;yarn.resourcemanager.admin.address&lt;/name&gt;</div><div class="line">  &lt;value&gt;master:8033&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div><div class="line">&lt;property&gt;</div><div class="line">  &lt;name&gt;yarn.resourcemanager.webapp.address&lt;/name&gt;</div><div class="line">  &lt;value&gt;master:8088&lt;/value&gt;</div><div class="line">&lt;/property&gt;</div></pre></td></tr></table></figure>
-<h4 id="Configure-master"><a href="#Configure-master" class="headerlink" title="Configure master"></a>Configure master</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">gedit master</div><div class="line"><span class="comment">#add this code</span></div><div class="line">master</div></pre></td></tr></table></figure>
-<h4 id="Configure-slaves"><a href="#Configure-slaves" class="headerlink" title="Configure slaves"></a>Configure slaves</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">gedit slaves</div><div class="line">#add this code</div><div class="line">master</div><div class="line">slave1</div><div class="line">slave2</div></pre></td></tr></table></figure>
-<h3 id="Copy-configured-files-to-slaves"><a href="#Copy-configured-files-to-slaves" class="headerlink" title="Copy configured files to slaves"></a>Copy configured files to slaves</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd</div><div class="line">cd hadoop</div><div class="line">scp -r hadoop-2.6.4 slave1:~/hadoop</div><div class="line">scp -r hadoop-2.6.4 slave2:~/hadoop</div></pre></td></tr></table></figure>
-<h3 id="Start-cluster"><a href="#Start-cluster" class="headerlink" title="Start cluster"></a>Start cluster</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd</div><div class="line">cd hadoop/hadoop-2.6.4</div><div class="line">bin/hdfs namenode -format     # format namenode</div><div class="line">sbin/start-all.sh</div></pre></td></tr></table></figure>
-<h3 id="Check-cluster"><a href="#Check-cluster" class="headerlink" title="Check cluster"></a>Check cluster</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jps   # maybe need install</div></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-<!-- Table of Contents -->
-
-  
-
-
-</section>
-        
-      </div>
-      
-        <div align="center" style="margin-top: 30px;"><hr class="hr" style="margin:0px; height:3px;"></div>
-      
-      <footer id="footer">
-  
-
-  <div class="container">
-      	<div class="row">
-	      <p> Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/iTimeTraveler/hexo-theme-hiker" target="_blank">Hexo-theme-hiker</a> </p>
-	      <p id="copyRightEn">Copyright &copy; 2013 - 2017 Knowledge Has NO Limit All Rights Reserved.</p>
-	      
-	      
-    		<p class="busuanzi_uv">
-				UV : <span id="busuanzi_value_site_uv"></span> |  
-				PV : <span id="busuanzi_value_site_pv"></span>
-		    </p>
-  		   
-		</div>
-
-		
-  </div>
-</footer>
-
-
-<!-- min height -->
-
-<script>
-    var wrapdiv = document.getElementById("wrap");
-    var contentdiv = document.getElementById("content");
-    var allheader = document.getElementById("allheader");
-
-    wrapdiv.style.minHeight = document.body.offsetHeight + "px";
-    if (allheader != null) {
-      contentdiv.style.minHeight = document.body.offsetHeight - allheader.offsetHeight - document.getElementById("footer").offsetHeight + "px";
-    } else {
-      contentdiv.style.minHeight = document.body.offsetHeight - document.getElementById("footer").offsetHeight + "px";
-    }
-</script>
-    </div>
-    <!-- <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-    <a href="/categories" class="mobile-nav-link">Categories</a>
-  
-    <a href="/tags" class="mobile-nav-link">Tags</a>
-  
-    <a href="/about" class="mobile-nav-link">About</a>
-  
-</nav> -->
-    
-
-<!-- mathjax config similar to math.stackexchange -->
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
-  });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      }
-    });
-</script>
-
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-
-<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/scripts.js"></script>
-
-
-  <script src="/js/home.js"></script>
-
-
-
-
-
-
-
-
-
-
-	<div style="display: none;">
-    <script src="https://s95.cnzz.com/z_stat.php?id=1260716016&web_id=1260716016" language="JavaScript"></script>
-  </div>
-
-
-
-	<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
-	</script>
-
-
-
-
-
-
-  </div>
-
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title" id="myModalLabel">设置</h2>
-      </div>
-      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
-      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
-
-
-      <div class="modal-body">
-          <div style="margin:6px;">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" onclick="javascript:setFontSize();" aria-expanded="true" aria-controls="collapseOne">
-              正文字号大小
-            </a>
-          </div>
-          <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-          <div class="panel-body">
-            您已调整页面字体大小
-          </div>
-        </div>
-      
-
-
-          <div style="margin:6px;">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" onclick="javascript:setBackground();" aria-expanded="true" aria-controls="collapseTwo">
-              夜间护眼模式
-            </a>
-        </div>
-          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-          <div class="panel-body">
-            夜间模式已经开启，再次单击按钮即可关闭 
-          </div>
-        </div>
-
-        <div>
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;关 于&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-        </div>
-         <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-          <div class="panel-body">
-            Knowledge Has NO Limit
-          </div>
-          <div class="panel-body">
-            Copyright © 2017 Chern Tau All Rights Reserved.
-          </div>
-        </div>
-      </div>
-
-
-      <hr style="margin-top:0px; margin-bottom:0px; width:80%; border-top: 1px solid #000;">
-      <hr style="margin-top:2px; margin-bottom:0px; width:80%; border-top: 3px solid #000;">
-      <div class="modal-footer">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-      </div>
-    </div>
-  </div>
 </div>
-  
-  <a id="rocket" href="#top" class=""></a>
-  <script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
-  
-</body>
+        <div class="container">
+            <main class="main index-page">
+    
+    
+    
+        <article class="index-post">
+            <a class="content-show-full" href = "/2017/08/08/Web crawling CSI 300 index using Python/" >
+                    <h2 class="abstract-title">
+                        
+                        <span>Web crawling CSI 300 index using Python</span>
+                    </h2>
+                <div class="abstract-content">
+                    Simulating browser loginYou must make sure that you have installed firefox browser.
+123456789from selenium import webdriverfrom selenium.webdriver.common.keys import Keysimport timeimport pandas as pdimport reimport numpy as npfrom bs4 import BeautifulSoupdriver = webdriver.Firefox()
+Finding the ...
+                </div>
+            </a>
+            <div class="abstract-post-meta">
+                <!-- tags  -->
+                
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer"></span><span class="abstract-time">2017/08/08</span>
+                </div>
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="content-show-full" href = "/2017/08/07/Install-R-and-RStudio-in-Ubuntu/" >
+                    <h2 class="abstract-title">
+                        
+                        <span>Install R and RStudio in Ubuntu</span>
+                    </h2>
+                <div class="abstract-content">
+                    Install RAdd Mirror source12sudo gedit /etc/apt/sources.listdeb http://cran.rstudio.com/bin/linux/ubuntu trusty/  # Add the code in the end of sources.list
+Run command of downloading public key12sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 51716619E084DAB9sudo apt-get update   # ...
+                </div>
+            </a>
+            <div class="abstract-post-meta">
+                <!-- tags  -->
+                
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer"></span><span class="abstract-time">2017/08/07</span>
+                </div>
+            </div>
+        </article>
+    
+    
+    
+        <article class="index-post">
+            <a class="content-show-full" href = "/2017/08/07/Install Hadoop on Ubuntu/" >
+                    <h2 class="abstract-title">
+                        
+                        <span>Install Hadoop on Ubuntu</span>
+                    </h2>
+                <div class="abstract-content">
+                    Install JDKVisit http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html and download jre-8u121-linux-x64.tar.gz file to Home.
+Open terminal, get root and create new folder on the home1234sudo passwd root # set root passwordsu      # get rootgedit /etc/sudoers  # add c...
+                </div>
+            </a>
+            <div class="abstract-post-meta">
+                <!-- tags  -->
+                
+                <!-- date  -->
+                <div class="abstract-date">
+                    <span class="abstract-calander iconfont-archer"></span><span class="abstract-time">2017/08/07</span>
+                </div>
+            </div>
+        </article>
+    
+    <!-- paginator  -->
+    
+</main>
+            <!-- profile -->
+            
+            <div class="profile">
+    <img class="profile-avatar" src= /avatar/kumamon.jpg >
+    <div class="profile-name">fi3ework</div>
+    
+    <div class="profile-signature">
+        witness me
+    </div>
+    
+    
+    <div class="profile-social">
+        
+    
+        
+            
+                <a href="emailto:12345@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/fi3ework" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+    
+
+    </div>
+    
+    
+        <div class="friends">
+            <div>FRIENDS</div>
+            
+                <span>
+                    <a href= //www.baidu.com target="_black">friendA</a>
+                </span>
+            
+                <span>
+                    <a href= //www.google.com target="_black">friendB</a>
+                </span>
+            
+        </div>
+    
+    
+        <div class="about-me">
+            <div>
+                <a href = "/about" >ABOUT ME</a>
+            </div>
+        </div>
+    
+</div>
+            
+        </div>
+        <footer class="footer">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="emailto:12345@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/fi3ework" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span>
+        <span
+            id="theme-info">Theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+</footer>
+    </div>
+    <div class="back-top">&#xe639;</div>
+    <div class="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-category">
+            <span class="sidebar-archive-link"><span class="iconfont-archer">&#xe67d;</span>Archive</span>
+            <span class="sidebar-tags-link"><span class="iconfont-archer">&#xe610;</span>Tag</span>
+        </div>
+    </div>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-archive">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 3 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/08</span><a class="archive-post-title" href= "/2017/08/08/Web crawling CSI 300 index using Python/" >Web crawling CSI 300 index using Python</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2017/08/07/Install Hadoop on Ubuntu/" >Install Hadoop on Ubuntu</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2017/08/07/Install-R-and-RStudio-in-Ubuntu/" >Install R and RStudio in Ubuntu</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-tags">
+    <div class="sidebar-tags-name">
+    
+    </div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #888; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: false
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tag-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var jsInfo = {
+        root: '/'
+    }
+</script>
+    <!-- 不蒜子  -->
+    
+    <!-- CNZZ统计  -->
+    
+    </div>
+    </body>
 </html>
+
+
