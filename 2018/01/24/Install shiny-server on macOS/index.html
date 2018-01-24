@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" >
+    <title>
+        
+        Chern&#39;s Studio
+        
+    </title>
+    <link rel="icon" href= /assests/favicon.ico>
+    <!-- 提前加载place holder  -->
+    <style>
+        @font-face {
+            font-family: 'Oswald-Regular';
+            src: url('/font/Oswald-Regular.ttf');
+        }
+        @font-face {
+            font-family: 'Source Sans Pro';
+            src: url('/font/Source Sans Pro.woff'),
+            url('/font/Source Sans Pro.woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+        @font-face {
+            font-family: 'Source Code Pro';
+            src: url('/font/SourceCodePro-Regular.ttf.woff'),
+            url('/font/SourceCodePro-Regular.ttf.woff2');
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        
+        .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0px;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2s ease-out 0s 1;
+        }
+        @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        99% {
+            transform: translate3d(0, 0, 0);
+        }
+        99.1% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(-226px, 0, 0);
+        }
+    }
+    </style>
+    <link rel="stylesheet" href = "/css/style.css?v=20170912" />
+    <script src="//cdn.staticfile.org/jquery/3.2.1/jquery.min.js" defer></script>
+    
+    <script src="/scripts/main.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+</head>
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Chern&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name"></a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>Chern's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-img" style="background-image: url(http://oumn0o088.bkt.clouddn.com/post-bg.jpg)"></div>
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            [Untitled Post]
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+        </p>
+        <!-- 404 -->
+        
+        <!-- 文章页meta -->
+        
+            <!-- 文章页标签  -->
+            
+            <div class="post-intro-meta">
+                <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                <span class="post-intro-time">2018/01/24</span>
+            </div>
+        
+    </div>
+</div>
+        <div class="container">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="Install-shiny-server-on-MacOS"><a href="#Install-shiny-server-on-MacOS" class="headerlink" title="Install shiny-server on MacOS"></a>Install shiny-server on MacOS</h1><h2 id="Step-1"><a href="#Step-1" class="headerlink" title="Step 1:"></a>Step 1:</h2><h3 id="1-Install-homebrew"><a href="#1-Install-homebrew" class="headerlink" title="1. Install homebrew"></a>1. Install homebrew</h3><p>input the code in terminal</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</div></pre></td></tr></table></figure>
+<h3 id="2-Intsall-essential-software"><a href="#2-Intsall-essential-software" class="headerlink" title="2. Intsall essential software"></a>2. Intsall essential software</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">brew intsall cmake</div><div class="line">brew install g++</div><div class="line">brew install gcc</div><div class="line">brew install git</div></pre></td></tr></table></figure>
+<h2 id="Step-2"><a href="#Step-2" class="headerlink" title="Step 2:"></a>Step 2:</h2><h3 id="1-Input-the-following-codes-in-terminal"><a href="#1-Input-the-following-codes-in-terminal" class="headerlink" title="1. Input the following codes in terminal"></a>1. Input the following codes in terminal</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># Clone the repository from GitHub</div><div class="line">git clone https://github.com/nathanweeks/shiny-server.git</div><div class="line"></div><div class="line"># Get into a temporary directory in which we&apos;ll build the project</div><div class="line">cd shiny-server</div><div class="line">mkdir tmp</div><div class="line">cd tmp</div><div class="line"></div><div class="line"># Add the bin directory to the path so we can reference node</div><div class="line">DIR=`pwd`</div><div class="line">PATH=$DIR/../bin:$PATH</div><div class="line"></div><div class="line"># See the &quot;Python&quot; section below if your default python version is not 2.6 or 2.7. </div><div class="line">PYTHON=`which python`</div><div class="line"></div><div class="line"># Check the version of Python. If it&apos;s not 2.6.x or 2.7.x, see the Python section below.</div><div class="line">$PYTHON --version</div></pre></td></tr></table></figure>
+<h3 id="2-Replace-the-launcher-cc"><a href="#2-Replace-the-launcher-cc" class="headerlink" title="2. Replace the launcher.cc"></a>2. Replace the <code>launcher.cc</code></h3><ul>
+<li>The current launcher.cc source file must be edited to use the proc_pidpath() function on macOS instead of Linux proc (see <a href="https://github.com/nathanweeks/shiny-server/blob/d5240ef6d795dafc89c74a49d6f14d7fe0509541/src/launcher.cc" target="_blank" rel="external">this thread</a>). Use this version from Nathan Weeks instead. After replacing the file, you can proceed with cmake and all subsequent installation steps.</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># Use cmake to prepare the make step. Modify the &quot;--DCMAKE_INSTALL_PREFIX&quot;</div><div class="line"># if you wish the install the software at a different location.</div><div class="line">cmake -DCMAKE_INSTALL_PREFIX=/usr/local/var -DPYTHON=&quot;$PYTHON&quot; ../</div><div class="line"># Get an error here? Check the &quot;How do I set the cmake Python version?&quot; question below</div><div class="line"></div><div class="line"># Recompile the npm modules included in the project</div><div class="line">make</div><div class="line">mkdir ../build</div></pre></td></tr></table></figure>
+<ul>
+<li>Before execute the following codes,it is necessary to replace     <code>package.json</code> (see <a href="https://github.com/rstudio/shiny-server/blob/master/package.json" target="_blank" rel="external">this thread</a>)</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(cd .. &amp;&amp; ./bin/npm --python=&quot;$PYTHON&quot; install)</div><div class="line">(cd .. &amp;&amp; ./bin/node ./ext/node/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js --python=&quot;$PYTHON&quot; rebuild)</div><div class="line"></div><div class="line"># Install the software at the predefined location</div><div class="line">sudo make install</div></pre></td></tr></table></figure>
+<h3 id="Step-3"><a href="#Step-3" class="headerlink" title="Step 3:"></a>Step 3:</h3><h2 id="1-Place-a-shortcut-to-the-shiny-server-in-usr-bin"><a href="#1-Place-a-shortcut-to-the-shiny-server-in-usr-bin" class="headerlink" title="1. Place a shortcut to the shiny-server in /usr/bin"></a>1. Place a shortcut to the shiny-server in <code>/usr/bin</code></h2><ul>
+<li>With macOS and later you have to disable System Integrity Protection (SIP) first. </li>
+<li>Do this by rebooting your mac into Recovery Mode by restarting and holding down Command+R until the logo appears.</li>
+<li>Open a terminal from the Utilities menu and type “csrutil disable”, reboot and then execute the command below. </li>
+<li>Don’t forget to turn on SIP again immediately after, using the same procedure, but now with “csrutil enable” in the terminal</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo ln -s /usr/local/var/shiny-server/bin/shiny-server /usr/bin/shiny-server</div></pre></td></tr></table></figure>
+<h2 id="2-Create-the-shiny-user"><a href="#2-Create-the-shiny-user" class="headerlink" title="2. Create the shiny user"></a>2. Create the shiny user</h2><ul>
+<li>Create the shiny user that the server will run under</li>
+<li>The instructions call for <code>useradd</code> but that doesn’t exist in macOS, so we will have to manually do it with <code>dscl</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">sudo dscl . -create /Users/shiny</div><div class="line">sudo dscl . -create /Users/shiny Password &quot;shiny&quot;</div><div class="line">sudo dscl . -create /Users/shiny UserShell /bin/sh</div><div class="line">sudo dscl . -create /Users/shiny Realname &quot;Shiny Server&quot;</div><div class="line">sudo dscl . -create /Users/shiny PrimaryGroupID &quot;80&quot;</div><div class="line">sudo dscl . -create /Users/shiny UniqueID &quot;502&quot;</div><div class="line">sudo dscl . -create /Users/shiny NFSHomeDirectory &quot;/Users/shiny&quot;</div></pre></td></tr></table></figure>
+<ul>
+<li><p>It may be necessary to go into System Preferences <code>/Users &amp; Groups/ GUI</code> and change the password for the shiny user. You must be able to <code>su</code> to the shiny user before continuing.</p>
+</li>
+<li><p>Create Log, config and application directories</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sudo mkdir -p /var/log/shiny-server</div><div class="line">sudo mkdir -p /srv/shiny-server    # This is the applications directory, all apps go here</div><div class="line">sudo mkdir -p /var/lib/shiny-server</div><div class="line">sudo chown shiny /var/log/shiny-server</div><div class="line">sudo mkdir -p /etc/shiny-server</div></pre></td></tr></table></figure>
+<ul>
+<li><p>Replace the <a href="https://github.com/rstudio/shiny-server/blob/master/config/default.config" target="_blank" rel="external">default.config</a> to <code>/usr/local/var/shiny-server/config/default.config</code></p>
+</li>
+<li><p>Test the server. At this point you should be able to start the server and serve an app if you put one in the application directory</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">sudo su shiny -c shiny-server</div><div class="line">[2014-02-19 10:03:45.125] [INFO] shiny-server - Shiny Server v1.  1.  0.0 (Node.js v0.10.21)</div><div class="line">[2014-02-19 10:03:45.128] [INFO] shiny-server - Using config file &quot;/usr/local/var/shiny-server/config/default.config&quot;</div><div class="line">[2014-02-19 10:03:45.180] [INFO] shiny-server - Starting listener on 0.0.0.0:3838  # Access the server on port 3838</div></pre></td></tr></table></figure>
+<ul>
+<li>Input <code>0.0.0.0:3838</code> in Browser</li>
+</ul>
+<h2 id="Step-4"><a href="#Step-4" class="headerlink" title="Step 4:"></a>Step 4:</h2><h3 id="1-Replace-the-node-modules"><a href="#1-Replace-the-node-modules" class="headerlink" title="1. Replace the node_modules"></a>1. Replace the <code>node_modules</code></h3><ul>
+<li><p>If the browser page some is showing some error like <code>TyperError ....</code>, the <code>http-proxy</code> in <code>node_modules</code> was not incomplete. So, it is must be replaced as new <a href="https://github.com/ChernTau/shiny-server/tree/master/node_modules" target="_blank" rel="external">node_modules</a></p>
+</li>
+<li><p>If the browser is showing ‘Page NOT Found’,copy <a href="https://github.com/ChernTau/shiny-server/tree/master/samples" target="_blank" rel="external">index.html</a> in <code>/srv/shiny-server</code></p>
+</li>
+</ul>
+<h2 id="Step-5"><a href="#Step-5" class="headerlink" title="Step 5:"></a>Step 5:</h2><h3 id="1-Make-the-Shiny-Server-Start-Automatically"><a href="#1-Make-the-Shiny-Server-Start-Automatically" class="headerlink" title="1. Make the Shiny Server Start Automatically"></a>1. Make the Shiny Server Start Automatically</h3><ul>
+<li>Create a plist file in <code>/Library/LaunchDaemons</code> called <code>com.xoma.shiny-server.plist</code> that looks like this</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;   </div><div class="line">&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;   </div><div class="line">&lt;plist version=&quot;1.0&quot;&gt;   </div><div class="line">&lt;dict&gt;   </div><div class="line">  &lt;key&gt;Disabled&lt;/key&gt;   </div><div class="line">  &lt;true/&gt;   </div><div class="line">  &lt;key&gt;EnvironmentVariables&lt;/key&gt;   </div><div class="line">  &lt;dict&gt;   </div><div class="line">  	&lt;key&gt;PATH&lt;/key&gt;   </div><div class="line">  	&lt;string&gt;/usr/local/bin/&lt;/string&gt;   </div><div class="line">  &lt;/dict&gt;   </div><div class="line">  &lt;key&gt;GroupName&lt;/key&gt;   </div><div class="line">  &lt;string&gt;admin&lt;/string&gt;   </div><div class="line">  &lt;key&gt;KeepAlive&lt;/key&gt;   </div><div class="line">  &lt;true/&gt;   </div><div class="line">  &lt;key&gt;Label&lt;/key&gt;   </div><div class="line">  &lt;string&gt;com.xoma.shiny-server&lt;/string&gt;   </div><div class="line">  &lt;key&gt;Program&lt;/key&gt;   </div><div class="line">  &lt;string&gt;/usr/bin/shiny-server&lt;/string&gt;   </div><div class="line">  &lt;key&gt;RunAtLoad&lt;/key&gt;   </div><div class="line">  &lt;true/&gt;   </div><div class="line">  &lt;key&gt;UserName&lt;/key&gt;   </div><div class="line">  &lt;string&gt;shiny&lt;/string&gt;   </div><div class="line">  &lt;key&gt;WorkingDirectory&lt;/key&gt;   </div><div class="line">  &lt;string&gt;/usr/local/var/shiny-server&lt;/string&gt;   </div><div class="line">&lt;/dict&gt;   </div><div class="line">&lt;/plist&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>Start the server with </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo launchctl load -w /Library/LaunchDaemons/com.xoma.shiny-server.plist</div></pre></td></tr></table></figure>
+
+    </article>
+    <!-- 前后页  -->
+    <ul class="post-pager">
+        
+        
+            <li class="previous">
+                <a href= "/2017/10/01/Hello/" title= Hello >
+                    <span>Previous Post</span>
+                    <span>Hello</span>
+                </a>
+            </li>
+        
+    </ul>
+    <!-- 来必力City版安装代码 -->
+
+    
+
+<!-- City版安装代码已完成 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="emailto:12345@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/fi3ework" class="iconfont-archer github" target="_blank" title="github"></a>
+            
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span>
+        <span
+            id="theme-info">Theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+</footer>
+    </div>
+    <div class="back-top">&#xe639;</div>
+    <div class="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-category">
+            <span class="sidebar-archive-link"><span class="iconfont-archer">&#xe67d;</span>Archive</span>
+            <span class="sidebar-tags-link"><span class="iconfont-archer">&#xe610;</span>Tag</span>
+        </div>
+    </div>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-archive">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-archive"> Total : 7 </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> Invalid date </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">Invalid date</span><a class="archive-post-title" href= "/2018/01/24/Install shiny-server on macOS/" >[Untitled Post]</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2017/10/01/Hello/" >Hello</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2017/10/01/Awesome Mac/" >Awesome Mac</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/14</span><a class="archive-post-title" href= "/2017/09/14/I-love-Xumengyue/" >One Day Traveling in Yinxing Lake</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/08</span><a class="archive-post-title" href= "/2017/08/08/Web crawling CSI 300 index using Python/" >Web crawling CSI 300 index using Python</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2017/08/07/Install-R-and-RStudio-in-Ubuntu/" >Install R and RStudio in Ubuntu</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2017/08/07/Install Hadoop on Ubuntu/" >Install Hadoop on Ubuntu</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-tags">
+    <div class="sidebar-tags-name">
+    
+    </div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #888; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: false
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tag-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var jsInfo = {
+        root: '/'
+    }
+</script>
+    <!-- 不蒜子  -->
+    
+    <!-- CNZZ统计  -->
+    
+    </div>
+    </body>
+</html>
+
+
