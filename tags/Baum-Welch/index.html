@@ -6,7 +6,7 @@
 
 
 <head>
-    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
     <meta name="author" content="Chern Tau">
     <meta name="renderer" content="webkit">
@@ -189,15 +189,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
     <!-- 百度统计  -->
     
-    <!-- 谷歌统计  --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    <!-- 谷歌统计  -->
     
 </head>
 
     
-        <body class="home-body">
     
-    
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="header index-header">
+<header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
@@ -215,34 +213,21 @@
 
 
 
-height:50vh;
-
 >
     
     <!-- 主页  -->
-    
-    
-    <!-- 文章页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            Chern's Studio.
-            <!-- 文章页  -->
-            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
-            
-            
-                it's better to burn out than to fade away
-            
-            <!-- 文章页  -->
             
         </p>
         <!-- 文章页meta -->
@@ -354,41 +339,6 @@ height:50vh;
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2018/05/01/GMM 算法/" >
-            
-                <span>3. GMM 算法</span>
-        </a>
-        <div class="abstract-content">
-            GMM 算法$\S$ 1 $ $  单一多维高斯的参数估计假设一组 $d$ 维度的点， $i=1,2,3\dots n$ ，如果这些点的分布近似椭圆球形，那么我们可以使用高斯密度函数进行刻画：
-
-\mathcal{N}(\boldsymbol{x}\ ;\mu, \Sigma)=\dfrac{1}{ {(2\pi)}^{\frac{d}{2} }\big|\Sigma\big|^{\frac{1}{2} }}e^{-\frac{1}{2}(\boldsymbol{x}-\mu)^T\Sigma^{-1}(\boldsymbol{x}-\mu)}其中： $\mu$ 为中心点，$\Sigma...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/05/01</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "EM">EM</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "高斯分布">高斯分布</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "聚类">聚类</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
         <a class="abstract-title" href = "/2018/04/01/2. Baum-Welch 算法/" >
             
                 <span>2. Baum-Welch 算法</span>
@@ -428,293 +378,10 @@ $\pi$ 表示初始状...
         </div>
     </article>
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/03/01/1. EM 算法/" >
-            
-                <span>1.EM 算法</span>
-        </a>
-        <div class="abstract-content">
-            EM 算法给定的训练样本是 $\{x^{(1)}, x^{(2)},\dots,x^{(m)}\}$ ，样例间独立，我们想找到每个样例隐含的类别 $z$ ，能使得 $p(x,z)$ 最大。 $p(x,z)$ 的最大似然估计如下：
-
-\begin{align*}
-l(\theta)&= \sum_{i=1}^{m}\log p(x;\theta)\\
-&=\sum_{i=1}^{m}\log \sum_z p(x,z;\theta)
-\end{align*}
-第一步是对极大似然取对数
-
-第二步是对每个样例的每个可能类别 $z$ 求联合分布概率和。但是直接求 $\theta$ 一般比较困难，...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/01</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "EM">EM</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "机器学习">机器学习</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Jensen 不等式">Jensen 不等式</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2018/01/24/Install shiny-server on macOS/" >
-            
-                <span>Install shiny-server on MacOS</span>
-        </a>
-        <div class="abstract-content">
-            Install shiny-server on MacOSStep 1:1. Install homebrewinput the code in terminal
-1/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
-2. Intsall essential software1234brew intsall cmakebrew install g++brew install gccbrew install git
-Step ...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/01/24</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2017/10/01/Awesome Mac/" >
-            
-                <span>Awesome Mac</span>
-        </a>
-        <div class="abstract-content">
-            Awesome MacContents
-Editors and IDE
-Development Tools
-Test Tools
-Command Line Tools
-Version Control Systems
-Databases
-Design and Product
-Virtual Machines
-Communication
-Data Recovery Tools
-Audio and Video Tools
-Reading and Writing Tools
-Ebooks
-FTP Clients
-Frameworks For Hybrid Applications
-Downloa...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/10/01</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2017/09/14/I-love-Xumengyue/" >
-            
-                <span>One Day Traveling in Yinxing Lake</span>
-        </a>
-        <div class="abstract-content">
-            One Day Traveling in Yinxing Lake
-
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/09/14</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "嘿嘿">嘿嘿</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2017/08/08/Web crawling CSI 300 index using Python/" >
-            
-                <span>Web crawling CSI 300 index using Python</span>
-        </a>
-        <div class="abstract-content">
-            Simulating browser loginYou must make sure that you have installed firefox browser.
-123456789from selenium import webdriverfrom selenium.webdriver.common.keys import Keysimport timeimport pandas as pdimport reimport numpy as npfrom bs4 import BeautifulSoupdriver = webdriver.Firefox()
-Finding the ...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/08/08</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2017/08/07/Install Hadoop on Ubuntu/" >
-            
-                <span>Install Hadoop on Ubuntu</span>
-        </a>
-        <div class="abstract-content">
-            Install JDKVisit http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html and download jre-8u121-linux-x64.tar.gz file to Home.
-Open terminal, get root and create new folder on the home1234sudo passwd root # set root passwordsu      # get rootgedit /etc/sudoers  # add c...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/08/07</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2017/08/07/Install-R-and-RStudio-in-Ubuntu/" >
-            
-                <span>Install R and RStudio in Ubuntu</span>
-        </a>
-        <div class="abstract-content">
-            Install RAdd Mirror source12sudo gedit /etc/apt/sources.listdeb http://cran.rstudio.com/bin/linux/ubuntu trusty/  # Add the code in the end of sources.list
-Run command of downloading public key12sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 51716619E084DAB9sudo apt-get update   # ...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/08/07</span>
-            </div>
-            <!-- tags  -->
-            
-        </div>
-    </article>
-    
     <!-- paginator  -->
     
 </main>
             <!-- profile -->
-            
-            <div class="profile">
-    <img class="profile-avatar" src= /avatar/kumamon.jpg >
-    <div class="profile-name">Chern</div>
-    
-    <div class="profile-signature">
-        witness me
-    </div>
-    
-    
-    <div class="profile-social">
-        
-    
-        
-            
-                <a href="mailto:Chern.Tsui@gmail.com" class="iconfont-archer email" title=email ></a>
-            
-        
-    
-        
-            
-                <a href="//github.com/ChernTau" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-            
-                <span class="iconfont-archer wechat" title=wechat>
-                  
-                  <img class="profile-qr" src="/assets/example_qr.jpeg" />
-                </span>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-
-    </div>
-    
-    
-    
-        <div class="about-me">
-            <a href = "/about" >ABOUT ME</a>
-        </div>
-    
-</div>
             
         </div>
         <footer class="footer footer-unloaded">
@@ -1066,7 +733,7 @@ jsonContent:
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 </body>
 </html>

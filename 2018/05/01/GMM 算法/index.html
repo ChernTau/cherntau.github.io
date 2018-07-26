@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="Chern Tau">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Chern Tau">
+    <meta name="keywords" content="Knowledge Has NO Limit | Chern Tau">
+    <meta name="description" content="">
+    <meta name="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>3. GMM 算法 · Chern&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180721 as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= /css/mobile.css?v=20180721 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Chern&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">3. GMM 算法</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>Chern's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            3. GMM 算法
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "EM">EM</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "高斯分布">高斯分布</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "聚类">聚类</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count">2,488</span> / Reading time: <span class="post-count">11 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/05/01</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="GMM-算法"><a href="#GMM-算法" class="headerlink" title="GMM 算法"></a><strong>GMM</strong> 算法</h1><h2 id="S-1-单一多维高斯的参数估计"><a href="#S-1-单一多维高斯的参数估计" class="headerlink" title="$\S$ 1 $ $  单一多维高斯的参数估计"></a>$\S$ 1 $ $  单一多维高斯的参数估计</h2><p>假设一组 $d$ 维度的点， $i=1,2,3\dots n$ ，如果这些点的分布近似椭圆球形，那么我们可以使用高斯密度函数进行刻画：</p>
+<script type="math/tex; mode=display">
+\mathcal{N}(\boldsymbol{x}\ ;\mu, \Sigma)=\dfrac{1}{ {(2\pi)}^{\frac{d}{2} }\big|\Sigma\big|^{\frac{1}{2} }}e^{-\frac{1}{2}(\boldsymbol{x}-\mu)^T\Sigma^{-1}(\boldsymbol{x}-\mu)}</script><p>其中： $\mu$ 为中心点，$\Sigma$ 代表此密度函数的协方差矩阵，这些参数决定了函数形状的中心，宽幅，走向等等。</p>
+<p>注释：协方差矩阵，分别为 $m$ 与 $n$ 个标量元素的列向量随机变量 $X$ 与 $Y$ ，二者对应的期望值分别为 $\mu$ 与 $\nu$，这两个变量之间的协方差定义为 $m×n$ 矩阵</p>
+<p>最佳的用来描述这些点的参数值的计算方法，可以采用概率论中的<strong>极大似然估计（MLE，Maximum Likelihood Estimation）</strong> 来计算。在上述概率密度分布函数下，假设 $X_i$ 为相互独立的事件，那么发生 $X=\{x_1,x_2,x_3\dots x_n\}$ 的概率密度为：</p>
+<script type="math/tex; mode=display">
+\mathcal{p}(\boldsymbol{X}\ ;\mu, \Sigma)=\prod_{i=1}^{n}\mathcal{N}(\boldsymbol{x}_i\ ;\mu, \Sigma)</script><p>由于 $X$ 已经发生，因此我们只需要找出 $\mu$ 和 $\Sigma$ 即可使得 $\mathcal{p}(\boldsymbol{X} ;\mu, \Sigma)$ 有最大值。使用<strong>极大似然估计</strong>，转化到计算 $\mathcal{J}(\mu, \Sigma)$ 的最大值上去</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\mathcal{J}(\mu, \Sigma)&=\log\ \mathcal{p}(\boldsymbol{X}\ ;\mu, \Sigma)\\
+&=\log\ \Bigg[\prod_{i=1}^{n}\mathcal{N}(\boldsymbol{x}_i\ ;\mu, \Sigma)\Bigg]\\
+&=\sum_{i=1}^{n}\log\ \mathcal{N}(\boldsymbol{x}_i\ ;\mu, \Sigma)\\
+&=\sum_{i=1}^{n}\Bigg[-\frac{d}{2}\log(2\pi)-\frac{1}{2}\log\big|\Sigma\big|-\frac{1}{2}(\boldsymbol{x_i}-\mu)^T\Sigma^{-1}(\boldsymbol{x_i}-\mu) \Bigg]\\
+&=-\frac{nd}{2}\log(2\pi)-\frac{n}{2}\log\big|\Sigma\big|-\frac{1}{2}\sum_{i=1}^{n}\Bigg[(\boldsymbol{x_i}-\mu)^T\Sigma^{-1}(\boldsymbol{x_i}-\mu) \Bigg]
+\end{align*}</script><p>想求得 $\mu$ 的最佳结果，有最值问题可知，$\mathcal{J}(\mu, \Sigma)$ 对 $\mu, \Sigma$ 分别计算偏导数即可：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\frac{\partial \mathcal{J}(\mu, \Sigma)}{\partial \mu} &= -\frac{1}{2}\sum_{i=1}^{n}\Bigg[-\big(\Sigma^{-1}+(\Sigma^{-1})^T\big)(\boldsymbol{x_i}-\mu)\Bigg]\\
+&=-\frac{1}{2}\sum_{i=1}^{n}\Bigg[-2\Sigma^{-1}(\boldsymbol{x_i}-\mu)\Bigg]\\
+&=\Sigma^{-1}\Bigg[\sum_{i=1}^{n}\boldsymbol{x_i}-n\mu\Bigg]
+\end{align*}</script><ul>
+<li><p>因为 $\Sigma$ 是协方差矩阵，协方差矩阵都是对称矩阵，所以 $\Sigma^{-1}+(\Sigma^{-1})^T = 2\Sigma^{-1}$</p>
+</li>
+<li><p>$\dfrac{\partial  x^TAx}{\partial x} = (A^T+A)x$ </p>
+</li>
+</ul>
+<p>令 $\dfrac{\partial \mathcal{J}(\mu, \Sigma)}{\partial \mu} = 0$ 可得：$\widehat{\mu}=\dfrac{1}{n}\displaystyle \sum_{i=1}^{n}\boldsymbol{x_i}$</p>
+<p>此时 $\mathcal{J}(\mu, \Sigma)$ 对 $\Sigma$ 求偏导数，引入矩阵的迹</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\sum_{i=1}^{n}\Bigg[(\boldsymbol{x_i}-\mu)^T\Sigma^{-1}(\boldsymbol{x_i}-\mu) \Bigg]&=\sum_{i=1}^{n}trace\Bigg((\boldsymbol{x_i}-\mu)^T\Sigma^{-1}(\boldsymbol{x_i}-\mu) \Bigg)\\
+&=\sum_{i=1}^{n}trace\Bigg(\Sigma^{-1}(\boldsymbol{x_i}-\mu)(\boldsymbol{x_i}-\mu)^T \Bigg)\\
+&=trace\Bigg(\Sigma^{-1}\sum_{i=1}^{n}(\boldsymbol{x_i}-\mu)(\boldsymbol{x_i}-\mu)^T \Bigg)
+\end{align*}</script><ul>
+<li>两个矩阵之积的迹数满足交换率，成为循环不变性。设 $A=[a_{ij}]$ 为 $m\times n$ 阶，$B=[b_{ij}]$ 为 $n\times m$ 阶，则 <script type="math/tex; mode=display">
+trace(AB)=trace(BA)</script></li>
+</ul>
+<p>定义 $p\times p$ 阶样本离差阵为：</p>
+<script type="math/tex; mode=display">
+\displaystyle  S=\frac{1}{n-1}\sum_{k=1}^n(\mathbf{x}_k-\overline{\mathbf{x} })(\mathbf{x}_k-\overline{\mathbf{x} })^T</script><ul>
+<li>$\overline{\mathbf{x} }$ 是 $\mu$ 是最大似然估計</li>
+</ul>
+<p>所以 </p>
+<script type="math/tex; mode=display">
+\mathcal{J}(\mu, \Sigma)=\frac{nd}{2}\log(2\pi)-\frac{n}{2}\log\big|\Sigma\big|-\frac{n-1}{2}trace(\Sigma^{-1}S)</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+\frac{\partial \mathcal{J}(\mu, \Sigma)}{\partial \Sigma} &= 
+-\frac{n}{2}\Sigma^{-1}+\frac{n-1}{2}\Sigma^{-1}S\Sigma^{-1}
+\end{align*}</script><ul>
+<li><p>$\dfrac{\partial \log\big|X\big|}{\partial X}=\dfrac{\partial \log\big|X\big|}{\partial x_{ij} }=\dfrac{1}{\big|X\big|} \dfrac{\partial \big|X\big|}{\partial x_{ij} }=\dfrac{1}{\big|X\big|}(\big|X\big| (X^{-1})^T)_{ij}=(X^{-1})^T$</p>
+</li>
+<li><p>$\dfrac{\partial trace(X^{-1}A)}{\partial X}=-(X^{-1}AX^{-1})^T$</p>
+</li>
+</ul>
+<p>令 $\dfrac{\partial \mathcal{J}(\mu, \Sigma)}{\partial \Sigma}=0$ 可得：</p>
+<script type="math/tex; mode=display">
+\widehat{\Sigma}=\frac{n-1}{n}S=\frac{1}{n}\sum_{k=1}^n(\mathbf{x}_k-\overline{\mathbf{x} })(\mathbf{x}_k-\overline{\mathbf{x} })^T</script><font color="red">**总结**</font>：单一多维高斯的 $\mu$ 和 $\Sigma$ 的参数估计为：
+$$
+\begin{align*}
+\widehat{\mu}&=\dfrac{1}{n}\displaystyle \sum_{i=1}^{n}\boldsymbol{x_i}\\
+\widehat{\Sigma}=\frac{n-1}{n}S&=\frac{1}{n}\sum_{k=1}^n(\mathbf{x}_k-\overline{\mathbf{x} })(\mathbf{x}_k-\overline{\mathbf{x} })^T
+\end{align*}
+$$
+
+
+## $\S$ 1 $\ $ 高斯混合模型
+
+### $\S$ 2.1 $\ $ 混合模型
+**混合模型 (mixture model)** 是一种描述不规则分布的机率模型。 混合模型将多个形式相同的密度函数，称为**混合组件 (mixture component)**，组合成一个密度函数：
+
+$$
+\displaystyle   p(\mathbf{x}\ ;\boldsymbol{\Theta})=\sum_{k=1}^m\alpha_kp(\mathbf{x}\ ;\boldsymbol{\theta}_k)
+$$
+
+其中 $\boldsymbol{\Theta}=\{\alpha_k,\boldsymbol{\theta}_k\}_{k=1}^m$ 表示混合模型的参数集合，$\boldsymbol{\theta}_k$ 是混合组件 $p(\mathbf{x}\ ;\boldsymbol{\theta}_k)$ 的参数，$\alpha_k\ge 0$ 是 $p(\mathbf{x}\ ;\boldsymbol{\theta}_k)$ 的权值，$\displaystyle \sum_{k=1}^m\alpha_k=1$ 。
+
+$$
+\displaystyle  \int p(\mathbf{x}\ ;\boldsymbol{\Theta})d\mathbf{x}=\sum_{k=1}^m\alpha_k\int p(\mathbf{x}\ ;\boldsymbol{\theta}_k)d\mathbf{x}=\sum_{k=1}^m\alpha_k=1
+$$
+
+**高斯混合模型 (Gaussian mixture model)** 可能是最常见的一种混合模型，其中混合组件为高斯密度函数 $p(\mathbf{x}\ ;\boldsymbol{\theta}_k)=\mathcal{N}(\mathbf{x}\ ;\boldsymbol{\mu}_k,\Sigma_k)$ ， $\boldsymbol{\theta}_k=\{\boldsymbol{\mu}_k,\Sigma_k\}$。 给定样本 $\mathcal{X}=\{\mathbf{x}_i\}_{i=1}^n$ ，混合模型参数 $\boldsymbol{\Theta}$ 的似然函数定义为
+
+$$
+\displaystyle   \mathcal{L}(\boldsymbol{\Theta}\ ;\mathcal{X})=p(\mathcal{X}\ ;\boldsymbol{\Theta})=\prod_{i=1}^np(\mathbf{x}_i\ ;\boldsymbol{\Theta})=\prod_{i=1}^n\sum_{k=1}^m\alpha_kp(\mathbf{x}_i\ ;\boldsymbol{\theta}_k)
+$$
+
+计算对数，
+$$
+\displaystyle   \log\mathcal{L}(\boldsymbol{\Theta}\ ;\mathcal{X})=\log\left\{\prod_{i=1}^np(\mathbf{x}_i\ ;\boldsymbol{\Theta})\right\}=\sum_{i=1}^n\log\left\{\sum_{k=1}^m\alpha_kp(\mathbf{x}_i\ ;\boldsymbol{\theta}_k)\right\}
+$$
+
+因为 $\log\mathcal{L}(\boldsymbol{\Theta}\ ;\mathcal{X})$ 包含和的对数，致使最大化的计算变得相当困难，所以引入**EM**算法。
+
+
+
+### $\S$ 2.2 $\ $ **EM**算法
+
+在混合模型中，混合组件 $p(\mathbf{x}\ ;\boldsymbol{\theta}_k)$ 的权重 $\alpha_k$ 既是模型参数，也可视为第 $k$ 个混合组件被选中的概率。 
+
+设想你有 $m$ 个盒子 (混合组件)，每个盒子里面有无穷多颗球 (数据点)，其密度函数为 $p(\mathbf{x}\ ;\boldsymbol{\theta}_k)$。 
+数据样本 $\mathcal{X}=\{\mathbf{x}_i\}_{i=1}^n$ 的产生过程如下：你闭上眼睛随机挑选一个盒子，然后从中抽出一颗球，睁开眼睛后发现你得到数据点 $\mathbf{x}_i$，按此方式重复 $n$ 次。 令 $\mathbf{z}=(z_1,\ldots,z_m)$ 代表选出一个盒子的离散型随机向量，$z_k=1$ 且 $z_j=0$， $j\neq k$，表示第 $k$ 个盒子被选中。 实际上，$\mathbf{z}$ 是无法量测的随机向量，称为**隐藏变量 (hidden variable)**。 
+定义第 $k$ 个混合组件被选中的概率 $p(z_k=1)=\alpha_k$， $k=1,\ldots,m$ 。 隐藏变量 $\mathbf{z}$ 的概率即为：
+$$
+\displaystyle   p(\mathbf{z})=\prod_{k=1}^mp(z_k=1)^{z_k}=\prod_{k=1}^m\alpha_k^{z_k}
+$$
+
+* 举例来说，$\mathbf{z}=(1,0,\ldots,0)$ 表示第一个盒子被选中，发生的概率是 $p(\mathbf{z})=p(z_1=1)^1p(z_2=1)^0\cdots p(z_m=1)^0=p(z_1=1)=\alpha_1$ 
+
+
+按照这个思考模型，每个混合组件可用条件密度函数表示：
+$$
+\displaystyle   p(\mathbf{x}\ |z_k=1)=p(\mathbf{x}\ ;\boldsymbol{\theta}_k),~~~k=1,\ldots,m，
+$$
+或写成
+
+$$
+\displaystyle   p(\mathbf{x}\ |\mathbf{z})=\prod_{k=1}^mp(\mathbf{x}\ |z_k=1)^{z_k}=\prod_{k=1}^mp(\mathbf{x}\ ;\boldsymbol{\theta}_k)^{z_k}
+$$
+
+使用全概率公式，我们可以得到混合模型：
+$$  
+\begin{aligned}  
+p(\mathbf{x}\ ;\boldsymbol{\Theta})&=\sum_{\mathbf{z} }p(\mathbf{x}\ |\mathbf{z})p(\mathbf{z})\\ 
+&=\sum_{k=1}^mp(\mathbf{x}\ |z_k=1)p(z_k=1)\\  
+&=\sum_{k=1}^m\alpha_kp(\mathbf{x}\ ;\boldsymbol{\theta}_k)
+\end{aligned}
+$$
+
+<font color="red">如果你知道混合模型参数 $\boldsymbol{\Theta}$，给定一个数据点 $\mathbf{x}$ ，能否推测它来自哪个混合组件？也就是计算后验概率 $p(z_k=1|\ \mathbf{x})$？</font>
+
+<p>使用<strong>贝叶斯公式 (Bayes’ theorem)</strong>，可得：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} 
+r_{k}(\mathbf{x})&=p(z_k=1|\ \mathbf{x})\\ 
+&=\frac{p(\mathbf{x}|\ z_k=1)p(z_k=1)}{p(\mathbf{x})}\\  
+&=\frac{p(\mathbf{x}|\ z_k=1)p(z_k=1)}{\sum_{l=1}^mp(\mathbf{x}|\ z_l=1)p(z_l=1)}\\  
+&=\frac{\alpha_k\,p(\mathbf{x}\ ;\boldsymbol{\theta}_k)}{\sum_{l=1}^m\alpha_l\,p(\mathbf{x}\ ;\boldsymbol{\theta}_l)}
+\end{aligned}</script><p>后验概率 $r_k(\mathbf{x})$ 称为<strong>责任 (responsibility)</strong>，意思是第 $k$ 个混合组件要对给定的数据点 $\mathbf{x}$ 的生成担负多少责任。 </p>
+<p>$r_k(\mathbf{x})$ 具有归一性，$\displaystyle \sum_{k=1}^mr_k(\mathbf{x})=\sum_{k=1}^mp(z_k=1| \mathbf{x})=1$ 。</p>
+<p>根据前述数据产生的模型，我们要从给定的样本 $\mathcal{X}=\{\mathbf{x}_i\}_{i=1}^n$ 反推每个盒子被选中的概率 $p(z_k=1)=\alpha_k$ ，以及每个盒子里面球的条件密度函数 $p(\mathbf{x}| z_k=1)$ 的参数 $\boldsymbol{\theta}_k$，<strong>EM </strong>算法 是计算混合模型参数的最大似然估计的一个有效方法。则对数似然函数：</p>
+<script type="math/tex; mode=display">
+\displaystyle   \log\mathcal{L}(\boldsymbol{\Theta})=\sum_{i=1}^n\log p(\mathbf{x}_i\ ;\boldsymbol{\Theta})=\sum_{i=1}^n\log\left\{\sum_{k=1}^mp(\mathbf{x}_i|\ z_k=1)p(z_k=1)\right\}</script><p><strong>EM</strong> 算法是一种迭代法。 假设 $\boldsymbol{\Theta}=\{\alpha_k,\boldsymbol{\theta}_k\}_{k=1}^m$ 表示目前所估计出的旧混合模型参数，$\boldsymbol{\Theta}’=\{\alpha’_k,\boldsymbol{\theta}’_k\}_{k=1}^m$ 表示尚待决定的新参数。 $\mathcal{L}=\mathcal{L}(\boldsymbol{\Theta})$ 代表旧模型的似然函数，$p’(\mathbf{x}_i)=p(\mathbf{x}_i|\boldsymbol{\Theta}’)$ 代表新模型的密度函数。 考虑两组模型参数的对数似然函数改变量，并代入新混合模型的密度函数表达式，</p>
+<script type="math/tex; mode=display">
+\begin{aligned}  
+\log\mathcal{L}'-\log\mathcal{L}&=\sum_{i=1}^n\log\frac{p'(\mathbf{x}_i)}{p(\mathbf{x}_i)}\\  &=\sum_{i=1}^n\log\left\{\frac{\sum_{k=1}^mp'(\mathbf{x}_i|\ z_k=1)p'(z_k=1)}{p(\mathbf{x}_i)}\right\}\\  &=\sum_{i=1}^n\log\left\{\sum_{k=1}^mp(z_k=1|\ \mathbf{x}_i)\frac{p'(\mathbf{x}_i|\ z_k=1)p'(z_k=1)}{p(\mathbf{x}_i)p(z_k=1|\ \mathbf{x}_i)}\right\}
+\end{aligned}</script><p>使用 <strong>Jensen</strong> 不等式，（具体参见 <strong>EM</strong> 算法），可得：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\log\mathcal{L}'-\log\mathcal{L}&\ge \sum_{i=1}^n\sum_{k=1}^mp(z_k=1|\ \mathbf{x}_i)\log\left\{\frac{p'(\mathbf{x}_i|\ z_k=1)p'(z_k=1)}{p(\mathbf{x}_i)p(z_k=1|\ \mathbf{x}_i)}\right\}\\  
+&=\sum_{i=1}^n\sum_{k=1}^mp(z_k=1|\ \mathbf{x}_i)\log\left\{p'(\mathbf{x}_i|\ z_k=1)p'(z_k=1)\right\}\\  &~~~-\sum_{i=1}^n\sum_{k=1}^mp(z_k=1|\ \mathbf{x}_i)\log\left\{p(\mathbf{x}_i)p(z_k=1|\ \mathbf{x}_i)\right\}
+\end{aligned}</script><p>其中不等式右边的第二项由旧模型参数 $\boldsymbol{\Theta}$ 固定，可视为一个常数 $c$ (包含负号)。 我们在乎的是与新模型参数 $\boldsymbol{\Theta}’$ 有关的第一项，于是定义</p>
+<script type="math/tex; mode=display">
+\begin{aligned}  
+Q(\boldsymbol{\Theta}',\boldsymbol{\Theta})&=\sum_{i=1}^n\sum_{k=1}^mp(z_k=1|\mathbf{x}_i)\log\left\{p'(\mathbf{x}_i|z_k=1)p'(z_k=1)\right\}\\  
+&=\sum_{i=1}^n\sum_{k=1}^mp(z_k=1|\mathbf{x}_i)\log\left\{\alpha'_k p(\mathbf{x}_i\ ;\boldsymbol{\theta}'_k)\right\}
+\end{aligned}</script><ul>
+<li>原本我们希望找到新参数 $\boldsymbol{\Theta}’$ 最大化 $\log\mathcal{L}’$，因为 $\log\mathcal{L}’\ge \log\mathcal{L}+Q+c$ ，也就是说 $\log\mathcal{L}+Q+c$ 是 $\log\mathcal{L}’$ 的下界。 </li>
+<li>欲使 $\log\mathcal{L}’$ 有最大的下界，你可以设法找到 $\boldsymbol{\Theta}’$ 使最大化目标函数 $Q$，这比直接最大化 $\log\mathcal{L}’$ 容易得多，最大期望算法称之为 <strong>M─步骤</strong> (最大─步骤)。</li>
+<li>最大化 $Q$ 必然使得 $\log\mathcal{L}’$ 增大，除非 $\log\mathcal{L}’$ 已经抵达<strong>局部最大值 (local maximum)</strong>。 另外，所谓的 <strong>E─步骤</strong> (期望─步骤) 是指确立目标函数 $Q(\boldsymbol{\Theta}’,\boldsymbol{\Theta})$，也就是用旧模型参数 $\boldsymbol{\Theta}$ 计算后验概率 $r_{ik}=r_k(\mathbf{x}_i)=p(z_k=1| \mathbf{x}_i)，i=1,\ldots,n，k=1,\ldots,m$。</li>
+</ul>
+<p>我们将估计混合模型参数的 <strong>EM</strong> 算法整理于下：<br>初始化 $\boldsymbol{\Theta}^0=\{\alpha_k^0,\boldsymbol{\theta}^0_k\}_{k=1}^m$，设 $t=0$。 重复<strong>步骤1</strong>与<strong>2</strong>直到满足收敛条件即停止 (比如 $\log\mathcal{L}$ 不再增大)。</p>
+<ul>
+<li>E─步骤. 使用 $\boldsymbol{\Theta}^t=\{\alpha_k^t,\boldsymbol{\theta}^t_k\}_{k=1}^m$ 定义 $Q(\boldsymbol{\Theta}’,\boldsymbol{\Theta}^t)$。 具体地说，计算每个样本的后验概率，对于 $i=1,\ldots,n，k=1,\ldots,m$：<script type="math/tex; mode=display">
+r^t_{ik}=\frac{\alpha^t_k\,p(\mathbf{x}_i\ ;\boldsymbol{\theta}^t_k)}{\sum_{l=1}^m\alpha^t_l\,p(\mathbf{x}_i\ ;\boldsymbol{\theta}^t_l)}</script></li>
+<li>M─步骤. 解这个优化问题：<script type="math/tex; mode=display">
+\begin{aligned} 
+\boldsymbol{\Theta}^{t+1}&=\arg\max_{\boldsymbol{\Theta}'}Q(\boldsymbol{\Theta}',\boldsymbol{\Theta}^t)\\  &=\arg\max_{\boldsymbol{\Theta}'}\sum_{i=1}^n\sum_{k=1}^mr^t_{ik}\log\left\{\alpha'_k\,p(\mathbf{x}_i\ ;\boldsymbol{\theta}'_k)\right\}\\  
+&=\arg\max_{\boldsymbol{\Theta}'}\left\{Q_1\left(\{\alpha'_k\},\boldsymbol{\Theta}^t\right)+Q_2\left(\{\boldsymbol{\theta}'_k\},\boldsymbol{\Theta}^t\right)\right\}\\
+&=\arg\max_{\boldsymbol{\Theta}'}\left\{\sum_{i=1}^n\sum_{k=1}^mr^t_{ik}\log\alpha'_k + \sum_{i=1}^n\sum_{k=1}^mr^t_{ik}\log p(\mathbf{x}_i\ ;\boldsymbol{\theta}'_k)\right\}
+\end{aligned}</script></li>
+</ul>
+<p>混合模型参数 $\boldsymbol{\Theta}=\{\alpha_k,\boldsymbol{\theta}_k\}_{k=1}^m$ 区分为两类：</p>
+<ul>
+<li><p>$\boldsymbol{\theta}_k$ 是所采用的混合组件参数</p>
+</li>
+<li><p>权重 $\alpha_k\ge 0$ 还要满足归一条件 $\displaystyle\sum_{k=1}^m\alpha_k=1$ </p>
+</li>
+</ul>
+<p>因此，<strong>M-步骤</strong>可以切割为两个独立的问题：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} 
+\{\alpha^{t+1}_k\}&=\arg\max_{\{\alpha'_k\} }Q_1\left(\{\alpha'_k\},\boldsymbol{\Theta}^t\right)\\  \{\boldsymbol{\theta}^{t+1}_k\}&=\arg\max_{\{\boldsymbol{\theta}'_k\} }Q_2\left(\{\boldsymbol{\theta}'_k\},\boldsymbol{\Theta}^t\right)
+\end{aligned}</script><h3 id="S-2-3-alpha’-k-的参数估计"><a href="#S-2-3-alpha’-k-的参数估计" class="headerlink" title="$\S$ 2.3 $ $ $\alpha’_k$ 的参数估计"></a>$\S$ 2.3 $ $ $\alpha’_k$ 的参数估计</h3><p>底下说明如何利用<strong>拉格朗日乘子法</strong>解出最大化 $Q_1$ 的最佳权重 $\alpha’_k$ ：</p>
+<script type="math/tex; mode=display">
+\begin{array}{ll}  
+\hbox{max} & Q_1\left(\{\alpha'_k\},\boldsymbol{\Theta}^t\right)\\  
+\hbox{s.t.}& \sum_{k=1}^m\alpha'_k=1
+\end{array}</script><p>定义拉格朗日函数</p>
+<script type="math/tex; mode=display">
+L\left(\{\alpha'_k\},\lambda\right)=\sum_{i=1}^n\sum_{k=1}^mr^t_{ik}\log\alpha'_k+\lambda\left(\sum_{k=1}^m\alpha'_k-1\right)</script><p>其中 $\lambda$ 是拉格朗日乘数。 求导可得</p>
+<script type="math/tex; mode=display">
+\displaystyle   \frac{\partial L}{\partial\alpha'_k}=\frac{1}{\alpha'_k}\sum_{i=1}^nr^t_{ik}+\lambda</script><p>设上式等于零，乘以 $\alpha’_k$，并加总所有的 $k$，使用 $\displaystyle\sum_{k=1}^mr^t_{ik}=1$，</p>
+<script type="math/tex; mode=display">
+\displaystyle   \lambda=\sum_{k=1}^m\lambda\alpha'_k=-\sum_{i=1}^n\sum_{k=1}^mr^t_{ik}=-n</script><p>因此，最佳权重为</p>
+<script type="math/tex; mode=display">
+\displaystyle   \alpha'_k=\frac{\sum_{i=1}^nr^t_{ik} }{n}=\frac{n^t_k}{n}，</script><font color="red">这个结果与所采用的模型元件无关。</font>
+
+
+
+<h3 id="S-2-4-boldsymbol-theta-’-k-的参数估计"><a href="#S-2-4-boldsymbol-theta-’-k-的参数估计" class="headerlink" title="$\S$ 2.4 $ $ $\boldsymbol{\theta}’_k$ 的参数估计"></a>$\S$ 2.4 $ $ $\boldsymbol{\theta}’_k$ 的参数估计</h3><script type="math/tex; mode=display">
+\begin{aligned}  
+Q_2(\{\boldsymbol{\mu}'_k,\Sigma'_k\},\boldsymbol{\Theta}^t)  &=\sum_{i=1}^n\sum_{k=1}^mr^t_{ik}\log\mathcal{N}(\mathbf{x}_i\ ;\boldsymbol{\mu}'_k,\Sigma'_k)\\  &=\sum_{i=1}^n\sum_{k=1}^mr^t_{ik}\left(-\frac{d}{2}\log(2\pi)-\frac{1}{2}\log|\Sigma'_k|-\frac{1}{2}(\mathbf{x}_i-\boldsymbol{\mu}'_k)^T(\Sigma'_k)^{-1}(\mathbf{x}_i-\boldsymbol{\mu}'_k)\right)
+\end{aligned}</script><p>计算 $Q_2$ 对 $\boldsymbol{\mu}’_k$ 的偏导数</p>
+<script type="math/tex; mode=display">
+ \frac{\partial Q_2}{\partial \boldsymbol{\mu}'_k}=\sum_{i=1}^nr^t_{ik}(\Sigma'_k)^{-1}(\mathbf{x}_i-\boldsymbol{\mu}'_k)=(\Sigma'_k)^{-1}\sum_{i=1}^nr^t_{ik}(\mathbf{x}_i-\boldsymbol{\mu}'_k)</script><p>设上式为零，左乘 $\Sigma’_k$ ，解得</p>
+<script type="math/tex; mode=display">
+\displaystyle   \boldsymbol{\mu}'_k=\dfrac{\displaystyle \sum_{i=1}^nr^t_{ik}\mathbf{x}_i}{\displaystyle \sum_{i=1}^nr^t_{ik} }=\frac{\displaystyle\sum_{i=1}^nr^t_{ik}\mathbf{x}_i}{n^t_k}</script><p>接着将 $Q_2$ 包含的二次型改写为迹数并使用循环不变性：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}  
+Q_2(\{\boldsymbol{\mu}'_k,\Sigma'_k\},\boldsymbol{\Theta}^t)  &=\sum_{i=1}^n\sum_{k=1}^mr^t_{ik}\left(-\frac{d}{2}\log(2\pi)-\frac{1}{2}\log|\Sigma'_k|-\frac{1}{2}\hbox{trace}\left\{(\mathbf{x}_i-\boldsymbol{\mu}'_k)^T(\Sigma'_k)^{-1}(\mathbf{x}_i-\boldsymbol{\mu}'_k)\right\}\right)\\  &=\sum_{i=1}^n\sum_{k=1}^mr^t_{ik}\left(-\frac{d}{2}\log(2\pi)-\frac{1}{2}\log|\Sigma'_k|-\frac{1}{2}\hbox{trace}\left\{(\Sigma'_k)^{-1}(\mathbf{x}_i-\boldsymbol{\mu}'_k)(\mathbf{x}_i-\boldsymbol{\mu}'_k)^T\right\}\right)
+\end{aligned}</script><p>计算 $Q_2$ 对 $\Sigma’_k$ 的偏导数</p>
+<script type="math/tex; mode=display">
+\frac{\partial Q_2}{\partial \Sigma'_k}=-\frac{1}{2}\sum_{i=1}^nr^t_{ik}\left((\Sigma'_k)^{-1}-(\Sigma'_k)^{-1}(\mathbf{x}_i-\boldsymbol{\mu}'_k)(\mathbf{x}_i-\boldsymbol{\mu}'_k)^T(\Sigma'_k)^{-1}\right)。</script><p>设上式等于零，左右同时乘以 $\Sigma’_k$，解得</p>
+<script type="math/tex; mode=display">
+\Sigma'_k=\frac{\displaystyle\sum_{i=1}^nr^t_{ik}(\mathbf{x}_i-\boldsymbol{\mu}'_k)(\mathbf{x}_i-\boldsymbol{\mu}'_k)^T}{\displaystyle\sum_{i=1}^nr^t_{ik} }=\frac{\displaystyle\sum_{i=1}^nr^t_{ik}(\mathbf{x}_i-\boldsymbol{\mu}'_k)(\mathbf{x}_i-\boldsymbol{\mu}'_k)^T}{n^t_k}</script><p>注：$d\times d$ 阶样本共变异数矩阵 $\Sigma’_k$ 为可逆的 (即正定) 一个充要条件是样本大小 $n$ 不能小于随机向量 $\mathbf{x}$ 的维数 $d$。</p>
+
+    </article>
+    <!-- license  -->
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/04/01/2. Baum-Welch 算法/" title= 2. Baum-Welch 算法 >
+                    <div class="prevTitle">2. Baum-Welch 算法</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC和WAP自适应版-->
+
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:Chern.Tsui@gmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/ChernTau" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/example_qr.jpeg" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GMM-算法"><span class="toc-number">1.</span> <span class="toc-text">GMM 算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#S-1-单一多维高斯的参数估计"><span class="toc-number">1.1.</span> <span class="toc-text">$\S$ 1 $ $  单一多维高斯的参数估计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#S-2-3-alpha’-k-的参数估计"><span class="toc-number">1.1.1.</span> <span class="toc-text">$\S$ 2.3 $ $ $\alpha’_k$ 的参数估计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#S-2-4-boldsymbol-theta-’-k-的参数估计"><span class="toc-number">1.1.2.</span> <span class="toc-text">$\S$ 2.4 $ $ $\boldsymbol{\theta}’_k$ 的参数估计</span></a></li></ol></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 9
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/GMM 算法/" >3. GMM 算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/2. Baum-Welch 算法/" >2. Baum-Welch 算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2018/03/01/1. EM 算法/" >1.EM 算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/24</span><a class="archive-post-title" href= "/2018/01/24/Install shiny-server on macOS/" >Install shiny-server on MacOS</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2017/10/01/Awesome Mac/" >Awesome Mac</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/14</span><a class="archive-post-title" href= "/2017/09/14/I-love-Xumengyue/" >One Day Traveling in Yinxing Lake</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/08</span><a class="archive-post-title" href= "/2017/08/08/Web crawling CSI 300 index using Python/" >Web crawling CSI 300 index using Python</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2017/08/07/Install-R-and-RStudio-in-Ubuntu/" >Install R and RStudio in Ubuntu</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2017/08/07/Install Hadoop on Ubuntu/" >Install Hadoop on Ubuntu</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="Baum-Welch"><span class="iconfont-archer">&#xe606;</span>Baum-Welch</span>
+    
+        <span class="sidebar-tag-name" data-tags="EM"><span class="iconfont-archer">&#xe606;</span>EM</span>
+    
+        <span class="sidebar-tag-name" data-tags="隐马尔可夫"><span class="iconfont-archer">&#xe606;</span>隐马尔可夫</span>
+    
+        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
+    
+        <span class="sidebar-tag-name" data-tags="Jensen 不等式"><span class="iconfont-archer">&#xe606;</span>Jensen 不等式</span>
+    
+        <span class="sidebar-tag-name" data-tags="高斯分布"><span class="iconfont-archer">&#xe606;</span>高斯分布</span>
+    
+        <span class="sidebar-tag-name" data-tags="聚类"><span class="iconfont-archer">&#xe606;</span>聚类</span>
+    
+        <span class="sidebar-tag-name" data-tags="嘿嘿"><span class="iconfont-archer">&#xe606;</span>嘿嘿</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="算法"><span class="iconfont-archer">&#xe60a;</span>算法</span>
+    
+        <span class="sidebar-category-name" data-categories="杂谈"><span class="iconfont-archer">&#xe60a;</span>杂谈</span>
+    
+        <span class="sidebar-category-name" data-categories="哈哈哈"><span class="iconfont-archer">&#xe60a;</span>哈哈哈</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "Chern Tau"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
+
+
