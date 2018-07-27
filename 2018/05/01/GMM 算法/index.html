@@ -261,9 +261,9 @@ height:50vh;
                 
                     <div class= post-intro-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "EM">EM</a>
-    
         <a class="post-tag" href="javascript:void(0);" data-tags = "高斯分布">高斯分布</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "EM">EM</a>
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "聚类">聚类</a>
     
@@ -271,7 +271,7 @@ height:50vh;
                 
                 
                     <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">2,488</span> / Reading time: <span class="post-count">11 min</span></span>
+                        <span>Word count: <span class="post-count">3,877</span> / Reading time: <span class="post-count">19 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -401,221 +401,240 @@ height:50vh;
             <main class="main post-page">
     <article class="article-entry">
         <h1 id="GMM-算法"><a href="#GMM-算法" class="headerlink" title="GMM 算法"></a><strong>GMM</strong> 算法</h1><h2 id="S-1-单一多维高斯的参数估计"><a href="#S-1-单一多维高斯的参数估计" class="headerlink" title="$\S$ 1 $ $  单一多维高斯的参数估计"></a>$\S$ 1 $ $  单一多维高斯的参数估计</h2><p>假设一组 $d$ 维度的点， $i=1,2,3\dots n$ ，如果这些点的分布近似椭圆球形，那么我们可以使用高斯密度函数进行刻画：</p>
-<script type="math/tex; mode=display">
-\mathcal{N}(\boldsymbol{x}\ ;\mu, \Sigma)=\dfrac{1}{ {(2\pi)}^{\frac{d}{2} }\big|\Sigma\big|^{\frac{1}{2} }}e^{-\frac{1}{2}(\boldsymbol{x}-\mu)^T\Sigma^{-1}(\boldsymbol{x}-\mu)}</script><p>其中： $\mu$ 为中心点，$\Sigma$ 代表此密度函数的协方差矩阵，这些参数决定了函数形状的中心，宽幅，走向等等。</p>
+
+$$
+\mathcal{N}(\boldsymbol{x}\ ;\mu, \Sigma)=\dfrac{1}{ {(2\pi)}^{\frac{d}{2} }\big|\Sigma\big|^{\frac{1}{2} }}e^{-\frac{1}{2}(\boldsymbol{x}-\mu)^T\Sigma^{-1}(\boldsymbol{x}-\mu)}
+$$
+
+<p>其中： $\mu$ 为中心点，$\Sigma$ 代表此密度函数的协方差矩阵，这些参数决定了函数形状的中心，宽幅，走向等等。</p>
 <p>注释：协方差矩阵，分别为 $m$ 与 $n$ 个标量元素的列向量随机变量 $X$ 与 $Y$ ，二者对应的期望值分别为 $\mu$ 与 $\nu$，这两个变量之间的协方差定义为 $m×n$ 矩阵</p>
 <p>最佳的用来描述这些点的参数值的计算方法，可以采用概率论中的<strong>极大似然估计（MLE，Maximum Likelihood Estimation）</strong> 来计算。在上述概率密度分布函数下，假设 $X_i$ 为相互独立的事件，那么发生 $X=\{x_1,x_2,x_3\dots x_n\}$ 的概率密度为：</p>
-<script type="math/tex; mode=display">
-\mathcal{p}(\boldsymbol{X}\ ;\mu, \Sigma)=\prod_{i=1}^{n}\mathcal{N}(\boldsymbol{x}_i\ ;\mu, \Sigma)</script><p>由于 $X$ 已经发生，因此我们只需要找出 $\mu$ 和 $\Sigma$ 即可使得 $\mathcal{p}(\boldsymbol{X} ;\mu, \Sigma)$ 有最大值。使用<strong>极大似然估计</strong>，转化到计算 $\mathcal{J}(\mu, \Sigma)$ 的最大值上去</p>
-<script type="math/tex; mode=display">
+
+$$
+\mathcal{p}(\boldsymbol{X}\ ;\mu, \Sigma)=\prod_{i=1}^{n}\mathcal{N}(\boldsymbol{x}_i\ ;\mu, \Sigma)
+$$
+
+<p>由于 $X$ 已经发生，因此我们只需要找出 $\mu$ 和 $\Sigma$ 即可使得  $\mathcal{p}(\boldsymbol{X}\ ;\mu, \Sigma)$  有最大值。使用<strong>极大似然估计</strong>，转化到计算  $\mathcal{J}(\mu, \Sigma)$  的最大值上去</p>
+
+$$
 \begin{align*}
 \mathcal{J}(\mu, \Sigma)&=\log\ \mathcal{p}(\boldsymbol{X}\ ;\mu, \Sigma)\\
 &=\log\ \Bigg[\prod_{i=1}^{n}\mathcal{N}(\boldsymbol{x}_i\ ;\mu, \Sigma)\Bigg]\\
 &=\sum_{i=1}^{n}\log\ \mathcal{N}(\boldsymbol{x}_i\ ;\mu, \Sigma)\\
 &=\sum_{i=1}^{n}\Bigg[-\frac{d}{2}\log(2\pi)-\frac{1}{2}\log\big|\Sigma\big|-\frac{1}{2}(\boldsymbol{x_i}-\mu)^T\Sigma^{-1}(\boldsymbol{x_i}-\mu) \Bigg]\\
 &=-\frac{nd}{2}\log(2\pi)-\frac{n}{2}\log\big|\Sigma\big|-\frac{1}{2}\sum_{i=1}^{n}\Bigg[(\boldsymbol{x_i}-\mu)^T\Sigma^{-1}(\boldsymbol{x_i}-\mu) \Bigg]
-\end{align*}</script><p>想求得 $\mu$ 的最佳结果，有最值问题可知，$\mathcal{J}(\mu, \Sigma)$ 对 $\mu, \Sigma$ 分别计算偏导数即可：</p>
-<script type="math/tex; mode=display">
+\end{align*}
+$$
+
+<p>想求得 $\mu$ 的最佳结果，有最值问题可知， $\mathcal{J}(\mu, \Sigma)$  对 $\mu, \Sigma$ 分别计算偏导数即可：</p>
+
+$$
 \begin{align*}
 \frac{\partial \mathcal{J}(\mu, \Sigma)}{\partial \mu} &= -\frac{1}{2}\sum_{i=1}^{n}\Bigg[-\big(\Sigma^{-1}+(\Sigma^{-1})^T\big)(\boldsymbol{x_i}-\mu)\Bigg]\\
 &=-\frac{1}{2}\sum_{i=1}^{n}\Bigg[-2\Sigma^{-1}(\boldsymbol{x_i}-\mu)\Bigg]\\
 &=\Sigma^{-1}\Bigg[\sum_{i=1}^{n}\boldsymbol{x_i}-n\mu\Bigg]
-\end{align*}</script><ul>
-<li><p>因为 $\Sigma$ 是协方差矩阵，协方差矩阵都是对称矩阵，所以 $\Sigma^{-1}+(\Sigma^{-1})^T = 2\Sigma^{-1}$</p>
-</li>
-<li><p>$\dfrac{\partial  x^TAx}{\partial x} = (A^T+A)x$ </p>
-</li>
+\end{align*}
+$$
+
+<ul>
+<li>因为 $\Sigma$ 是协方差矩阵，协方差矩阵都是对称矩阵，所以 $\Sigma^{-1}+(\Sigma^{-1})^T = 2\Sigma^{-1}$</li>
+<li>$\dfrac{\partial  x^TAx}{\partial x} = (A^T+A)x$</li>
 </ul>
-<p>令 $\dfrac{\partial \mathcal{J}(\mu, \Sigma)}{\partial \mu} = 0$ 可得：$\widehat{\mu}=\dfrac{1}{n}\displaystyle \sum_{i=1}^{n}\boldsymbol{x_i}$</p>
-<p>此时 $\mathcal{J}(\mu, \Sigma)$ 对 $\Sigma$ 求偏导数，引入矩阵的迹</p>
-<script type="math/tex; mode=display">
+<p>令  $\dfrac{\partial \mathcal{J}(\mu, \Sigma)}{\partial \mu} = 0$ 可得：$\widehat{\mu}=\dfrac{1}{n}\displaystyle \sum_{i=1}^{n}\boldsymbol{x_i}$</p>
+<p>此时  $\mathcal{J}(\mu, \Sigma)$ 对 $\Sigma$ 求偏导数，引入矩阵的迹</p>
+
+$$
 \begin{align*}
 \sum_{i=1}^{n}\Bigg[(\boldsymbol{x_i}-\mu)^T\Sigma^{-1}(\boldsymbol{x_i}-\mu) \Bigg]&=\sum_{i=1}^{n}trace\Bigg((\boldsymbol{x_i}-\mu)^T\Sigma^{-1}(\boldsymbol{x_i}-\mu) \Bigg)\\
 &=\sum_{i=1}^{n}trace\Bigg(\Sigma^{-1}(\boldsymbol{x_i}-\mu)(\boldsymbol{x_i}-\mu)^T \Bigg)\\
 &=trace\Bigg(\Sigma^{-1}\sum_{i=1}^{n}(\boldsymbol{x_i}-\mu)(\boldsymbol{x_i}-\mu)^T \Bigg)
-\end{align*}</script><ul>
-<li>两个矩阵之积的迹数满足交换率，成为循环不变性。设 $A=[a_{ij}]$ 为 $m\times n$ 阶，$B=[b_{ij}]$ 为 $n\times m$ 阶，则 <script type="math/tex; mode=display">
-trace(AB)=trace(BA)</script></li>
+\end{align*}
+$$
+
+<ul>
+<li>两个矩阵之积的迹数满足交换率，成为循环不变性。设 $A=[a_{ij}]$ 为 $m\times n$ 阶，$B=[b_{ij}]$ 为 $n\times m$ 阶，则</li>
 </ul>
-<p>定义 $p\times p$ 阶样本离差阵为：</p>
 <script type="math/tex; mode=display">
-\displaystyle  S=\frac{1}{n-1}\sum_{k=1}^n(\mathbf{x}_k-\overline{\mathbf{x} })(\mathbf{x}_k-\overline{\mathbf{x} })^T</script><ul>
-<li>$\overline{\mathbf{x} }$ 是 $\mu$ 是最大似然估計</li>
+trace(AB)=trace(BA)</script><p>定义 $p\times p$ 阶样本离差阵为：<br>
+$$
+\displaystyle  S=\frac{1}{n-1}\sum_{k=1}^n(\mathbf{x}_k-\overline{\mathbf{x} })(\mathbf{x}_k-\overline{\mathbf{x} })^T
+$$
+</p>
+<ul>
+<li>$\overline{\mathbf{x} }$  是 $\mu$ 是最大似然估計</li>
 </ul>
-<p>所以 </p>
-<script type="math/tex; mode=display">
-\mathcal{J}(\mu, \Sigma)=\frac{nd}{2}\log(2\pi)-\frac{n}{2}\log\big|\Sigma\big|-\frac{n-1}{2}trace(\Sigma^{-1}S)</script><p>所以</p>
-<script type="math/tex; mode=display">
+<p>所以</p>
+
+$$
+\mathcal{J}(\mu, \Sigma)=\frac{nd}{2}\log(2\pi)-\frac{n}{2}\log\big|\Sigma\big|-\frac{n-1}{2}trace(\Sigma^{-1}S)
+$$
+
+<p>所以</p>
+
+$$
 \begin{align*}
-\frac{\partial \mathcal{J}(\mu, \Sigma)}{\partial \Sigma} &= 
+\frac{\partial \mathcal{J}(\mu, \Sigma)}{\partial \Sigma} &=
 -\frac{n}{2}\Sigma^{-1}+\frac{n-1}{2}\Sigma^{-1}S\Sigma^{-1}
-\end{align*}</script><ul>
-<li><p>$\dfrac{\partial \log\big|X\big|}{\partial X}=\dfrac{\partial \log\big|X\big|}{\partial x_{ij} }=\dfrac{1}{\big|X\big|} \dfrac{\partial \big|X\big|}{\partial x_{ij} }=\dfrac{1}{\big|X\big|}(\big|X\big| (X^{-1})^T)_{ij}=(X^{-1})^T$</p>
-</li>
-<li><p>$\dfrac{\partial trace(X^{-1}A)}{\partial X}=-(X^{-1}AX^{-1})^T$</p>
-</li>
+\end{align*}
+$$
+
+<ul>
+<li>$\dfrac{\partial \log\big|X\big|}{\partial X}=\dfrac{\partial \log\big|X\big|}{\partial x_{ij} }=\dfrac{1}{\big|X\big|} \dfrac{\partial \big|X\big|}{\partial x_{ij} }=\dfrac{1}{\big|X\big|}(\big|X\big| (X^{-1})^T)_{ij}=(X^{-1})^T$</li>
+<li>$\dfrac{\partial trace(X^{-1}A)}{\partial X}=-(X^{-1}AX^{-1})^T$</li>
 </ul>
-<p>令 $\dfrac{\partial \mathcal{J}(\mu, \Sigma)}{\partial \Sigma}=0$ 可得：</p>
-<script type="math/tex; mode=display">
-\widehat{\Sigma}=\frac{n-1}{n}S=\frac{1}{n}\sum_{k=1}^n(\mathbf{x}_k-\overline{\mathbf{x} })(\mathbf{x}_k-\overline{\mathbf{x} })^T</script><font color="red">**总结**</font>：单一多维高斯的 $\mu$ 和 $\Sigma$ 的参数估计为：
+<p>令 $\dfrac{\partial \mathcal{J}(\mu, \Sigma)}{\partial \Sigma}=0$  可得：</p>
+
+$$
+\widehat{\Sigma}=\frac{n-1}{n}S=\frac{1}{n}\sum_{k=1}^n(\mathbf{x}_k-\overline{\mathbf{x} })(\mathbf{x}_k-\overline{\mathbf{x} })^T
+$$
+
+<p><font color="red"><strong>总结</strong></font>：单一多维高斯的 $\mu$ 和 $\Sigma$ 的参数估计为：<br>
 $$
 \begin{align*}
 \widehat{\mu}&=\dfrac{1}{n}\displaystyle \sum_{i=1}^{n}\boldsymbol{x_i}\\
 \widehat{\Sigma}=\frac{n-1}{n}S&=\frac{1}{n}\sum_{k=1}^n(\mathbf{x}_k-\overline{\mathbf{x} })(\mathbf{x}_k-\overline{\mathbf{x} })^T
 \end{align*}
 $$
-
-
-## $\S$ 1 $\ $ 高斯混合模型
-
-### $\S$ 2.1 $\ $ 混合模型
-**混合模型 (mixture model)** 是一种描述不规则分布的机率模型。 混合模型将多个形式相同的密度函数，称为**混合组件 (mixture component)**，组合成一个密度函数：
-
-$$
+</p>
+<h2 id="S-2-高斯混合模型"><a href="#S-2-高斯混合模型" class="headerlink" title="$\S$ 2 $ $ 高斯混合模型"></a>$\S$ 2 $ $ 高斯混合模型</h2><h3 id="S-2-1-混合模型"><a href="#S-2-1-混合模型" class="headerlink" title="$\S$ 2.1 $ $ 混合模型"></a>$\S$ 2.1 $ $ 混合模型</h3><p><strong>混合模型 (mixture model)</strong> 是一种描述不规则分布的机率模型。 混合模型将多个形式相同的密度函数，称为<strong>混合组件 (mixture component)</strong>，组合成一个密度函数：</p>
+ $$
 \displaystyle   p(\mathbf{x}\ ;\boldsymbol{\Theta})=\sum_{k=1}^m\alpha_kp(\mathbf{x}\ ;\boldsymbol{\theta}_k)
 $$
-
-其中 $\boldsymbol{\Theta}=\{\alpha_k,\boldsymbol{\theta}_k\}_{k=1}^m$ 表示混合模型的参数集合，$\boldsymbol{\theta}_k$ 是混合组件 $p(\mathbf{x}\ ;\boldsymbol{\theta}_k)$ 的参数，$\alpha_k\ge 0$ 是 $p(\mathbf{x}\ ;\boldsymbol{\theta}_k)$ 的权值，$\displaystyle \sum_{k=1}^m\alpha_k=1$ 。
-
+<p>其中 $\boldsymbol{\Theta}=\{\alpha_k,\boldsymbol{\theta}_k\}_{k=1}^m$ 表示混合模型的参数集合，$\boldsymbol{\theta}_k$ 是混合组件  $p(\mathbf{x}\ ;\boldsymbol{\theta}_k)$  的参数，$\alpha_k\ge 0$ 是 $p(\mathbf{x}\ ;\boldsymbol{\theta}_k)$  的权值，$\displaystyle \sum_{k=1}^m\alpha_k=1$ 。</p>
 $$
 \displaystyle  \int p(\mathbf{x}\ ;\boldsymbol{\Theta})d\mathbf{x}=\sum_{k=1}^m\alpha_k\int p(\mathbf{x}\ ;\boldsymbol{\theta}_k)d\mathbf{x}=\sum_{k=1}^m\alpha_k=1
 $$
-
-**高斯混合模型 (Gaussian mixture model)** 可能是最常见的一种混合模型，其中混合组件为高斯密度函数 $p(\mathbf{x}\ ;\boldsymbol{\theta}_k)=\mathcal{N}(\mathbf{x}\ ;\boldsymbol{\mu}_k,\Sigma_k)$ ， $\boldsymbol{\theta}_k=\{\boldsymbol{\mu}_k,\Sigma_k\}$。 给定样本 $\mathcal{X}=\{\mathbf{x}_i\}_{i=1}^n$ ，混合模型参数 $\boldsymbol{\Theta}$ 的似然函数定义为
-
-$$
+<p><strong>高斯混合模型 (Gaussian mixture model)</strong> 可能是最常见的一种混合模型，其中混合组件为高斯密度函数 $p(\mathbf{x}\ ;\boldsymbol{\theta}_k)=\mathcal{N}(\mathbf{x}\ ;\boldsymbol{\mu}_k,\Sigma_k)$ ， $\boldsymbol{\theta}_k=\{\boldsymbol{\mu}_k,\Sigma_k\}$。 给定样本 $\mathcal{X}=\{\mathbf{x}_i\}_{i=1}^n$  ，混合模型参数 $\boldsymbol{\Theta}$ 的似然函数定义为<strong>高斯混合模型 (Gaussian mixture model)</strong> 可能是最常见的一种混合模型，其中混合组件为高斯密度函数  $p(\mathbf{x}\ ;\boldsymbol{\theta}_k)=\mathcal{N}(\mathbf{x}\ ;\boldsymbol{\mu}_k,\Sigma_k)$ ， $\boldsymbol{\theta}_k=\{\boldsymbol{\mu}_k,\Sigma_k\}$。 给定样本  $\mathcal{X}=\{\mathbf{x}_i\}_{i=1}^n$  ，混合模型参数 $\boldsymbol{\Theta}$ 的似然函数定义为<br> $$
 \displaystyle   \mathcal{L}(\boldsymbol{\Theta}\ ;\mathcal{X})=p(\mathcal{X}\ ;\boldsymbol{\Theta})=\prod_{i=1}^np(\mathbf{x}_i\ ;\boldsymbol{\Theta})=\prod_{i=1}^n\sum_{k=1}^m\alpha_kp(\mathbf{x}_i\ ;\boldsymbol{\theta}_k)
-$$
-
-计算对数，
-$$
+$$</p>
+<p>计算对数，<br> $$
 \displaystyle   \log\mathcal{L}(\boldsymbol{\Theta}\ ;\mathcal{X})=\log\left\{\prod_{i=1}^np(\mathbf{x}_i\ ;\boldsymbol{\Theta})\right\}=\sum_{i=1}^n\log\left\{\sum_{k=1}^m\alpha_kp(\mathbf{x}_i\ ;\boldsymbol{\theta}_k)\right\}
-$$
-
-因为 $\log\mathcal{L}(\boldsymbol{\Theta}\ ;\mathcal{X})$ 包含和的对数，致使最大化的计算变得相当困难，所以引入**EM**算法。
-
-
-
-### $\S$ 2.2 $\ $ **EM**算法
-
-在混合模型中，混合组件 $p(\mathbf{x}\ ;\boldsymbol{\theta}_k)$ 的权重 $\alpha_k$ 既是模型参数，也可视为第 $k$ 个混合组件被选中的概率。 
-
-设想你有 $m$ 个盒子 (混合组件)，每个盒子里面有无穷多颗球 (数据点)，其密度函数为 $p(\mathbf{x}\ ;\boldsymbol{\theta}_k)$。 
-数据样本 $\mathcal{X}=\{\mathbf{x}_i\}_{i=1}^n$ 的产生过程如下：你闭上眼睛随机挑选一个盒子，然后从中抽出一颗球，睁开眼睛后发现你得到数据点 $\mathbf{x}_i$，按此方式重复 $n$ 次。 令 $\mathbf{z}=(z_1,\ldots,z_m)$ 代表选出一个盒子的离散型随机向量，$z_k=1$ 且 $z_j=0$， $j\neq k$，表示第 $k$ 个盒子被选中。 实际上，$\mathbf{z}$ 是无法量测的随机向量，称为**隐藏变量 (hidden variable)**。 
-定义第 $k$ 个混合组件被选中的概率 $p(z_k=1)=\alpha_k$， $k=1,\ldots,m$ 。 隐藏变量 $\mathbf{z}$ 的概率即为：
+$$</p>
+<p>因为  $\log\mathcal{L}(\boldsymbol{\Theta}\ ;\mathcal{X})$  包含和的对数，致使最大化的计算变得相当困难，所以引入<strong>EM</strong>算法。</p>
+<h3 id="S-2-2-EM算法"><a href="#S-2-2-EM算法" class="headerlink" title="$\S$ 2.2 $ $ EM算法"></a>$\S$ 2.2 $ $ <strong>EM</strong>算法</h3><p>在混合模型中，混合组件 $p(\mathbf{x}\ ;\boldsymbol{\theta}_k)$  的权重 $\alpha_k$ 既是模型参数，也可视为第 $k$ 个混合组件被选中的概率。</p>
+<p>设想你有 $m$ 个盒子 (混合组件)，每个盒子里面有无穷多颗球 (数据点)，其密度函数为 $p(\mathbf{x}\ ;\boldsymbol{\theta}_k)$ 。<br>数据样本 $\mathcal{X}=\{\mathbf{x}_i\}_{i=1}^n$  的产生过程如下：你闭上眼睛随机挑选一个盒子，然后从中抽出一颗球，睁开眼睛后发现你得到数据点 $\mathbf{x}_i$ ，按此方式重复 $n$ 次。 令 $\mathbf{z}=(z_1,\ldots,z_m)$  代表选出一个盒子的离散型随机向量，$z_k=1$ 且 $z_j=0$， $j\neq k$，表示第 $k$ 个盒子被选中。 实际上，$\mathbf{z}$ 是无法量测的随机向量，称为<strong>隐藏变量 (hidden variable)</strong>。<br>定义第 $k$ 个混合组件被选中的概率 $p(z_k=1)=\alpha_k$， $k=1,\ldots,m$ 。 隐藏变量  $\mathbf{z}$  的概率即为：</p>
 $$
 \displaystyle   p(\mathbf{z})=\prod_{k=1}^mp(z_k=1)^{z_k}=\prod_{k=1}^m\alpha_k^{z_k}
 $$
-
-* 举例来说，$\mathbf{z}=(1,0,\ldots,0)$ 表示第一个盒子被选中，发生的概率是 $p(\mathbf{z})=p(z_1=1)^1p(z_2=1)^0\cdots p(z_m=1)^0=p(z_1=1)=\alpha_1$ 
-
-
-按照这个思考模型，每个混合组件可用条件密度函数表示：
-$$
+<ul>
+<li>举例来说，$\mathbf{z}=(1,0,\ldots,0)$  表示第一个盒子被选中，发生的概率是  $p(\mathbf{z})=p(z_1=1)^1p(z_2=1)^0\cdots p(z_m=1)^0=p(z_1=1)=\alpha_1$ </li>
+</ul>
+<p>按照这个思考模型，每个混合组件可用条件密度函数表示：<br>$$
 \displaystyle   p(\mathbf{x}\ |z_k=1)=p(\mathbf{x}\ ;\boldsymbol{\theta}_k),~~~k=1,\ldots,m，
-$$
-或写成
-
-$$
+$$<br>或写成<br>$$
 \displaystyle   p(\mathbf{x}\ |\mathbf{z})=\prod_{k=1}^mp(\mathbf{x}\ |z_k=1)^{z_k}=\prod_{k=1}^mp(\mathbf{x}\ ;\boldsymbol{\theta}_k)^{z_k}
-$$
-
-使用全概率公式，我们可以得到混合模型：
-$$  
+$$<br>使用全概率公式，我们可以得到混合模型：<br>$$
 \begin{aligned}  
-p(\mathbf{x}\ ;\boldsymbol{\Theta})&=\sum_{\mathbf{z} }p(\mathbf{x}\ |\mathbf{z})p(\mathbf{z})\\ 
+p(\mathbf{x}\ ;\boldsymbol{\Theta})&=\sum_{\mathbf{z} }p(\mathbf{x}\ |\mathbf{z})p(\mathbf{z})\\
 &=\sum_{k=1}^mp(\mathbf{x}\ |z_k=1)p(z_k=1)\\  
 &=\sum_{k=1}^m\alpha_kp(\mathbf{x}\ ;\boldsymbol{\theta}_k)
 \end{aligned}
-$$
-
-<font color="red">如果你知道混合模型参数 $\boldsymbol{\Theta}$，给定一个数据点 $\mathbf{x}$ ，能否推测它来自哪个混合组件？也就是计算后验概率 $p(z_k=1|\ \mathbf{x})$？</font>
-
-<p>使用<strong>贝叶斯公式 (Bayes’ theorem)</strong>，可得：</p>
-<script type="math/tex; mode=display">
-\begin{aligned} 
-r_{k}(\mathbf{x})&=p(z_k=1|\ \mathbf{x})\\ 
+$$</p>
+<p><font color="red">如果你知道混合模型参数 $\boldsymbol{\Theta}$，给定一个数据点 $\mathbf{x}$ ，能否推测它来自哪个混合组件？</font>也就是计算后验概率 $p(z_k=1|\ \mathbf{x})$？</p>
+<p>使用<strong>贝叶斯公式 (Bayes’ theorem)</strong> ，可得：</p>
+ $$
+\begin{aligned}
+r_{k}(\mathbf{x})&=p(z_k=1|\ \mathbf{x})\\
 &=\frac{p(\mathbf{x}|\ z_k=1)p(z_k=1)}{p(\mathbf{x})}\\  
 &=\frac{p(\mathbf{x}|\ z_k=1)p(z_k=1)}{\sum_{l=1}^mp(\mathbf{x}|\ z_l=1)p(z_l=1)}\\  
 &=\frac{\alpha_k\,p(\mathbf{x}\ ;\boldsymbol{\theta}_k)}{\sum_{l=1}^m\alpha_l\,p(\mathbf{x}\ ;\boldsymbol{\theta}_l)}
-\end{aligned}</script><p>后验概率 $r_k(\mathbf{x})$ 称为<strong>责任 (responsibility)</strong>，意思是第 $k$ 个混合组件要对给定的数据点 $\mathbf{x}$ 的生成担负多少责任。 </p>
-<p>$r_k(\mathbf{x})$ 具有归一性，$\displaystyle \sum_{k=1}^mr_k(\mathbf{x})=\sum_{k=1}^mp(z_k=1| \mathbf{x})=1$ 。</p>
-<p>根据前述数据产生的模型，我们要从给定的样本 $\mathcal{X}=\{\mathbf{x}_i\}_{i=1}^n$ 反推每个盒子被选中的概率 $p(z_k=1)=\alpha_k$ ，以及每个盒子里面球的条件密度函数 $p(\mathbf{x}| z_k=1)$ 的参数 $\boldsymbol{\theta}_k$，<strong>EM </strong>算法 是计算混合模型参数的最大似然估计的一个有效方法。则对数似然函数：</p>
-<script type="math/tex; mode=display">
-\displaystyle   \log\mathcal{L}(\boldsymbol{\Theta})=\sum_{i=1}^n\log p(\mathbf{x}_i\ ;\boldsymbol{\Theta})=\sum_{i=1}^n\log\left\{\sum_{k=1}^mp(\mathbf{x}_i|\ z_k=1)p(z_k=1)\right\}</script><p><strong>EM</strong> 算法是一种迭代法。 假设 $\boldsymbol{\Theta}=\{\alpha_k,\boldsymbol{\theta}_k\}_{k=1}^m$ 表示目前所估计出的旧混合模型参数，$\boldsymbol{\Theta}’=\{\alpha’_k,\boldsymbol{\theta}’_k\}_{k=1}^m$ 表示尚待决定的新参数。 $\mathcal{L}=\mathcal{L}(\boldsymbol{\Theta})$ 代表旧模型的似然函数，$p’(\mathbf{x}_i)=p(\mathbf{x}_i|\boldsymbol{\Theta}’)$ 代表新模型的密度函数。 考虑两组模型参数的对数似然函数改变量，并代入新混合模型的密度函数表达式，</p>
-<script type="math/tex; mode=display">
+\end{aligned}
+$$
+<p>后验概率 $r_k(\mathbf{x})$  称为<strong>责任 (responsibility)</strong> ，意思是第 $k$ 个混合组件要对给定的数据点 $\mathbf{x}$ 的生成担负多少责任。</p>
+ $r_k(\mathbf{x})$  具有归一性， $\displaystyle \sum_{k=1}^mr_k(\mathbf{x})=\sum_{k=1}^mp(z_k=1|\ \mathbf{x})=1$ 。
+
+根据前述数据产生的模型，我们要从给定的样本  $\mathcal{X}=\{\mathbf{x}_i\}_{i=1}^n$  反推每个盒子被选中的概率 $p(z_k=1)=\alpha_k$ ，以及每个盒子里面球的条件密度函数 $p(\mathbf{x}|\ z_k=1)$  的参数 $\boldsymbol{\theta}_k$，**EM** 算法 是计算混合模型参数的最大似然估计的一个有效方法。则对数似然函数：
+ $$
+\displaystyle   \log\mathcal{L}(\boldsymbol{\Theta})=\sum_{i=1}^n\log p(\mathbf{x}_i\ ;\boldsymbol{\Theta})=\sum_{i=1}^n\log\left\{\sum_{k=1}^mp(\mathbf{x}_i|\ z_k=1)p(z_k=1)\right\}
+$$
+<p><strong>EM</strong> 算法是一种迭代法。 假设 $\boldsymbol{\Theta}=\{\alpha_k,\boldsymbol{\theta}_k\}_{k=1}^m$ 表示目前所估计出的旧混合模型参数，$\boldsymbol{\Theta}’=\{\alpha’_k,\boldsymbol{\theta}’_k\}_{k=1}^m$ 表示尚待决定的新参数。 $\mathcal{L}=\mathcal{L}(\boldsymbol{\Theta})$  代表旧模型的似然函数， $p'(\mathbf{x}_i)=p(\mathbf{x}_i|\boldsymbol{\Theta}')$  代表新模型的密度函数。 考虑两组模型参数的对数似然函数改变量，并代入新混合模型的密度函数表达式，<br> $$
 \begin{aligned}  
 \log\mathcal{L}'-\log\mathcal{L}&=\sum_{i=1}^n\log\frac{p'(\mathbf{x}_i)}{p(\mathbf{x}_i)}\\  &=\sum_{i=1}^n\log\left\{\frac{\sum_{k=1}^mp'(\mathbf{x}_i|\ z_k=1)p'(z_k=1)}{p(\mathbf{x}_i)}\right\}\\  &=\sum_{i=1}^n\log\left\{\sum_{k=1}^mp(z_k=1|\ \mathbf{x}_i)\frac{p'(\mathbf{x}_i|\ z_k=1)p'(z_k=1)}{p(\mathbf{x}_i)p(z_k=1|\ \mathbf{x}_i)}\right\}
-\end{aligned}</script><p>使用 <strong>Jensen</strong> 不等式，（具体参见 <strong>EM</strong> 算法），可得：</p>
-<script type="math/tex; mode=display">
+\end{aligned}
+$$<br>使用 <strong>Jensen</strong> 不等式，（具体参见 <strong>EM</strong> 算法），可得：<br>$$
 \begin{aligned}
 \log\mathcal{L}'-\log\mathcal{L}&\ge \sum_{i=1}^n\sum_{k=1}^mp(z_k=1|\ \mathbf{x}_i)\log\left\{\frac{p'(\mathbf{x}_i|\ z_k=1)p'(z_k=1)}{p(\mathbf{x}_i)p(z_k=1|\ \mathbf{x}_i)}\right\}\\  
 &=\sum_{i=1}^n\sum_{k=1}^mp(z_k=1|\ \mathbf{x}_i)\log\left\{p'(\mathbf{x}_i|\ z_k=1)p'(z_k=1)\right\}\\  &~~~-\sum_{i=1}^n\sum_{k=1}^mp(z_k=1|\ \mathbf{x}_i)\log\left\{p(\mathbf{x}_i)p(z_k=1|\ \mathbf{x}_i)\right\}
-\end{aligned}</script><p>其中不等式右边的第二项由旧模型参数 $\boldsymbol{\Theta}$ 固定，可视为一个常数 $c$ (包含负号)。 我们在乎的是与新模型参数 $\boldsymbol{\Theta}’$ 有关的第一项，于是定义</p>
-<script type="math/tex; mode=display">
+\end{aligned}
+$$</p>
+<p>其中不等式右边的第二项由旧模型参数 $\boldsymbol{\Theta}$ 固定，可视为一个常数 $c$ (包含负号)。 我们在乎的是与新模型参数 $\boldsymbol{\Theta}’$ 有关的第一项，于是定义<br>$$
 \begin{aligned}  
 Q(\boldsymbol{\Theta}',\boldsymbol{\Theta})&=\sum_{i=1}^n\sum_{k=1}^mp(z_k=1|\mathbf{x}_i)\log\left\{p'(\mathbf{x}_i|z_k=1)p'(z_k=1)\right\}\\  
 &=\sum_{i=1}^n\sum_{k=1}^mp(z_k=1|\mathbf{x}_i)\log\left\{\alpha'_k p(\mathbf{x}_i\ ;\boldsymbol{\theta}'_k)\right\}
-\end{aligned}</script><ul>
-<li>原本我们希望找到新参数 $\boldsymbol{\Theta}’$ 最大化 $\log\mathcal{L}’$，因为 $\log\mathcal{L}’\ge \log\mathcal{L}+Q+c$ ，也就是说 $\log\mathcal{L}+Q+c$ 是 $\log\mathcal{L}’$ 的下界。 </li>
-<li>欲使 $\log\mathcal{L}’$ 有最大的下界，你可以设法找到 $\boldsymbol{\Theta}’$ 使最大化目标函数 $Q$，这比直接最大化 $\log\mathcal{L}’$ 容易得多，最大期望算法称之为 <strong>M─步骤</strong> (最大─步骤)。</li>
-<li>最大化 $Q$ 必然使得 $\log\mathcal{L}’$ 增大，除非 $\log\mathcal{L}’$ 已经抵达<strong>局部最大值 (local maximum)</strong>。 另外，所谓的 <strong>E─步骤</strong> (期望─步骤) 是指确立目标函数 $Q(\boldsymbol{\Theta}’,\boldsymbol{\Theta})$，也就是用旧模型参数 $\boldsymbol{\Theta}$ 计算后验概率 $r_{ik}=r_k(\mathbf{x}_i)=p(z_k=1| \mathbf{x}_i)，i=1,\ldots,n，k=1,\ldots,m$。</li>
-</ul>
-<p>我们将估计混合模型参数的 <strong>EM</strong> 算法整理于下：<br>初始化 $\boldsymbol{\Theta}^0=\{\alpha_k^0,\boldsymbol{\theta}^0_k\}_{k=1}^m$，设 $t=0$。 重复<strong>步骤1</strong>与<strong>2</strong>直到满足收敛条件即停止 (比如 $\log\mathcal{L}$ 不再增大)。</p>
+\end{aligned}
+$$</p>
 <ul>
-<li>E─步骤. 使用 $\boldsymbol{\Theta}^t=\{\alpha_k^t,\boldsymbol{\theta}^t_k\}_{k=1}^m$ 定义 $Q(\boldsymbol{\Theta}’,\boldsymbol{\Theta}^t)$。 具体地说，计算每个样本的后验概率，对于 $i=1,\ldots,n，k=1,\ldots,m$：<script type="math/tex; mode=display">
-r^t_{ik}=\frac{\alpha^t_k\,p(\mathbf{x}_i\ ;\boldsymbol{\theta}^t_k)}{\sum_{l=1}^m\alpha^t_l\,p(\mathbf{x}_i\ ;\boldsymbol{\theta}^t_l)}</script></li>
-<li>M─步骤. 解这个优化问题：<script type="math/tex; mode=display">
-\begin{aligned} 
+<li>原本我们希望找到新参数 $\boldsymbol{\Theta}’$ 最大化 $\log\mathcal{L}'$ ，因为 $\log\mathcal{L}'\ge \log\mathcal{L}+Q+c$  ，也就是说 $\log\mathcal{L}+Q+c$ 是 $\log\mathcal{L}'$  的下界。</li>
+<li>欲使 $\log\mathcal{L}'$  有最大的下界，你可以设法找到 $\boldsymbol{\Theta}’$ 使最大化目标函数 $Q$，这比直接最大化  $\log\mathcal{L}'$  容易得多，最大期望算法称之为 <strong>M─步骤</strong> (最大─步骤)。</li>
+<li>最大化 $Q$ 必然使得 $\log\mathcal{L}'$  增大，除非 $\log\mathcal{L}'$  已经抵达<strong>局部最大值 (local maximum)</strong>。 另外，所谓的 <strong>E─步骤</strong> (期望─步骤) 是指确立目标函数 $Q(\boldsymbol{\Theta}’,\boldsymbol{\Theta})$，也就是用旧模型参数 $\boldsymbol{\Theta}$ 计算后验概率 $r_{ik}=r_k(\mathbf{x}_i)=p(z_k=1|\ \mathbf{x}_i)，i=1,\ldots,n，k=1,\ldots,m$ 。</li>
+</ul>
+<p>我们将估计混合模型参数的 <strong>EM</strong> 算法整理于下：<br>初始化 $\boldsymbol{\Theta}^0=\{\alpha_k^0,\boldsymbol{\theta}^0_k\}_{k=1}^m$，设 $t=0$。 重复<strong>步骤1</strong>与<strong>2</strong>直到满足收敛条件即停止 (比如  $\log\mathcal{L}$  不再增大)。</p>
+<ul>
+<li>E─步骤. 使用 $\boldsymbol{\Theta}^t=\{\alpha_k^t,\boldsymbol{\theta}^t_k\}_{k=1}^m$ 定义 $Q(\boldsymbol{\Theta}’,\boldsymbol{\Theta}^t)$。 具体地说，计算每个样本的后验概率，对于 $i=1,\ldots,n，k=1,\ldots,m$：</li>
+</ul>
+ $$
+r^t_{ik}=\frac{\alpha^t_k\,p(\mathbf{x}_i\ ;\boldsymbol{\theta}^t_k)}{\sum_{l=1}^m\alpha^t_l\,p(\mathbf{x}_i\ ;\boldsymbol{\theta}^t_l)}
+$$
+<ul>
+<li>M─步骤. 解这个优化问题：</li>
+</ul>
+ $$
+\begin{aligned}
 \boldsymbol{\Theta}^{t+1}&=\arg\max_{\boldsymbol{\Theta}'}Q(\boldsymbol{\Theta}',\boldsymbol{\Theta}^t)\\  &=\arg\max_{\boldsymbol{\Theta}'}\sum_{i=1}^n\sum_{k=1}^mr^t_{ik}\log\left\{\alpha'_k\,p(\mathbf{x}_i\ ;\boldsymbol{\theta}'_k)\right\}\\  
 &=\arg\max_{\boldsymbol{\Theta}'}\left\{Q_1\left(\{\alpha'_k\},\boldsymbol{\Theta}^t\right)+Q_2\left(\{\boldsymbol{\theta}'_k\},\boldsymbol{\Theta}^t\right)\right\}\\
 &=\arg\max_{\boldsymbol{\Theta}'}\left\{\sum_{i=1}^n\sum_{k=1}^mr^t_{ik}\log\alpha'_k + \sum_{i=1}^n\sum_{k=1}^mr^t_{ik}\log p(\mathbf{x}_i\ ;\boldsymbol{\theta}'_k)\right\}
-\end{aligned}</script></li>
-</ul>
+\end{aligned}
+$$
 <p>混合模型参数 $\boldsymbol{\Theta}=\{\alpha_k,\boldsymbol{\theta}_k\}_{k=1}^m$ 区分为两类：</p>
 <ul>
 <li><p>$\boldsymbol{\theta}_k$ 是所采用的混合组件参数</p>
 </li>
-<li><p>权重 $\alpha_k\ge 0$ 还要满足归一条件 $\displaystyle\sum_{k=1}^m\alpha_k=1$ </p>
+<li><p>权重 $\alpha_k\ge 0$ 还要满足归一条件 $\displaystyle\sum_{k=1}^m\alpha_k=1$</p>
 </li>
 </ul>
-<p>因此，<strong>M-步骤</strong>可以切割为两个独立的问题：</p>
+<p>因此，<strong>M-步骤</strong> 可以切割为两个独立的问题：</p>
 <script type="math/tex; mode=display">
-\begin{aligned} 
+\begin{aligned}
 \{\alpha^{t+1}_k\}&=\arg\max_{\{\alpha'_k\} }Q_1\left(\{\alpha'_k\},\boldsymbol{\Theta}^t\right)\\  \{\boldsymbol{\theta}^{t+1}_k\}&=\arg\max_{\{\boldsymbol{\theta}'_k\} }Q_2\left(\{\boldsymbol{\theta}'_k\},\boldsymbol{\Theta}^t\right)
-\end{aligned}</script><h3 id="S-2-3-alpha’-k-的参数估计"><a href="#S-2-3-alpha’-k-的参数估计" class="headerlink" title="$\S$ 2.3 $ $ $\alpha’_k$ 的参数估计"></a>$\S$ 2.3 $ $ $\alpha’_k$ 的参数估计</h3><p>底下说明如何利用<strong>拉格朗日乘子法</strong>解出最大化 $Q_1$ 的最佳权重 $\alpha’_k$ ：</p>
-<script type="math/tex; mode=display">
-\begin{array}{ll}  
-\hbox{max} & Q_1\left(\{\alpha'_k\},\boldsymbol{\Theta}^t\right)\\  
+\end{aligned}</script><h3 id="S-2-3-alpha’-k-的参数估计"><a href="#S-2-3-alpha’-k-的参数估计" class="headerlink" title="$\S$ 2.3 $ $ $\alpha’_k$ 的参数估计"></a>$\S$ 2.3 $ $ $\alpha’_k$ 的参数估计</h3><p>底下说明如何利用<strong>拉格朗日乘子法</strong>解出最大化 $Q_1​$ 的最佳权重 $\alpha’_k​$ ：<br>$$
+\begin{array}{ll}
+\hbox{max} & Q_1\left(\{\alpha'_k\},\boldsymbol{\Theta}^t\right)\\
 \hbox{s.t.}& \sum_{k=1}^m\alpha'_k=1
-\end{array}</script><p>定义拉格朗日函数</p>
-<script type="math/tex; mode=display">
-L\left(\{\alpha'_k\},\lambda\right)=\sum_{i=1}^n\sum_{k=1}^mr^t_{ik}\log\alpha'_k+\lambda\left(\sum_{k=1}^m\alpha'_k-1\right)</script><p>其中 $\lambda$ 是拉格朗日乘数。 求导可得</p>
-<script type="math/tex; mode=display">
-\displaystyle   \frac{\partial L}{\partial\alpha'_k}=\frac{1}{\alpha'_k}\sum_{i=1}^nr^t_{ik}+\lambda</script><p>设上式等于零，乘以 $\alpha’_k$，并加总所有的 $k$，使用 $\displaystyle\sum_{k=1}^mr^t_{ik}=1$，</p>
-<script type="math/tex; mode=display">
-\displaystyle   \lambda=\sum_{k=1}^m\lambda\alpha'_k=-\sum_{i=1}^n\sum_{k=1}^mr^t_{ik}=-n</script><p>因此，最佳权重为</p>
-<script type="math/tex; mode=display">
-\displaystyle   \alpha'_k=\frac{\sum_{i=1}^nr^t_{ik} }{n}=\frac{n^t_k}{n}，</script><font color="red">这个结果与所采用的模型元件无关。</font>
-
-
-
-<h3 id="S-2-4-boldsymbol-theta-’-k-的参数估计"><a href="#S-2-4-boldsymbol-theta-’-k-的参数估计" class="headerlink" title="$\S$ 2.4 $ $ $\boldsymbol{\theta}’_k$ 的参数估计"></a>$\S$ 2.4 $ $ $\boldsymbol{\theta}’_k$ 的参数估计</h3><script type="math/tex; mode=display">
-\begin{aligned}  
+\end{array}
+$$</p>
+<p>定义拉格朗日函数<br>$$
+L\left(\{\alpha'_k\},\lambda\right)=\sum_{i=1}^n\sum_{k=1}^mr^t_{ik}\log\alpha'_k+\lambda\left(\sum_{k=1}^m\alpha'_k-1\right)
+$$<br>其中 $\lambda$ 是拉格朗日乘数。 求导可得</p>
+$$
+\displaystyle   \frac{\partial L}{\partial\alpha'_k}=\frac{1}{\alpha'_k}\sum_{i=1}^nr^t_{ik}+\lambda
+$$
+<p>设上式等于零，乘以 $\alpha’_k$，并加总所有的 $k$，使用 $\displaystyle\sum_{k=1}^mr^t_{ik}=1$，</p>
+$$
+\displaystyle   \lambda=\sum_{k=1}^m\lambda\alpha'_k=-\sum_{i=1}^n\sum_{k=1}^mr^t_{ik}=-n
+$$
+<p>因此，最佳权重为</p>
+$$
+\displaystyle   \alpha'_k=\frac{\sum_{i=1}^nr^t_{ik} }{n}=\frac{n^t_k}{n}
+$$
+<p><strong>这个结果与所采用的模型元件无关</strong> 。</p>
+<h3 id="S-2-4-boldsymbol-theta-’-k-的参数估计"><a href="#S-2-4-boldsymbol-theta-’-k-的参数估计" class="headerlink" title="$\S$ 2.4 $ $ $\boldsymbol{\theta}’_k$ 的参数估计"></a>$\S$ 2.4 $ $ $\boldsymbol{\theta}’_k$ 的参数估计</h3>$$
+\begin{aligned}
 Q_2(\{\boldsymbol{\mu}'_k,\Sigma'_k\},\boldsymbol{\Theta}^t)  &=\sum_{i=1}^n\sum_{k=1}^mr^t_{ik}\log\mathcal{N}(\mathbf{x}_i\ ;\boldsymbol{\mu}'_k,\Sigma'_k)\\  &=\sum_{i=1}^n\sum_{k=1}^mr^t_{ik}\left(-\frac{d}{2}\log(2\pi)-\frac{1}{2}\log|\Sigma'_k|-\frac{1}{2}(\mathbf{x}_i-\boldsymbol{\mu}'_k)^T(\Sigma'_k)^{-1}(\mathbf{x}_i-\boldsymbol{\mu}'_k)\right)
-\end{aligned}</script><p>计算 $Q_2$ 对 $\boldsymbol{\mu}’_k$ 的偏导数</p>
-<script type="math/tex; mode=display">
- \frac{\partial Q_2}{\partial \boldsymbol{\mu}'_k}=\sum_{i=1}^nr^t_{ik}(\Sigma'_k)^{-1}(\mathbf{x}_i-\boldsymbol{\mu}'_k)=(\Sigma'_k)^{-1}\sum_{i=1}^nr^t_{ik}(\mathbf{x}_i-\boldsymbol{\mu}'_k)</script><p>设上式为零，左乘 $\Sigma’_k$ ，解得</p>
-<script type="math/tex; mode=display">
-\displaystyle   \boldsymbol{\mu}'_k=\dfrac{\displaystyle \sum_{i=1}^nr^t_{ik}\mathbf{x}_i}{\displaystyle \sum_{i=1}^nr^t_{ik} }=\frac{\displaystyle\sum_{i=1}^nr^t_{ik}\mathbf{x}_i}{n^t_k}</script><p>接着将 $Q_2$ 包含的二次型改写为迹数并使用循环不变性：</p>
-<script type="math/tex; mode=display">
-\begin{aligned}  
+\end{aligned}
+$$
+<p>计算 $Q_2$ 对 $\boldsymbol{\mu}’_k$ 的偏导数<br> $$
+\frac{\partial Q_2}{\partial \boldsymbol{\mu}'_k}=\sum_{i=1}^nr^t_{ik}(\Sigma'_k)^{-1}(\mathbf{x}_i-\boldsymbol{\mu}'_k)=(\Sigma'_k)^{-1}\sum_{i=1}^nr^t_{ik}(\mathbf{x}_i-\boldsymbol{\mu}'_k)
+$$<br>设上式为零，左乘 $\Sigma’_k$ ，解得<br> $$
+\displaystyle   \boldsymbol{\mu}'_k=\dfrac{\displaystyle \sum_{i=1}^nr^t_{ik}\mathbf{x}_i}{\displaystyle \sum_{i=1}^nr^t_{ik} }=\frac{\displaystyle\sum_{i=1}^nr^t_{ik}\mathbf{x}_i}{n^t_k}
+$$<br>接着将 $Q_2$ 包含的二次型改写为迹数并使用循环不变性：<br> $$
+\begin{aligned}
 Q_2(\{\boldsymbol{\mu}'_k,\Sigma'_k\},\boldsymbol{\Theta}^t)  &=\sum_{i=1}^n\sum_{k=1}^mr^t_{ik}\left(-\frac{d}{2}\log(2\pi)-\frac{1}{2}\log|\Sigma'_k|-\frac{1}{2}\hbox{trace}\left\{(\mathbf{x}_i-\boldsymbol{\mu}'_k)^T(\Sigma'_k)^{-1}(\mathbf{x}_i-\boldsymbol{\mu}'_k)\right\}\right)\\  &=\sum_{i=1}^n\sum_{k=1}^mr^t_{ik}\left(-\frac{d}{2}\log(2\pi)-\frac{1}{2}\log|\Sigma'_k|-\frac{1}{2}\hbox{trace}\left\{(\Sigma'_k)^{-1}(\mathbf{x}_i-\boldsymbol{\mu}'_k)(\mathbf{x}_i-\boldsymbol{\mu}'_k)^T\right\}\right)
-\end{aligned}</script><p>计算 $Q_2$ 对 $\Sigma’_k$ 的偏导数</p>
-<script type="math/tex; mode=display">
-\frac{\partial Q_2}{\partial \Sigma'_k}=-\frac{1}{2}\sum_{i=1}^nr^t_{ik}\left((\Sigma'_k)^{-1}-(\Sigma'_k)^{-1}(\mathbf{x}_i-\boldsymbol{\mu}'_k)(\mathbf{x}_i-\boldsymbol{\mu}'_k)^T(\Sigma'_k)^{-1}\right)。</script><p>设上式等于零，左右同时乘以 $\Sigma’_k$，解得</p>
-<script type="math/tex; mode=display">
-\Sigma'_k=\frac{\displaystyle\sum_{i=1}^nr^t_{ik}(\mathbf{x}_i-\boldsymbol{\mu}'_k)(\mathbf{x}_i-\boldsymbol{\mu}'_k)^T}{\displaystyle\sum_{i=1}^nr^t_{ik} }=\frac{\displaystyle\sum_{i=1}^nr^t_{ik}(\mathbf{x}_i-\boldsymbol{\mu}'_k)(\mathbf{x}_i-\boldsymbol{\mu}'_k)^T}{n^t_k}</script><p>注：$d\times d$ 阶样本共变异数矩阵 $\Sigma’_k$ 为可逆的 (即正定) 一个充要条件是样本大小 $n$ 不能小于随机向量 $\mathbf{x}$ 的维数 $d$。</p>
+\end{aligned}
+$$<br>计算 $Q_2$ 对 $\Sigma’_k$ 的偏导数<br> $$
+\frac{\partial Q_2}{\partial \Sigma'_k}=-\frac{1}{2}\sum_{i=1}^nr^t_{ik}\left((\Sigma'_k)^{-1}-(\Sigma'_k)^{-1}(\mathbf{x}_i-\boldsymbol{\mu}'_k)(\mathbf{x}_i-\boldsymbol{\mu}'_k)^T(\Sigma'_k)^{-1}\right)
+$$<br>设上式等于零，左右同时乘以 $\Sigma’_k$，解得<br> $$
+\Sigma'_k=\frac{\displaystyle\sum_{i=1}^nr^t_{ik}(\mathbf{x}_i-\boldsymbol{\mu}'_k)(\mathbf{x}_i-\boldsymbol{\mu}'_k)^T}{\displaystyle\sum_{i=1}^nr^t_{ik} }=\frac{\displaystyle\sum_{i=1}^nr^t_{ik}(\mathbf{x}_i-\boldsymbol{\mu}'_k)(\mathbf{x}_i-\boldsymbol{\mu}'_k)^T}{n^t_k}
+$$<br>注：$d\times d$ 阶样本共变异数矩阵 $\Sigma’_k$ 为可逆的 (即正定) 一个充要条件是样本大小 $n$ 不能小于随机向量 $\mathbf{x}$  的维数 $d$</p>
 
     </article>
     <!-- license  -->
@@ -627,7 +646,7 @@ Q_2(\{\boldsymbol{\mu}'_k,\Sigma'_k\},\boldsymbol{\Theta}^t)  &=\sum_{i=1}^n\sum
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href= "/2018/04/01/2. Baum-Welch 算法/" title= 2. Baum-Welch 算法 >
+                <a href= "/2018/04/01/Baum-Welch 算法/" title= 2. Baum-Welch 算法 >
                     <div class="prevTitle">2. Baum-Welch 算法</div>
                 </a>
             
@@ -745,7 +764,7 @@ top:50vh;
         <div class="toc-catalog">
             <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
         </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GMM-算法"><span class="toc-number">1.</span> <span class="toc-text">GMM 算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#S-1-单一多维高斯的参数估计"><span class="toc-number">1.1.</span> <span class="toc-text">$\S$ 1 $ $  单一多维高斯的参数估计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#S-2-3-alpha’-k-的参数估计"><span class="toc-number">1.1.1.</span> <span class="toc-text">$\S$ 2.3 $ $ $\alpha’_k$ 的参数估计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#S-2-4-boldsymbol-theta-’-k-的参数估计"><span class="toc-number">1.1.2.</span> <span class="toc-text">$\S$ 2.4 $ $ $\boldsymbol{\theta}’_k$ 的参数估计</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GMM-算法"><span class="toc-number">1.</span> <span class="toc-text">GMM 算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#S-1-单一多维高斯的参数估计"><span class="toc-number">1.1.</span> <span class="toc-text">$\S$ 1 $ $  单一多维高斯的参数估计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#S-2-高斯混合模型"><span class="toc-number">1.2.</span> <span class="toc-text">$\S$ 2 $ $ 高斯混合模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#S-2-1-混合模型"><span class="toc-number">1.2.1.</span> <span class="toc-text">$\S$ 2.1 $ $ 混合模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#S-2-2-EM算法"><span class="toc-number">1.2.2.</span> <span class="toc-text">$\S$ 2.2 $ $ EM算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#S-2-3-alpha’-k-的参数估计"><span class="toc-number">1.2.3.</span> <span class="toc-text">$\S$ 2.3 $ $ $\alpha’_k$ 的参数估计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#S-2-4-boldsymbol-theta-’-k-的参数估计"><span class="toc-number">1.2.4.</span> <span class="toc-text">$\S$ 2.4 $ $ $\boldsymbol{\theta}’_k$ 的参数估计</span></a></li></ol></li></ol></li></ol>
     </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
@@ -758,12 +777,6 @@ top:50vh;
     <div class="sidebar-content sidebar-content-show-archive">
           <div class="sidebar-panel-archives">
     <!-- 在ejs中将archive按照时间排序 -->
-    
-    
-    
-    
-    
-    
     
     
     
@@ -866,12 +879,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/2. Baum-Welch 算法/" >2. Baum-Welch 算法</a>
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/Baum-Welch 算法/" >2. Baum-Welch 算法</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2018/03/01/1. EM 算法/" >1.EM 算法</a>
+            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2018/03/01/EM-算法/" >1.EM 算法</a>
         </li>
     
     
@@ -918,19 +931,19 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="Baum-Welch"><span class="iconfont-archer">&#xe606;</span>Baum-Welch</span>
+        <span class="sidebar-tag-name" data-tags="高斯分布"><span class="iconfont-archer">&#xe606;</span>高斯分布</span>
     
         <span class="sidebar-tag-name" data-tags="EM"><span class="iconfont-archer">&#xe606;</span>EM</span>
+    
+        <span class="sidebar-tag-name" data-tags="聚类"><span class="iconfont-archer">&#xe606;</span>聚类</span>
+    
+        <span class="sidebar-tag-name" data-tags="Baum-Welch"><span class="iconfont-archer">&#xe606;</span>Baum-Welch</span>
     
         <span class="sidebar-tag-name" data-tags="隐马尔可夫"><span class="iconfont-archer">&#xe606;</span>隐马尔可夫</span>
     
         <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
     
         <span class="sidebar-tag-name" data-tags="Jensen 不等式"><span class="iconfont-archer">&#xe606;</span>Jensen 不等式</span>
-    
-        <span class="sidebar-tag-name" data-tags="高斯分布"><span class="iconfont-archer">&#xe606;</span>高斯分布</span>
-    
-        <span class="sidebar-tag-name" data-tags="聚类"><span class="iconfont-archer">&#xe606;</span>聚类</span>
     
         <span class="sidebar-tag-name" data-tags="嘿嘿"><span class="iconfont-archer">&#xe606;</span>嘿嘿</span>
     
@@ -969,9 +982,9 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="算法"><span class="iconfont-archer">&#xe60a;</span>算法</span>
     
-        <span class="sidebar-category-name" data-categories="杂谈"><span class="iconfont-archer">&#xe60a;</span>杂谈</span>
-    
         <span class="sidebar-category-name" data-categories="哈哈哈"><span class="iconfont-archer">&#xe60a;</span>哈哈哈</span>
+    
+        <span class="sidebar-category-name" data-categories="杂谈"><span class="iconfont-archer">&#xe60a;</span>杂谈</span>
     
     </div>
     <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
