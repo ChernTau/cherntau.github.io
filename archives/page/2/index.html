@@ -6,7 +6,7 @@
 
 
 <head>
-    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
     <meta name="author" content="Chern Tau">
     <meta name="renderer" content="webkit">
@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="Cache-Control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>2. Baum-Welch 算法 · Chern&#39;s Studio</title>
+    <title>Chern&#39;s Studio</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -70,8 +70,6 @@
 
     <link rel="preload" href= /css/style.css?v=20180721 as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= /css/mobile.css?v=20180721 media="(max-width: 980px)">
-    
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -191,28 +189,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
     <!-- 百度统计  -->
     
-    <!-- 谷歌统计  --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    <!-- 谷歌统计  -->
     
 </head>
 
     
-        <body class="post-body">
     
-    
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="header">
+<header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
-    
-    <div class="banner">
-            <div class="blog-title">
-                <a href="/" >Chern&#39;s Studio.</a>
-            </div>
-            <div class="post-title">
-                <a href="#" class="post-name">2. Baum-Welch 算法</a>
-            </div>
-    </div>
     
     <a class="home-link" href=/>Chern's Studio.</a>
 </header>
@@ -226,78 +213,24 @@
 
 
 
-height:50vh;
-
 >
     
     <!-- 主页  -->
-    
-    
-    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
-            
-            2. Baum-Welch 算法
-            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
-            
-            <!-- 404 -->
-            
         </p>
         <!-- 文章页meta -->
-        
-            <div class="post-intros">
-                <!-- 文章页标签  -->
-                
-                    <div class= post-intro-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "EM">EM</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Baum-Welch">Baum-Welch</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "隐马尔可夫">隐马尔可夫</a>
-    
-</div>
-                
-                
-                    <div class="post-intro-read">
-                        <span>Word count: <span class="post-count">899</span> / Reading time: <span class="post-count">4 min</span></span>
-                    </div>
-                
-                <div class="post-intro-meta">
-                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
-                    <span class="post-intro-time">2018/04/01</span>
-                    
-                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                        <span class="iconfont-archer">&#xe602;</span>
-                        <span id="busuanzi_value_page_pv"></span>
-                    </span>
-                    
-                    <span class="shareWrapper">
-                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
-                        <span class="shareText">Share</span>
-                        <ul class="shareList">
-                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
-                                <div class="share-qrcode"></div>
-                            </li>
-                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
-                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
-                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
-                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
-                        </ul>
-                    </span>
-                </div>
-            </div>
         
     </div>
 </div>
@@ -398,119 +331,39 @@ height:50vh;
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main post-page">
-    <article class="article-entry">
-        <h1 id="Baum-Welch-算法"><a href="#Baum-Welch-算法" class="headerlink" title="Baum-Welch 算法"></a><strong>Baum-Welch</strong> 算法</h1><h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>隐马尔可夫模型 <strong>(HMM)</strong> 里有三个基本问题，第三个问题叫做：</p>
-<ul>
-<li>参数估计问题是 <strong>HMM</strong> 面临的第三个问题，即给定一个观察序列 $O=O_1O_2\dots O_T$ ，如何调节模型 $\mu = (A,B,\pi)$ 的参数，使得 $P(O\,|\,\mu)$ 最大化：<script type="math/tex; mode=display">
-arg\max_{\theta}P(O_{training}\, | \, \mu)</script></li>
-</ul>
-<p>通俗解释为：</p>
-<ul>
-<li>知道骰子有几种（数量），不知道每种骰子是什么，观测到很多次掷骰子的结果，想反推出每种骰子是什么</li>
-</ul>
-<h2 id="字符解释"><a href="#字符解释" class="headerlink" title="字符解释"></a>字符解释</h2><ul>
-<li>$A$ 表示状态转移概率矩阵</li>
-<li>$B$ 表示发射概率矩阵</li>
-<li>$\pi$ 表示初始状态的概率分布</li>
-<li>$O$ 表示观察状态序列</li>
-<li>$I$ 表示隐藏状态序列</li>
-</ul>
-<h2 id="EM-算法回顾"><a href="#EM-算法回顾" class="headerlink" title="EM 算法回顾"></a><strong>EM</strong> 算法回顾</h2><p>在 <strong>EM</strong> 算法里，我们回顾了下界函数 $Q(\theta,\theta^{(t)}) =\displaystyle \sum_{i=1}^{m}\sum_{z^{(i)}}Q_i^{(t)}(z^{(i)})\log p(x^{(i)},z^{(i)};\theta)$ 以及它的推导过程，而 <strong>Baum-Welch</strong> 算法也是从一个下界函数开始的。隐马尔可夫模型 <strong>(HMM)</strong> 中，赋予 $Q_i^{(t)}(z^{(i)})$ 不一样的值。</p>
-<script type="math/tex; mode=display">
-\begin{align*}
-Q_i^{(t)}(z^{(i)})&=P(z^{(i)}\,|\,x^{(i)};\theta^{(t)})\\
-&=P(I\,|\,O;\theta^{(t)})\\
-&=\pi_{i_1}b_{i_1}(O_1)a_{i_1i_2}b_{i_2}(O_2)\dots a_{i_{T-1}i_T}b_{i_T}(O_T)
-\end{align*}</script><ul>
-<li>其中， $\pi$ 是之前定义的初始状态的概率分布 $\pi$ ，$b_{i_T}(O_T)$ 是 $O_T$ 的发射概率矩阵 $B$ ，$a_{i_{T-1}i_T}$ 是状态 $i_{T-1}$ 到状态 $i_{T}$ 的状态转移概率矩阵 $A$ ，$\theta = (A,B,\pi)$。</li>
-</ul>
-<h3 id="1-E-步骤：求-Q-函数-Q-theta-theta-i"><a href="#1-E-步骤：求-Q-函数-Q-theta-theta-i" class="headerlink" title="1. E-步骤：求 $Q$ 函数 $Q(\theta,\theta^{(i)})$"></a>1. E-步骤：求 $Q$ 函数 $Q(\theta,\theta^{(i)})$</h3><script type="math/tex; mode=display">
-\begin{align*}
-Q(\theta,\theta^{(i)})&=\sum_IP(I\,|\,O;\theta^{(i)})\log P(O,I;\theta)\\
-&=\sum_I \dfrac{P(O,I;\theta^{(i)})}{P(O;\theta^{(i)})}\log P(O,I;\theta)
-\end{align*}</script><p>我们写出 $Q$ 函数之后后面就要对它进行极大化，也就是说 <strong>EM</strong> 算法的 <strong>M</strong> 步骤。既然是最大化，那么只要保证不影响最终的结果，对 $Q$ 函数进行对于最大化来说没有影响的常数因子乘除是可以的。</p>
-<p>而 $P(O;\theta^{(i)})$ 便是概率计算问题中我们解决的问题，对于固定的模型参数来说它是一个常量，因此我们为了后边计算方便可以在上面原先的 $Q$ 函数的基础上乘以它，使得 $Q$ 函数成为： </p>
-<script type="math/tex; mode=display">
-Q(\theta,\theta^{(i)})=\sum_IP(O,I;\theta^{(i)})\log P(O,I;\theta)</script><ul>
-<li>$\theta^{(i)}$ 是隐马尔可夫模型参数的当前估计值， $\theta$ 是要极大化的隐马尔可夫模型参数。 $P(O,I;\theta^{(i)})$ 是确定的值，即它可能为 $[0,1]$ 中的任何值，根据 $\theta^{(i)}$ 算出。</li>
-<li>如果仔细观察式子的话，该式就是对随机变量 $I$ 求期望。即：<script type="math/tex; mode=display">
-\begin{align*}
-Q(\theta,\theta^{(i)})&=E[f(I)]=E[\log P(O,I;\theta)]\\
-&=\sum_{k=1}^{\infty}g(x_k)p_k =\sum_IP(O,I;\theta^{(i)})\log P(O,I;\theta)\\
-&=\sum_IP(O,I;\theta^{(i)})\log\left(\pi_{i_1}b_{i_1}(O_1)a_{i_1i_2}b_{i_2}(O_2)\dots a_{i_{T-1}i_T}b_{i_T}(O_T)\right)\\
-&=\sum_I\log \pi_{i_1}P(O,I;\theta^{(i)})+\sum_I(\sum_{t=1}^{T-1}\log a_{i_{t-1}i_t})P(O,I;\theta^{(i)})+\sum_I(\sum_{t=1}^{T-1}\log b_{i_t}(O_t))P(O,I;\theta^{(i)})
-\end{align*}</script><ul>
-<li>其中， $\pi$ 是之前定义的初始状态的概率分布 $\pi$ ，$b_{i_T}(O_T)$ 是 $O_T$ 的发射概率矩阵 $B$ ，$a_{i_{T-1}i_T}$ 是状态 $i_{T-1}$ 到状态 $i_{T}$ 的状态转移概率矩阵 $A$ ，$\theta = (A,B,\pi)$。</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="2-M-步骤：-极大化-Q-函数-Q-theta-theta-i-求模型参数-A-B-pi"><a href="#2-M-步骤：-极大化-Q-函数-Q-theta-theta-i-求模型参数-A-B-pi" class="headerlink" title="2. M-步骤： 极大化 $Q$ 函数 $Q(\theta,\theta^{(i)})$ 求模型参数 $(A,B,\pi)$"></a>2. M-步骤： 极大化 $Q$ 函数 $Q(\theta,\theta^{(i)})$ 求模型参数 $(A,B,\pi)$</h3><p>$Q$ 现在有三项，要极大化它，只需要各项分别极大化： </p>
-<p><strong>(1)</strong> 上式第一项可以写成：</p>
-<script type="math/tex; mode=display">
-\sum_I\log \pi_{i_1}P(O,I;\theta^{(i)})=\sum_{i=1}^{N}\log \pi_iP(O,i_1=i;\theta^{(i)})</script><p>由于 $\displaystyle \sum_{i=1}^N\pi_i=1$ ，因此利用拉格朗日乘子法，可以写出第一项的拉格朗日函数：</p>
-<script type="math/tex; mode=display">
-\sum_{i=1}^{N}\log \pi_iP(O,i_1=i;\theta^{(i)})+\gamma(\sum_{i=1}^N\pi_i-1)</script><p>令其偏导数为 $0$，</p>
-<script type="math/tex; mode=display">
-\dfrac{\partial}{\partial \pi_i}\left[\sum_{i=1}^{N}\log \pi_iP(O,i_1=i;\theta^{(i)})+\gamma(\sum_{i=1}^N\pi_i-1) \right]=0</script><ul>
-<li>其中 $\dfrac{\partial (\log\pi_i)}{\partial \pi_i}=\dfrac{1}{\pi_i}$ ， $\dfrac{\partial (\gamma\pi_i)}{\partial \pi_i}=\gamma$ </li>
-</ul>
-<p>得到：</p>
-<script type="math/tex; mode=display">
-\sum_{i=1}^{N}\dfrac{P(O,i_1=i;\theta^{(i)})}{\pi_i}+\sum_{i=1}^{N}\gamma=0</script><p>接下来等式两边同乘以 $\pi_i$ 得到如下式子：</p>
-<script type="math/tex; mode=display">
-P(O,i_1=i;\theta^{(i)})+\gamma\pi_i=0</script><p>对 $i$ 求和可得：$\gamma=-P(O;\theta^{(i)})$</p>
-<p>于是可得：<script type="math/tex">\pi_i=\dfrac{P(O,i_1=i;\theta^{(i)})}{P(O;\theta^{(i)})}</script></p>
-<p><strong>(2)</strong> 上式第一项可以写成：</p>
-<script type="math/tex; mode=display">
-\sum_I(\sum_{t=1}^{T-1}\log a_{i_{t-1}i_t})P(O,I;\theta^{(i)})=\sum_{i=1}^{N}\sum_{j=1}^{N}\sum_{t=1}^{T-1}\log a_{ij}P(O,i_t=i,i_{t+1}=j;\theta^{(i)})</script><p>类似第一项，应用具有约束条件 $\displaystyle \sum_{j=1}^Na_{ij}=1$ 的拉格朗日乘子法可以求出：</p>
-<script type="math/tex; mode=display">
-a_{ij}=\dfrac{\sum_{t=1}^{T-1}P(O,i_t=i,i_{t+1}=j;\theta^{(i)})}{\sum_{t=1}^{T-1}P(O,i_t=i;\theta^{(i)})}</script><p><strong>(3)</strong> 类似 <strong>(1)</strong> 有 $\displaystyle \sum_{k=1}^Nb_{j}(k)=1$ ，可得：</p>
-<script type="math/tex; mode=display">
-b_{j}(k)=\dfrac{\sum_{t=1}^{T-1}P(O,i_t=j;\theta^{(i)})\delta(o_t=v_k)}{\sum_{t=1}^{T-1}P(O,i_t=j;\theta^{(i)})}</script><ul>
-<li>其中，$o_t$ 是在 $t$ 时刻输出的符号，$v_k$ 是 <strong>HMM</strong> 输出符号集合中的第 $k$ 个符号。 </li>
-<li>$\delta(o_t=v_k)$ 为 <strong>Kronecker</strong> 函数，当 $o_t=v_k$ 时，$\delta(o_t=v_k) = 1$ ，当 $o_t \ne v_k$ 时，$\delta(o_t=v_k) = 0$ 。</li>
-</ul>
-
+            <main class="main index-page">
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2017/08/07/Install Hadoop on Ubuntu/" >
+            
+                <span>Install Hadoop on Ubuntu</span>
+        </a>
+        <div class="abstract-content">
+            Install JDKVisit http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html and download jre-8u121-linux-x64.tar.gz file to Home.
+Open terminal, get root and create new folder on the home1234sudo passwd root # set root passwordsu      # get rootgedit /etc/sudoers  # add c...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/08/07</span>
+            </div>
+            <!-- tags  -->
+            
+        </div>
     </article>
-    <!-- license  -->
+    
     <!-- paginator  -->
-    <ul class="post-paginator">
-        <li class="next">
-            
-                <div class="nextSlogan">Next Post</div>
-                <a href= "/2018/05/01/GMM 算法/" title= 3. GMM 算法 >
-                    <div class="nextTitle">3. GMM 算法</div>
-                </a>
-            
-        </li>
-        <li class="previous">
-            
-                <div class="prevSlogan">Previous Post</div>
-                <a href= "/2018/03/01/EM-算法/" title= 1.EM 算法 >
-                    <div class="prevTitle">1.EM 算法</div>
-                </a>
-            
-        </li>
-    </ul>
-    <!-- 评论插件 -->
-    <!-- 来必力City版安装代码 -->
-
-<!-- City版安装代码已完成 -->
     
+    <nav class="page-nav">
+        <a class="extend prev" rel="prev" href="/archives/">&#60; PREV</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span>
+    </nav>
     
-    <!--PC和WAP自适应版-->
-
-    <!--PC版-->
-
-
-    
-    
-
-    <!-- 评论 -->
 </main>
-
             <!-- profile -->
             
         </div>
@@ -590,24 +443,6 @@ b_{j}(k)=\dfrac{\sum_{t=1}^{T-1}P(O,i_t=j;\theta^{(i)})\delta(o_t=v_k)}{\sum_{t=
 </footer>
     </div>
     <!-- toc -->
-    
-    <div class="toc-wrapper" style=
-    
-
-
-
-
-
-
-
-top:50vh;
-
-    >
-        <div class="toc-catalog">
-            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
-        </div>
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Baum-Welch-算法"><span class="toc-number">1.</span> <span class="toc-text">Baum-Welch 算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#目的"><span class="toc-number">1.1.</span> <span class="toc-text">目的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符解释"><span class="toc-number">1.2.</span> <span class="toc-text">字符解释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EM-算法回顾"><span class="toc-number">1.3.</span> <span class="toc-text">EM 算法回顾</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-E-步骤：求-Q-函数-Q-theta-theta-i"><span class="toc-number">1.3.1.</span> <span class="toc-text">1. E-步骤：求 $Q$ 函数 $Q(\theta,\theta^{(i)})$</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-M-步骤：-极大化-Q-函数-Q-theta-theta-i-求模型参数-A-B-pi"><span class="toc-number">1.3.2.</span> <span class="toc-text">2. M-步骤： 极大化 $Q$ 函数 $Q(\theta,\theta^{(i)})$ 求模型参数 $(A,B,\pi)$</span></a></li></ol></li></ol></li></ol>
-    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -698,9 +533,47 @@ top:50vh;
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 9
+        Total : 11
         </div>
         <!-- search  -->
         
@@ -716,17 +589,27 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/GMM 算法/" >3. GMM 算法</a>
+            <span class="archive-post-date">07/01</span><a class="archive-post-title" href= "/2018/07/01/决策树-算法/" >决策树 算法</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/Baum-Welch 算法/" >2. Baum-Welch 算法</a>
+            <span class="archive-post-date">06/01</span><a class="archive-post-title" href= "/2018/06/01/SVM-算法/" >SVM 算法</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2018/03/01/EM-算法/" >1.EM 算法</a>
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/GMM-算法/" >GMM 算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/Baum-Welch-算法/" >Baum-Welch 算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2018/03/01/EM-算法/" >EM 算法</a>
         </li>
     
     
@@ -760,12 +643,12 @@ top:50vh;
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2017/08/07/Install-R-and-RStudio-in-Ubuntu/" >Install R and RStudio in Ubuntu</a>
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2017/08/07/Install Hadoop on Ubuntu/" >Install Hadoop on Ubuntu</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2017/08/07/Install Hadoop on Ubuntu/" >Install Hadoop on Ubuntu</a>
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2017/08/07/Install-R-and-RStudio-in-Ubuntu/" >Install R and RStudio in Ubuntu</a>
         </li>
     
     </div>
@@ -773,21 +656,35 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="高斯分布"><span class="iconfont-archer">&#xe606;</span>高斯分布</span>
+        <span class="sidebar-tag-name" data-tags="Baum-Welch"><span class="iconfont-archer">&#xe606;</span>Baum-Welch</span>
     
         <span class="sidebar-tag-name" data-tags="EM"><span class="iconfont-archer">&#xe606;</span>EM</span>
     
-        <span class="sidebar-tag-name" data-tags="聚类"><span class="iconfont-archer">&#xe606;</span>聚类</span>
-    
-        <span class="sidebar-tag-name" data-tags="Baum-Welch"><span class="iconfont-archer">&#xe606;</span>Baum-Welch</span>
-    
         <span class="sidebar-tag-name" data-tags="隐马尔可夫"><span class="iconfont-archer">&#xe606;</span>隐马尔可夫</span>
     
-        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
+        <span class="sidebar-tag-name" data-tags="极大似然估计"><span class="iconfont-archer">&#xe606;</span>极大似然估计</span>
+    
+        <span class="sidebar-tag-name" data-tags="隐变量"><span class="iconfont-archer">&#xe606;</span>隐变量</span>
     
         <span class="sidebar-tag-name" data-tags="Jensen 不等式"><span class="iconfont-archer">&#xe606;</span>Jensen 不等式</span>
     
-        <span class="sidebar-tag-name" data-tags="嘿嘿"><span class="iconfont-archer">&#xe606;</span>嘿嘿</span>
+        <span class="sidebar-tag-name" data-tags="高斯分布"><span class="iconfont-archer">&#xe606;</span>高斯分布</span>
+    
+        <span class="sidebar-tag-name" data-tags="聚类"><span class="iconfont-archer">&#xe606;</span>聚类</span>
+    
+        <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
+    
+        <span class="sidebar-tag-name" data-tags="对偶"><span class="iconfont-archer">&#xe606;</span>对偶</span>
+    
+        <span class="sidebar-tag-name" data-tags="拉格朗日乘子"><span class="iconfont-archer">&#xe606;</span>拉格朗日乘子</span>
+    
+        <span class="sidebar-tag-name" data-tags="核函数"><span class="iconfont-archer">&#xe606;</span>核函数</span>
+    
+        <span class="sidebar-tag-name" data-tags="分类"><span class="iconfont-archer">&#xe606;</span>分类</span>
+    
+        <span class="sidebar-tag-name" data-tags="信息增益"><span class="iconfont-archer">&#xe606;</span>信息增益</span>
+    
+        <span class="sidebar-tag-name" data-tags="剪枝"><span class="iconfont-archer">&#xe606;</span>剪枝</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -824,7 +721,7 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="算法"><span class="iconfont-archer">&#xe60a;</span>算法</span>
     
-        <span class="sidebar-category-name" data-categories="哈哈哈"><span class="iconfont-archer">&#xe60a;</span>哈哈哈</span>
+        <span class="sidebar-category-name" data-categories="测试"><span class="iconfont-archer">&#xe60a;</span>测试</span>
     
         <span class="sidebar-category-name" data-categories="杂谈"><span class="iconfont-archer">&#xe60a;</span>杂谈</span>
     
@@ -860,8 +757,6 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
-    
-        <script src="/scripts/share.js" async></script>    
      
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -877,7 +772,7 @@ jsonContent:
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 
 </body>
 </html>

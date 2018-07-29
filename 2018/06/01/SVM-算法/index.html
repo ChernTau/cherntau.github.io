@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="Chern Tau">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Chern Tau">
+    <meta name="keywords" content="Knowledge Has NO Limit | Chern Tau">
+    <meta name="description" content="">
+    <meta name="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>SVM 算法 · Chern&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180721 as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= /css/mobile.css?v=20180721 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Chern&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">SVM 算法</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>Chern's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            SVM 算法
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "对偶">对偶</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "拉格朗日乘子">拉格朗日乘子</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "核函数">核函数</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count">7,730</span> / Reading time: <span class="post-count">29 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/06/01</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="SVM-算法"><a href="#SVM-算法" class="headerlink" title="SVM 算法"></a><strong>SVM</strong> 算法</h1><h2 id="S-1-Logistic回归"><a href="#S-1-Logistic回归" class="headerlink" title="$\S$ 1 $ $ Logistic回归"></a>$\S$ 1 $ $ Logistic回归</h2><h3 id="S-1-1-原理"><a href="#S-1-1-原理" class="headerlink" title="$\S$ 1.1 $ $ 原理"></a>$\S$ 1.1 $ $ 原理</h3><p>给定一些数据点，它们分别属于两个不同的类，现在要找到一个线性分类器把这些数据分成两类。如果用 $\boldsymbol{x}$ 表示数据点，用 $\boldsymbol{y}$ 表示类别（ $\boldsymbol{y}$ 可以取 $1$ 或者 $-1$ ，分别代表两个不同的类），一个线性分类器的学习目标便是要在 $n$ 维的数据空间中找到一个<strong>超平面（hyper plane）</strong>，这个超平面的方程可以表示：</p>
+<script type="math/tex; mode=display">
+\omega ^T\boldsymbol{x} + b = 0</script><p><strong>Logistic回归</strong>目的是从特征学习出一个 $0/1$ 分类模型，而这个模型是将特性的线性组合作为自变量，由于自变量的取值范围是 $(-\infty, +\infty)$ 。因此，使用<strong>logistic函数</strong>（或称作<strong>sigmoid函数</strong>）将自变量映射到 $(0,1)$ 上，映射后的值被认为是属于 $\boldsymbol{y}=1$ 的概率。</p>
+<p>假设函数：</p>
+<script type="math/tex; mode=display">
+h_{\theta}(\boldsymbol{x}) = g(\theta^T\boldsymbol{x}) = \frac{1}{1+e^{-\theta^T\boldsymbol{x}}}</script><ul>
+<li>其中 $\boldsymbol{x}$ 是 $n$ 维特征向量，函数 $g$ 就是<strong>logistic函数</strong></li>
+</ul>
+<p>而假设函数就是特征属于 $\boldsymbol{y}=1$的概率：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+P(y = 1\  |\ \boldsymbol{x}\ ; \theta)&=h_{\theta}(\boldsymbol{x})\\
+P(y = 0\  |\ \boldsymbol{x}\ ; \theta)&=1-h_{\theta}(\boldsymbol{x})
+\end{align}</script><p>从而，当我们要判别一个新来的特征属于哪个类时，只需求 $h_{\theta}(\boldsymbol{x})$ 即可，若大于 $0.5$ 就是 $\boldsymbol{y}=1$ 的类，反之属于  $\boldsymbol{y}=0$ 类。</p>
+<ul>
+<li>$h_{\theta}(\boldsymbol{x})$ 只和 $\theta^T\boldsymbol{x}$ 有关，$\theta^T\boldsymbol{x}&gt;0$，那么 $h_{\theta}(\boldsymbol{x}) &gt; 0$ ，而 $g(z)$ 只是用来映射，真实的类别决定权还是在于 $\theta^T\boldsymbol{x}&gt;0$</li>
+<li>当时 $\theta^T\boldsymbol{x}&gt;&gt;0$ 时， $h_{\theta}(\boldsymbol{x}) = 1$，反之 $h_{\theta}(\boldsymbol{x}) = 0$</li>
+<li><strong>Logistic回归</strong>就是要学习得到 $\theta$，使得正例的特征远大于 $0$ ，负例的特征远小于 $0$</li>
+</ul>
+<p>接下来，尝试把<strong>logistic回归</strong>做个变形。</p>
+<ul>
+<li>首先，将使用的结果标签 $\boldsymbol{y}=0$ 和 $\boldsymbol{y}=1$ 替换为 $\boldsymbol{y}=-1$ ，$\boldsymbol{y}=1$ </li>
+<li>然后将 $\theta^T\boldsymbol{x} = \theta_0+\theta_1x_1+\theta_2x_2+ \dots +\theta_nx_n$中的 $\theta_0$ 替换为 $b$</li>
+<li>最后将后面的 $\theta_0+\theta_1x_1+\theta_2x_2+ \dots +\theta_nx_n$ 替换为 $\omega ^T\boldsymbol{x}$。如此，则有了 $\omega ^T\boldsymbol{x} + b$。</li>
+</ul>
+<p>也就是说除了 $\boldsymbol{y}$ 由 $\boldsymbol{y}=0$ 变为 $\boldsymbol{y}=1$ 外，线性分类函数跟<strong>logistic回归</strong>的形式化表示没区别。</p>
+<p>进一步，可以将假设函数 $h_{\omega,b}(\boldsymbol{x}) = g(\omega ^T\boldsymbol{x} + b )$ 中的 $g(z)$ 做一个简化，将其简单映射到 $\boldsymbol{y}=-1$ 和 $\boldsymbol{y}=1$ 上。映射关系如下：</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+g(z)=\left \{
+  \begin{array}{lr}
+    1,   &z\ge 0\\
+    -1,  &z<0 
+  \end{array}
+\right.
+\end{equation}</script><h3 id="S-1-2-例子"><a href="#S-1-2-例子" class="headerlink" title="$\S$ 1.2 $ $ 例子"></a>$\S$ 1.2 $ $ 例子</h3><p>如下图所示，现在有一个二维平面，平面上有两种不同的数据，分别用 $\circ$ 和 $\times$ 表示。由于这些数据是线性可分的，所以可以用一条直线将这两类数据分开，这条直线就相当于一个超平面，超平面一边的数据点所对应的 $\boldsymbol{y}$ 全是 $-1$ ，另一边所对应的 $\boldsymbol{y}$ 全是 $1$</p>
+<div align="center"> 
+<img src="/2018/06/01/SVM-算法/pic_Algo_5.1.png" width="350" height="250">
+</div>
+
+<p>这个超平面可以用分类函数表示，当 $f(\boldsymbol{x})$ 等于 $0$ 的时候，$x $ 便是位于超平面上的点，而 $f(\boldsymbol{x})$ 大于 $0$ 的点对应 $\boldsymbol{y}=1$ 的数据点，$f(\boldsymbol{x})$小于 $0$ 的点对应 $\boldsymbol{y}=-1$ 的点，如下图所示：</p>
+<div align="center"> 
+<img src="/2018/06/01/SVM-算法/pic_Algo_5.2.png" width="350" height="250">
+</div>
+
+<p>接下来的问题是，<font color="red"><strong>如何确定这个超平面呢</strong></font>？ 从直观上而言，这个超平面应该是最适合分开两类数据的直线。而判定“最适合”的标准就是<font color="red"><strong>这条直线离直线两边的数据的间隔最大</strong></font>。所以，得寻找有着最大间隔的超平面。</p>
+<h3 id="S-1-3-函数间隔与几何间隔"><a href="#S-1-3-函数间隔与几何间隔" class="headerlink" title="$\S$ 1.3 $ $ 函数间隔与几何间隔"></a>$\S$ 1.3 $ $ 函数间隔与几何间隔</h3><p>在超平面 $\omega ^T\boldsymbol{x} + b$ 确定的情况下，$\left |\omega ^T\boldsymbol{x} + b\right| $ 能够表示点 $x$ 到距离超平面的远近，而通过观察 $\omega ^T\boldsymbol{x} + b$ 的符号与类标记 $\boldsymbol{y}$ 的符号是否一致可判断分类是否正确<br>所以，可以用 $\boldsymbol{y} \cdot(\omega ^T\boldsymbol{x} + b)$ 的正负性来判定或表示分类的正确性。于此，我们便引出了 <strong>函数间隔（functional margin）</strong> 的概念。</p>
+<p>定义函数间隔（用 $\widehat{\gamma}$ 表示）为：</p>
+<script type="math/tex; mode=display">
+\widehat{\gamma}_i=\boldsymbol{y}_i (\omega ^T\boldsymbol{x}_i + b)=yf(\boldsymbol{x}_i)</script><p>而超平面 $(\omega,b)$ 关于 $T$ 中所有样本点 $(\boldsymbol{x}_i，\boldsymbol{y}_i)$ 的函数间隔最小值（其中，$\boldsymbol{x}$ 是特征，$\boldsymbol{y}$ 是结果标签，$i$ 表示第 $i$ 个样本），便为超平面 $(\omega, b)$ 关于训练数据集 $T$ 的函数间隔：</p>
+<script type="math/tex; mode=display">
+\widehat{\gamma}=\min \widehat{\gamma}_i\\
+(i=1,2,3,\dots,n)</script><ul>
+<li>但这样定义的函数间隔有问题，即如果成比例的改变 $\omega$ 和 $b$（如将它们改成 $2\omega$ 和 $2b$ ），则函数间隔的值 $f(x)$ 却变成了原来的 $2$ 倍（虽然此时超平面没有改变），所以只有函数间隔还远远不够。</li>
+</ul>
+<p>事实上，我们可以对法向量 $\omega$ 加些约束条件，从而引出真正定义点到超平面的距离—<strong>几何间隔（geometrical margin）</strong> 的概念。</p>
+<p>假定对于一个点 $\boldsymbol{x}$ ，令其垂直投影到超平面上的对应点为 $\boldsymbol{x}_0$ ， $\omega$ 是垂直于超平面的一个向量，$\gamma$ 为样本 $\boldsymbol{x}$  到超平面的距离，如下图所示：</p>
+<div align="center"> 
+<img src="/2018/06/01/SVM-算法/pic_Algo_5.3.png" width="300" height="200">
+</div>
+
+<p>则：</p>
+<script type="math/tex; mode=display">
+\boldsymbol{x} = \boldsymbol{x}_0+\gamma\dfrac{\omega}{\left \| \omega\right \|}</script><ul>
+<li>其中 $\left | \omega\right |$ 为 $\omega$  的二阶范数（范数是一个类似于模的表示长度的概念），$\dfrac{\omega}{\left | \omega\right |}$ 是单位向量（一个向量除以它的模谓之单位向量）。</li>
+</ul>
+<p>又由于是超平面上的点，代入超平面的方程 $\omega ^T\boldsymbol{x} + b =0$ ，可得 $\omega ^T\boldsymbol{x}_0 + b =0$ ，即  $\omega ^T\boldsymbol{x}_0 = -b$<br>随即让此式 $\boldsymbol{x} = \boldsymbol{x}_0+\gamma\dfrac{\omega}{\left | \omega\right |}$ 的两边同时乘以 $\omega^T$ ，再根据 $\omega ^T\boldsymbol{x}_0 = -b$ 和 $\omega ^T\omega=\left | \omega\right |^2$ ，即可算出： </p>
+<script type="math/tex; mode=display">
+\gamma = \dfrac{\omega ^T\boldsymbol{x} + b}{\left \| \omega\right \|}= \dfrac{f(\boldsymbol{x})}{\left \| \omega\right \|}</script><p>为了得到 $\gamma$ 的绝对值，令 $\gamma$ 乘上对应的类别 $\boldsymbol{y}$ ，即可得出几何间隔（用 $\widetilde{\gamma}$ 表示）的定义：</p>
+<script type="math/tex; mode=display">
+\widetilde{\gamma} = \boldsymbol{y}\gamma=\dfrac{\boldsymbol{y}(\omega ^T\boldsymbol{x} + b)}{\left \| \omega\right \|}=\dfrac{\widehat{\gamma}}{\left \| \omega\right \|}</script><p>从上述函数间隔和几何间隔的定义可以看出：几何间隔就是函数间隔除以 $\left | \omega\right |$，而且函数间隔 $\boldsymbol{y}(\omega ^T\boldsymbol{x} + b)=\boldsymbol{y}f(\boldsymbol{x})$ 实际上就是 $\left|f(\boldsymbol{x})\right|$ ，只是人为定义的一个间隔度量，而几何间隔 $\dfrac{\left|f(\boldsymbol{x})\right|}{\left | \omega\right |}$ 才是直观上的点到超平面的距离。</p>
+<h3 id="S-1-4-最大间隔分类器"><a href="#S-1-4-最大间隔分类器" class="headerlink" title="$\S$ 1.4 $ $ 最大间隔分类器"></a>$\S$ 1.4 $ $ 最大间隔分类器</h3><p>对一个数据点进行分类，当超平面离数据点的“间隔”越大，分类的<strong>确信度（confidence）</strong> 也越大。所以，为了使得分类的确信度尽量高，需要让所选择的超平面能够最大化这个“间隔”值。这个间隔就是下图中的<strong>Gap</strong>的一半。</p>
+<div align="center"> 
+<img src="/2018/06/01/SVM-算法/pic_Algo_5.4.png" width="350" height="250">
+</div>
+
+
+<p>通过由前面的分析可知：函数间隔不适合用来最大化间隔值，因为在超平面固定以后，可以等比例地缩放 $\omega$ 的长度和 $b$ 的值，这样可以使得 $f(\boldsymbol{x})=\omega ^T\boldsymbol{x} + b$ 的值任意大，亦即函数间隔 $\widehat{\gamma}$ 可以在超平面保持不变的情况下被取得任意大。但几何间隔因为除上了 $\left | \omega\right |$ ，使得在缩放 $\omega$ 和 $b$ 的时候几何间隔的值是不会改变的，它只随着超平面的变动而变动，因此，这是更加合适的一个间隔。那么，  换言之，这里要找的最大间隔分类超平面中的“间隔”指的是几何间隔。</p>
+<p>于是<strong>最大间隔分类器（maximum margin classifier）</strong> 的目标函数可以定义为：<br>同时需满足一些条件，根据间隔的定义，有</p>
+<script type="math/tex; mode=display">
+\boldsymbol{y}_i(\omega ^T\boldsymbol{x}_i + b)=\widehat{\gamma}_i \ge \widehat{\gamma}\\
+(i=1,2,3,\dots,n)</script><p>回顾下几何间隔的定义 $\widetilde{\gamma} = \boldsymbol{y}\gamma=\dfrac{\widehat{\gamma}}{\left | \omega\right |}$ 可知：如果令函数间隔等于 $1$，则有 $\widetilde{\gamma}= \dfrac{1}{\left | \omega\right |}$ 且 $\boldsymbol{y}_i(\omega ^T\boldsymbol{x}_i + b) \ge 1$ ，从而上述目标函数转化成了：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&\max \dfrac{1}{\left \| \omega\right \|}\\
+s.t.,\quad& \boldsymbol{y}_i(\omega ^T\boldsymbol{x}_i + b) \ge 1\\
+&i=1,2,3,\dots,n
+\end{align}</script><p>这个目标函数便是在相应的约束条件下，最大化这个 $\dfrac{1}{\left | \omega\right |}$ 值，而 $\dfrac{1}{\left | \omega\right |}$ 便是几何间隔 $\widetilde{\gamma}$。   如下图所示，中间的实线便是寻找到的<strong>最优超平面（Optimal Hyper Plane）</strong> ，其到两条虚线的距离相等，这个距离便是几何间隔 $\widetilde{\gamma}$ ，两条虚线之间的距离等于 $2\widetilde{\gamma}$  ，而虚线上的点则是支持向量。由于这些支持向量刚好在边界上，所以它们满足 $\boldsymbol{y}(\omega ^T\boldsymbol{x} + b) =1$（上节中：处于方便推导和优化的目的，我们可以令 $\widetilde{\gamma}=1$ ），而对于所有不是支持向量的点，则显然有 $\boldsymbol{y}(\omega ^T\boldsymbol{x} + b) &gt;1$。</p>
+<div align="center"> 
+<img src="/2018/06/01/SVM-算法/pic_Algo_5.5.png" width="350" height="250">
+</div>
+
+
+<h2 id="S-2-深入SVM"><a href="#S-2-深入SVM" class="headerlink" title="$\S$ 2 $ $ 深入SVM"></a>$\S$ 2 $ $ 深入SVM</h2><h3 id="S-2-1-从线性可分到线性不可分"><a href="#S-2-1-从线性可分到线性不可分" class="headerlink" title="$\S$ 2.1 $ $ 从线性可分到线性不可分"></a>$\S$ 2.1 $ $ 从线性可分到线性不可分</h3><h4 id="S-2-1-1-从原始问题到对偶问题的求解"><a href="#S-2-1-1-从原始问题到对偶问题的求解" class="headerlink" title="$\S$ 2.1.1 $ $ 从原始问题到对偶问题的求解"></a>$\S$ 2.1.1 $ $ 从原始问题到对偶问题的求解</h4><p>接着考虑之前得到的目标函数：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&\max \dfrac{1}{\left \| \omega\right \|}\\
+s.t.,\quad& \boldsymbol{y}_i(\omega ^T\boldsymbol{x}_i + b) \ge 1,\quad i=1,2,3,\dots,n
+\end{align}</script><p>由于求 $\dfrac{1}{\left | \omega\right |}$ 的最大值相当于求 $\dfrac{1}{2}\left | \omega\right |^2$ 的最小值，所以上述目标函数等价于：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&\min \dfrac{1}{2}\left \| \omega\right \|^2\\
+s.t.,\quad& \boldsymbol{y}_i(\omega ^T\boldsymbol{x}_i + b) \ge 1, \quad i=1,2,3,\dots,n
+\end{align}</script><p>因为现在的目标函数是二次的，约束条件是线性的，所以它是一个凸二次规划问题。即在一定的约束条件下，目标最优，损失最小。</p>
+<p>此外，由于这个问题的特殊结构，还可以通过<strong>拉格朗日对偶性（Lagrange Duality）</strong> 变换到<strong>对偶变量 (dual variable)</strong> 的优化问题，即<strong>通过求解与原问题等价的对偶问题（dual problem）得到原始问题的最优解</strong>，这就是线性可分条件下支持向量机的对偶算法。</p>
+<p>这样做的优点在于：</p>
+<ul>
+<li>对偶问题往往更容易求解</li>
+<li>可以自然的引入<strong>核函数</strong>，进而推广到非线性分类问题</li>
+</ul>
+<p>定义拉格朗日函数：</p>
+<script type="math/tex; mode=display">
+\mathcal{L}(\omega, b, \alpha)=\dfrac{1}{2}\left \| \omega\right \|^2-\sum_{i=1}^{n}\alpha_i\Big(\boldsymbol{y}_i(\omega ^T\boldsymbol{x}_i + b)-1\Big)</script><p>然后令：</p>
+<script type="math/tex; mode=display">
+\theta(\omega)=\max_{\alpha_i\ge0}\mathcal{L}(\omega, b, \alpha)</script><p>容易验证，当某个约束条件不满足时，例如 $\boldsymbol{y}_i(\omega ^T\boldsymbol{x}_i + b)&lt;1$ ，那么显然有 $\theta(\omega)=\infty$（只要令 $\alpha_i = \infty$ 即可）。而当所有约束条件都满足时，则最优值为 $\theta(\omega)=\dfrac{1}{2}\left | \omega\right |^2$ ，亦即最初要最小化的量。</p>
+<p>因此，在要求约束条件得到满足的情况下最小化 $\dfrac{1}{2}\left | \omega\right |^2$ ，实际上等价于直接最小化 $\theta(\omega)$ （当然，这里也有约束条件，就是 $\alpha_i$）   ，因为如果约束条件没有得到满足， $\theta(\omega)$ 会等于无穷大，自然不会是我们所要求的最小值。</p>
+<p>具体写出来，目标函数变成了：</p>
+<script type="math/tex; mode=display">
+\min_{\omega,b}\theta(\omega)=\min_{\omega,b}\max_{\alpha_i\ge0}\mathcal{L}(\omega, b, \alpha)=p^*</script><p>这里用 $p^*$ 表示这个问题的最优值，且和最初的问题是等价的。如果直接求解，那么一上来便得面对 $\omega$ 和 $b$ 两个参数，而 $\alpha_i$ 又是不等式约束，这个求解过程不好做。不妨把最小和最大的位置交换一下，变成：</p>
+<script type="math/tex; mode=display">
+\max_{\alpha_i\ge0}\min_{\omega,b}\mathcal{L}(\omega, b, \alpha)=d^*</script><p>交换以后的新问题是原始问题的对偶问题，这个新问题的最优值用 $d^<em>$ 来表示。而且有 $d^</em>\le p^*$ ，在满足某些条件的情况下，这两者相等，这个时候就可以通过求解对偶问题来间接地求解原始问题。</p>
+<h4 id="S-2-1-2-KKT条件"><a href="#S-2-1-2-KKT条件" class="headerlink" title="$\S$ 2.1.2 $ $ KKT条件"></a>$\S$ 2.1.2 $ $ KKT条件</h4><p>经过论证，是满足<strong>KKT</strong>条件的（<strong>KKT</strong>见<strong>maths_base</strong>），因此现在我们便转化为求解第二个问题。</p>
+<p>也就是说，原始问题通过满足<strong>KKT</strong>条件，已经转化成了对偶问题。而求解这个对偶学习问题，分为3个步骤：</p>
+<ul>
+<li>首先要让 $\mathcal{L}(\omega, b, \alpha)$ 关于 $\omega$ 和$b$最小化</li>
+<li>然后求对 $\alpha$ 的极大，</li>
+<li>最后利用<strong>SMO算法</strong>求解对偶问题中的拉格朗日乘子。</li>
+</ul>
+<h4 id="S-2-1-3-对偶问题求解的3个步骤"><a href="#S-2-1-3-对偶问题求解的3个步骤" class="headerlink" title="$\S$ 2.1.3 $ $ 对偶问题求解的3个步骤"></a>$\S$ 2.1.3 $ $ 对偶问题求解的3个步骤</h4><ol>
+<li>首先固定 $\alpha$ ，要让 $\mathcal{L}(\omega, b, \alpha)$ 关于 $\omega$ 和   $b$ 最小化，我们分别对 $\omega$，$b$ 求偏导数，即令各自偏导数等于零：</li>
+</ol>
+<script type="math/tex; mode=display">
+\dfrac{\partial\mathcal{L}}{\partial \omega}=0\Rightarrow\omega=\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i\boldsymbol{x}_i\\
+\dfrac{\partial\mathcal{L}}{\partial b}=0\Rightarrow\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i=0</script><ul>
+<li>将以上结果代入之前的 $\mathcal{L}$：</li>
+</ul>
+<script type="math/tex; mode=display">
+\begin{align}
+\mathcal{L}(\omega, b, \alpha)&=\dfrac{1}{2}\left \| \omega\right \|^2-\sum_{i=1}^{n}\alpha_i\Big(\boldsymbol{y}_i(\omega ^T\boldsymbol{x}_i + b)-1\Big)\\
+&=\dfrac{1}{2}\omega^T\omega-\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i\omega^T\boldsymbol{x}_i-\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_ib+\sum_{i=1}^{n}\alpha_i\\
+&=\dfrac{1}{2}\omega^T\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i\boldsymbol{x}_i-\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i\omega^T\boldsymbol{x}_i-\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_ib+\sum_{i=1}^{n}\alpha_i\\
+&=\dfrac{1}{2}\omega^T\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i\boldsymbol{x}_i-\omega^T\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i\boldsymbol{x}_i-\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_ib+\sum_{i=1}^{n}\alpha_i\\
+&=-\dfrac{1}{2}\omega^T\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i\boldsymbol{x}_i-\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_ib+\sum_{i=1}^{n}\alpha_i\\
+&=-\dfrac{1}{2}\omega^T\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i\boldsymbol{x}_i-b\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i+\sum_{i=1}^{n}\alpha_i\\
+&=-\dfrac{1}{2}\Big(\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i\boldsymbol{x}_i\Big)^T\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i\boldsymbol{x}_i-b\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i+\sum_{i=1}^{n}\alpha_i\\
+&=-\dfrac{1}{2}\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i\boldsymbol{x}_i^T\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i\boldsymbol{x}_i-b\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i+\sum_{i=1}^{n}\alpha_i\\
+&=-\dfrac{1}{2}\sum_{i,j=1}^{n}\alpha_i\boldsymbol{y}_i\boldsymbol{x}_i^T\alpha_j\boldsymbol{y}_j\boldsymbol{x}_j-b\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i+\sum_{i=1}^{n}\alpha_i\\
+&=-\dfrac{1}{2}\sum_{i,j=1}^{n}\alpha_i\alpha_j\boldsymbol{y}_i\boldsymbol{y}_j\boldsymbol{x}_i^T\boldsymbol{x}_j+\sum_{i=1}^{n}\alpha_i
+\end{align}</script><ul>
+<li>我们可以看出，此时的拉格朗日函数只包含了一个变量，那就是 $\alpha_i$（求出了$\alpha_i$ 便能求出 $\omega$ 和 $b$ ，由此可见，核心问题：分类函数 $f(\boldsymbol{x})=\omega ^T\boldsymbol{x} + b$ 也就可以轻而易举的求出来了）</li>
+</ul>
+<ol>
+<li>求对 $\alpha$ 的极大，即是关于对偶问题的最优化问题。经过上面第一个步骤的求 $\omega$ 和 $b$，得到的拉格朗日函数式子已经没有了变量 $\omega$ 和 $b$，只有 $\alpha$ 。从上面的式子得到：</li>
+</ol>
+<script type="math/tex; mode=display">
+\begin{align}
+&\max_{\alpha}\sum_{i=1}^{n}\alpha_i-\dfrac{1}{2}\sum_{i,j=1}^{n}\alpha_i\alpha_j\boldsymbol{y}_i\boldsymbol{y}_j\boldsymbol{x}_i^T\boldsymbol{x}_j\\
+s.t.,&\quad \alpha_i\ge0, &i=1,2,3,\dots,n\\
+&\quad\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i=0 &i=1,2,3,\dots,n
+\end{align}</script><ul>
+<li>求出了 $\alpha_i$，根据 $\omega=\displaystyle\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i\boldsymbol{x}_i$，即可求出 $\omega$</li>
+<li>然后通过 $\displaystyle b^*=-\dfrac{1}{2}\Big(\max_{i:y_i=-1}\omega^{*T}\boldsymbol{x}_i+\displaystyle\min_{i:y_i=1}\omega^{*T}\boldsymbol{x}_i\Big)$，即可求出 $b$</li>
+<li>最终得出分离超平面和分类决策函数。</li>
+</ul>
+<ol>
+<li>在求得 $\mathcal{L}(\omega, b, \alpha)$ 关于 $\omega$ 和 $b$ 最小化，以及对 $\alpha$ 的极大之后，最后一步则可以利用<strong>SMO算法</strong>求解对偶问题中的拉格朗日乘子 $\alpha$ 。<br>到目前为止，<strong>SVM</strong>只能处理线性的情况，下面我们将引入核函数，进而推广到非线性分类问题。</li>
+</ol>
+<h4 id="S-2-1-4-线性不可分的情况"><a href="#S-2-1-4-线性不可分的情况" class="headerlink" title="$\S$ 2.1.4 $ $ 线性不可分的情况"></a>$\S$ 2.1.4 $ $ 线性不可分的情况</h4><p>对于一个数据点 $\boldsymbol{x}_0$ 进行分类，实际上是通过把 $\boldsymbol{x}_0$  带入到 $f(\boldsymbol{x})=\omega ^T\boldsymbol{x} + b$ 算出结果然后根据其正负号来进行类别划分的。而前面的推导中我们得到：</p>
+<script type="math/tex; mode=display">
+\omega=\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i\boldsymbol{x}_i</script><p>因此<font color="red"><strong>分类函数</strong></font>为：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+f(\boldsymbol{x})&=\Big(\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i\boldsymbol{x}_i\Big)^T\boldsymbol{x} + b\\
+&=\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i\langle\boldsymbol{x}_i,\boldsymbol{x}\rangle+b
+\end{align}</script><ul>
+<li>对于新点 $\boldsymbol{x}_0$ 的预测，只需要计算它与训练数据点的内积即可，这一点至关重要，是之后使用核函数进行非线性推广的基本前提</li>
+<li>事实上，所有非 <strong>_Supporting Vector_</strong>  所对应的系数 $\alpha$ 都是等于零的，因此对于新点的内积计算实际上只要针对少量的 <strong>_Supporting Vector_</strong>  而不是所有的训练数据</li>
+</ul>
+<p><font color="red"><strong>为什么非支持向量对应的 $\alpha$ 等于零呢？</strong></font>直观上来理解的话，就是这些“后方”的点——对超平面是没有影响的，由于分类完全有超平面决定，所以这些无关的点并不会参与分类问题的计算，因而也就不会产生任何影响了。</p>
+<p>在 $\S$ <strong>2.1.4</strong> 中得到的目标函数：</p>
+<script type="math/tex; mode=display">
+\max_{\alpha_i\ge0}\mathcal{L}(\omega, b, \alpha)=\max_{\alpha_i\ge0}\dfrac{1}{2}\left \| \omega\right \|^2-\sum_{i=1}^{n}\alpha_i\Big(\boldsymbol{y}_i(\omega ^T\boldsymbol{x}_i + b)-1\Big)</script><ul>
+<li>注意到如果是 <strong>_Supporting Vector_</strong> 的话，上式中 $\boldsymbol{y}_i(\omega ^T\boldsymbol{x}_i + b)-1$ 是等于 $0$ 的</li>
+<li>而对于非 <strong>_Supporting Vector_</strong> 来说，函数间隔会大于$1$，因此 $\boldsymbol{y}_i(\omega ^T\boldsymbol{x}_i + b)-1$ 是大于 $0$ 的，而 $\alpha_i$ 又是非负的，为了满足最大化， $\alpha_i$ 必须等于 $0$ 。这也就是这些非 <strong>_Supporting Vector_</strong> 的点的局限性。 </li>
+</ul>
+<h3 id="S-2-2-核函数（Kernel）"><a href="#S-2-2-核函数（Kernel）" class="headerlink" title="$\S$ 2.2 $ $ 核函数（Kernel）"></a>$\S$ 2.2 $ $ 核函数（Kernel）</h3><h4 id="S-2-2-1-特征空间的隐式映射：核函数"><a href="#S-2-2-1-特征空间的隐式映射：核函数" class="headerlink" title="$\S$ 2.2.1 $ $ 特征空间的隐式映射：核函数"></a>$\S$ 2.2.1 $ $ 特征空间的隐式映射：核函数</h4><p>事实上，大部分时候数据并不是线性可分的，这个时候满足这样条件的超平面就根本不存在。在上文中，我们已经了解到了 <strong>SVM</strong> 处理线性可分的情况，那对于非线性的数据 <strong>SVM</strong> 咋处理呢？对于非线性的情况，<strong>SVM</strong> 的处理方法是选择一个<strong>核函数（Kernel）</strong> ，<strong>通过将数据映射到高维空间</strong>，来解决在原始空间中线性不可分的问题。</p>
+<p>具体来说，在线性不可分的情况下，支持向量机首先在低维空间中完成计算，然后通过<strong>核函数</strong>将输入空间映射到高维特征空间，最终在高维特征空间中构造出最优分离超平面，从而把平面上本身不好分的非线性数据分开。如图所示，一堆数据在二维空间无法划分，从而映射到三维空间里划分：</p>
+<div align="center"> 
+<img src="/2018/06/01/SVM-算法/pic_Algo_5.6.png" width="500" height="250">
+</div>
+
+<p>而在我们遇到核函数之前，如果用原始的方法，那么在用线性学习器学习一个非线性关系，需要选择一个非线性特征集，并且将数据写成新的表达形式，这等价于应用一个固定的非线性映射，将数据映射到特征空间，在特征空间中使用线性学习器，因此，考虑的假设集是这种类型的函数：</p>
+<script type="math/tex; mode=display">
+f(\boldsymbol{x})=\sum_{i=1}^{n}\omega_i\phi_i(\boldsymbol{x}) + b</script><p>这里 $\phi$ ：$\boldsymbol{x} \to \mathcal{F}$ 是从输入空间到某个特征空间的映射，这意味着建立非线性学习器分为两步：</p>
+<ul>
+<li>首先使用一个非线性映射将数据变换到一个特征空间 $\mathcal{F}$</li>
+<li>然后在特征空间使用线性学习器分类</li>
+</ul>
+<p>而由于对偶形式就是线性学习器的一个重要性质，这意味着假设可以表达为训练点的线性组合，因此决策规则可以用测试点和训练点的内积来表示：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+f(\boldsymbol{x})=\sum_{i=1}^{l}\alpha_i\boldsymbol{y}_i\langle\phi_i(\boldsymbol{x}_i),\phi_i(\boldsymbol{x})\rangle+b
+\end{align}</script><ul>
+<li>如果有一种方式可以在特征空间中直接计算内积 $\langle\phi_i(\boldsymbol{x}_i),\phi_i(\boldsymbol{x})\rangle$ ，就像在原始输入点的函数中一样，就有可能将两个步骤融合到一起建立一个非线性的学习器，<strong>这样直接计算法的方法称为核函数方法</strong></li>
+<li>核是一个函数 $\kappa$，对所有 $\boldsymbol{x}$，$\boldsymbol{z}$，满足 $\kappa(\boldsymbol{x},\boldsymbol{z})=\langle\phi_i(\boldsymbol{x}),\phi_i(\boldsymbol{z})\rangle$，这里 $\phi$ 是从 $\boldsymbol{x}$ 到内积特征空间 $\mathcal{F}$ 的映射。</li>
+</ul>
+<h4 id="S-2-2-2-核函数：如何处理非线性数据"><a href="#S-2-2-2-核函数：如何处理非线性数据" class="headerlink" title="$\S$ 2.2.2 $ $ 核函数：如何处理非线性数据"></a>$\S$ 2.2.2 $ $ 核函数：如何处理非线性数据</h4><p>如下图所示的两类数据，分别分布为两个圆圈的形状，这样的数据本身就是线性不可分的，此时咱们该如何把这两类数据分开呢？</p>
+<div align="center"> 
+<img src="/2018/06/01/SVM-算法/pic_Algo_5.7.png" width="250" height="200">
+</div>
+
+<p>事实上，上图所述的这个数据集，是用两个半径不同的圆圈加上了少量的噪音生成得到的，所以，一个理想的分界应该是一个“圆圈”而不是一条线（超平面）。如果用 $X_1$ 和  $X_2$ 来表示这个二维平面的两个坐标的话，我们知道一条二次曲线（圆圈是二次曲线的一种特殊情况）的方程可以写作这样的形式：</p>
+<script type="math/tex; mode=display">
+a_1X_1+a_2X_1^2+a_3X_2+a_4X_2^2+a_5X_1X_2+a_6=0</script><p>注意上面的形式，如果我们构造另外一个五维的空间，其中五个坐标的值分别为 $Z_1$，$Z_2$，$Z_3$，$Z_4$，$Z_5$，那么显然，上面的方程在新的坐标系下可以写作：</p>
+<script type="math/tex; mode=display">
+\sum_{i=1}^{5}a_iZ_i+a_6=0</script><p>新的坐标正是一个超平面的方程！这正是核函数处理非线性问题的基本思想。<br>将把它映射到三维空间中即：</p>
+<div align="center"> 
+<img src="/2018/06/01/SVM-算法/pic_Algo_5.8.gif" width="400" height="250">
+</div>
+
+
+<p>核函数相当于把原来的分类函数：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+f(\boldsymbol{x})=\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i\langle\boldsymbol{x}_i,\boldsymbol{x}_0\rangle+b
+\end{align}</script><p>映射为：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+f(\boldsymbol{x})=\sum_{i=1}^{l}\alpha_i\boldsymbol{y}_i\langle\phi_i(\boldsymbol{x}_i),\phi_i(\boldsymbol{x})\rangle+b
+\end{align}</script><p>而其中 $\alpha$ 可以通过求解如下对偶问题而得到的：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&\max_{\alpha}\sum_{i=1}^{n}\alpha_i-\dfrac{1}{2}\sum_{i,j=1}^{n}\alpha_i\alpha_j\boldsymbol{y}_i\boldsymbol{y}_j\langle\phi_i(\boldsymbol{x}_i),\phi_i(\boldsymbol{x}_j)\rangle\\
+s.t.,&\quad \alpha_i\ge0, \quad i=1,2,3,\dots,n\\
+&\quad\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i=0, \quad i=1,2,3,\dots,n
+\end{align}</script><p>在最初的例子里，我们对一个二维空间做映射，选择的新空间是原始空间的所有一阶和二阶的组合，得到了 $5$ 个维度；如果原始空间是三维，那么我们会得到 $19$ 维的新空间，这个数目是呈爆炸性增长的，这给计算带来了非常大的困难，而且<strong>如果遇到无穷维的情况，就根本无从计算了</strong>。</p>
+<p>不妨还是从最开始的简单例子出发，设两个向量 $\boldsymbol{x}_1=(\eta_1,\eta_2)^T$ 和  $\boldsymbol{x}_2=(\xi_1,\xi_2)^T$，而 $\phi(\cdot)$ 即是到前面说的五维空间的映射，因此映射过后的内积为：</p>
+<script type="math/tex; mode=display">
+\langle\phi(\boldsymbol{x}_1),\phi(\boldsymbol{x}_2)\rangle=\eta_1\xi_1+\eta_1^2\xi_1^2+\eta_2\xi_2+\eta_2^2\xi_2^2+\eta_1\eta_2\xi_1\xi_2</script><p>另外，注意到：</p>
+<script type="math/tex; mode=display">
+(\langle\boldsymbol{x}_1,\boldsymbol{x}_2\rangle +1)^2=2\eta_1\xi_1+\eta_1^2\xi_1^2+2\eta_2\xi_2+\eta_2^2\xi_2^2+2\eta_1\eta_2\xi_1\xi_2+1</script><p>二者有很多相似的地方，实际上，我们只要把某几个维度线性缩放一下，然后再加上一个常数维度，具体来说，上面这个式子的计算结果实际上和映射：</p>
+<script type="math/tex; mode=display">
+\varphi(X_1,X_2)=(\sqrt{2}X_1,X_1^2,\sqrt{2}X_2,X_2^2,\sqrt{2}X_1X_2,1)^T</script><p>之后的内积 $\langle\varphi(\boldsymbol{x}_1),\varphi(\boldsymbol{x}_2)\rangle$ 的结果是相等的，那么区别在于：</p>
+<ul>
+<li>一个是映射到高维空间中，然后再根据内积的公式进行计算</li>
+<li>而另一个则直接在原来的低维空间中进行计算，而不需要显式地写出映射后的结果</li>
+</ul>
+<p>我们把这里的计算两个向量在隐式映射过后的空间中的内积的函数叫做<strong>核函数 (Kernel Function)</strong> ，例如，在刚才的例子中，我们的核函数为：</p>
+<script type="math/tex; mode=display">
+\kappa(\boldsymbol{x}_1,\boldsymbol{x}_2)=(\langle\boldsymbol{x}_1,\boldsymbol{x}_2\rangle +1)^2</script><p>核函数能简化映射空间中的内积运算——刚好“碰巧”的是 <strong>SVM</strong> 里需要计算的地方数据向量总是以内积的形式出现的。对比刚才我们上面写出来的式子，现在我们的分类函数为：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+f(\boldsymbol{x})=\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i\kappa(\boldsymbol{x}_i,\boldsymbol{x})+b
+\end{align}</script><p>其中  $\alpha$ 由如下对偶问题计算而得：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&\max_{\alpha}\sum_{i=1}^{n}\alpha_i-\dfrac{1}{2}\sum_{i,j=1}^{n}\alpha_i\alpha_j\boldsymbol{y}_i\boldsymbol{y}_j\kappa(\boldsymbol{x}_i,\boldsymbol{x}_j)\\
+s.t.,&\quad \alpha_i\ge0,\quad i=1,2,3,\dots,n\\
+&\quad\sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i=0,\quad i=1,2,3,\dots,n
+\end{align}</script><p>这样一来计算的问题就算解决了，避开了直接在高维空间中进行计算，而结果却是<strong>等价</strong>的！当然，因为我们这里的例子非常简单，如果对于任意一个映射，想要构造出对应的核函数就很困难了。</p>
+<h4 id="S-2-2-3-几个核函数"><a href="#S-2-2-3-几个核函数" class="headerlink" title="$\S$ 2.2.3 $ $ 几个核函数"></a>$\S$ 2.2.3 $ $ 几个核函数</h4><p>通常人们会从一些常用的核函数中选择（根据问题和数据的不同，选择不同的参数，实际上就是得到了不同的核函数），例如：</p>
+<ul>
+<li><p>多项式核 $\kappa(\boldsymbol{x},\boldsymbol{x}_i)=(\langle\boldsymbol{x},\boldsymbol{x}_i\rangle +R)^d$ ，显然刚才我们举的例子是这里多项式核的一个特例（$R = 1，d = 2$）。不过这个核所对应的映射实际上是可以写出来的，该空间的维度是 $C_{n+d}^{d}$，其中 $n$ 是原始空间的维度</p>
+</li>
+<li><p>高斯核 $\kappa(\boldsymbol{x},\boldsymbol{x}_i)=exp\Big(-\dfrac{\left | \boldsymbol{x},\boldsymbol{x}_i\right |^2}{2\sigma^2}\Big)$，高斯核会将原始空间映射为无穷维空间。不过，如果 $\sigma$ 选得很大的话，高次特征上的权重实际上衰减得非常快，所以实际上（数值上近似一下）相当于一个低维的子空间；反过来，如果 $\sigma$ 选得很小，则可以将任意的数据映射为线性可分——当然，这并不一定是好事，因为随之而来的可能是非常严重的过拟合问题。不过，总的来说，通过调控参数 $\sigma$ ，高斯核实际上具有相当高的灵活性，也是使用最广泛的核函数之一</p>
+</li>
+<li>线性核 $\kappa(\boldsymbol{x},\boldsymbol{x}_i)=\langle\boldsymbol{x},\boldsymbol{x}_i\rangle$，这实际上就是原始空间中的内积。这个核存在的主要目的是使得“映射后空间中的问题”和“映射前空间中的问题”两者在形式上统一起来了</li>
+</ul>
+<h4 id="S-2-2-4-核函数的本质"><a href="#S-2-2-4-核函数的本质" class="headerlink" title="$\S$ 2.2.4 $ $ 核函数的本质"></a>$\S$ 2.2.4 $ $ 核函数的本质</h4><ul>
+<li>实际中，我们会经常遇到线性不可分的样例，此时，我们的常用做法是把样例特征映射到高维空间中去</li>
+<li>但进一步，如果凡是遇到线性不可分的样例，一律映射到高维空间，那么这个维度大小是会高到可怕的</li>
+<li>核函数就隆重登场了，核函数的价值在于<font color="red">虽然也是讲特征进行从低维到高维的转换，但核函数是事先在低维上进行计算，而将实质上的分类效果表现在了高维上</font>，也就如上文所说的避免了直接在高维空间中的复杂计算</li>
+</ul>
+<h3 id="S-2-3-使用松弛变量处理异常值"><a href="#S-2-3-使用松弛变量处理异常值" class="headerlink" title="$\S$ 2.3 $ $ 使用松弛变量处理异常值"></a>$\S$ 2.3 $ $ 使用松弛变量处理异常值</h3><p>假如并不是因为数据本身是非线性结构的，而只是因为数据有噪音。对于这种偏离正常位置很远的数据点，我们称之为<strong>异常值（outlier）</strong>，在我们原来的 <strong>SVM</strong> 模型里，异常值的存在有可能造成很大的影响，因为超平面本身就是只有少数几个 <strong>_Supporting Vector_</strong> 组成的，如果这些 <strong>_Supporting Vector_</strong> 里又存在异常值的话，其影响就很大了。例如下图：</p>
+<div align="center"> 
+<img src="/2018/06/01/SVM-算法/pic_Algo_5.9.png" width="350" height="250">
+</div>
+
+
+<ul>
+<li>用黑圈圈起来的那个蓝点是一个异常值 ，它偏离了自己原本所应该在的那个半空间</li>
+<li>如果直接忽略掉它的话，原来的分隔超平面还是挺好的，但是由于这个异常值的出现，导致分隔超平面不得不被挤歪了，变成途中黑色虚线所示，同时间隔也相应变小了</li>
+<li>当然，更严重的情况是，如果这个异常值再往右上移动一些距离的话，我们将无法构造出能将数据分开的超平面来。</li>
+</ul>
+<p>为了处理这种情况，<strong>SVM</strong> <font color="red">允许数据点在一定程度上偏离一下超平面</font>。例如上图中，黑色实线所对应的距离，就是该异常值偏离的距离，如果把它移动回来，就刚好落在原来的超平面上，而不会使得超平面发生变形了。</p>
+<p>另一种解读（论文《Large Scale Machine Learning》）：</p>
+<ul>
+<li>换言之，在有松弛的情况下异常值点也属于 <strong>_Supporting Vector_</strong>，同时，对于不同的 <strong>_Supporting Vector_</strong>，拉格朗日参数的值也不同<div align="center"> 
+<img src="/2018/06/01/SVM-算法/pic_Algo_5.10.png
+" width="350" height="250">
+</div>
+
+
+</li>
+</ul>
+<ul>
+<li>对于远离分类平面的点值为 $0$</li>
+<li>对于边缘上的点值在 $\big[0, \frac{1}{L}\big]$ 之间，其中，$L$ 为训练数据集个数，即数据集大小</li>
+<li>对于异常值数据和内部的数据值为 $\frac{1}{L}$</li>
+</ul>
+<p>原来的约束条件为：</p>
+<script type="math/tex; mode=display">
+\boldsymbol{y}_i(\omega ^T\boldsymbol{x}_i + b) \ge 1,\quad i=1,2,3,\dots,n</script><p>现在考虑到异常值问题，约束条件变成了：</p>
+<script type="math/tex; mode=display">
+\boldsymbol{y}_i(\omega ^T\boldsymbol{x}_i + b) \ge 1-\xi_i,\quad i=1,2,3,\dots,n</script><ul>
+<li>其中 $\xi_i \ge 0$ 称为<strong>松弛变量 (slack variable)</strong> ，对应数据点 $\boldsymbol{x}_i$ 允许偏离的函数间隔的量。</li>
+<li>如果 $\xi_i$ 任意大的话，那任意的超平面都是符合条件的了。所以，在原来的目标函数后面加上一项，使得 $\xi_i$ 这些的总和也要最小：</li>
+</ul>
+<script type="math/tex; mode=display">
+\min\dfrac{1}{2}\left \| \omega\right \|^2+C\sum_{i=1}^{n}\xi_i</script><ul>
+<li>其中 $C$ 是一个参数，用于控制目标函数中两项（“寻找间隔最大的超平面”和“保证数据点偏差量最小”）之间的权重。</li>
+<li>注意，其中 $\xi_i$ 是需要优化的变量（之一），而 $C$ 是一个事先确定好的常量。完整地写出来是这个样子：</li>
+</ul>
+<script type="math/tex; mode=display">
+\begin{align}
+&\min\dfrac{1}{2}\left \| \omega\right \|^2+C\sum_{i=1}^{n}\xi_i \tag{2.1}\\
+s.t.,&\quad \boldsymbol{y}_i(\omega ^T\boldsymbol{x}_i + b) \ge 1-\xi_i,\quad i=1,2,3,\dots,n\\
+&\quad\xi_i \ge 0, \quad i=1,2,3,\dots,n
+\end{align}</script><p>用之前的方法将限制或约束条件加入到目标函数中，得到新的拉格朗日函数，如下所示：</p>
+<script type="math/tex; mode=display">
+\mathcal{L}(\omega, b,\xi, \alpha,r)=\dfrac{1}{2}\left \| \omega\right \|^2+C\sum_{i=1}^{n}\xi_i-\sum_{i=1}^{n}\alpha_i\Big(\boldsymbol{y}_i(\omega ^T\boldsymbol{x}_i + b)-1+\xi_i\Big)-\sum_{i=1}^{n}r_i\xi_i</script><p>分析方法和前面一样，转换为另一个问题之后，我们先让 $\mathcal{L}$ 针对 $\omega$、$b$ 和 $\xi$ 最小化：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\dfrac{\partial\mathcal{L}}{\partial\omega}=0 &\Rightarrow \omega = \sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i\boldsymbol{x}_i \\
+\dfrac{\partial\mathcal{L}}{\partial b}=0 &\Rightarrow  \sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i=0\\
+\dfrac{\partial\mathcal{L}}{\partial \xi_i}=0 &\Rightarrow C-\alpha_i-r=0, \quad i=1,2,3,\dots,n
+\end{align}</script><p>将 $\omega$ 带回 $\mathcal{L}$ 并化简，得到和原来一样的目标函数：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\max_{\alpha}\sum_{i=1}^{n}\alpha_i-\dfrac{1}{2}\sum_{i,j=1}^{n}\alpha_i\alpha_j\boldsymbol{y}_i\boldsymbol{y}_j\langle\boldsymbol{x}_i,\boldsymbol{x}_j\rangle
+\end{align}</script><p>不过，由于 $C-\alpha_i-r=0$ 我们得到而又有 $r_i \ge 0$（作为拉格朗日乘子法的条件），因此有 $\alpha_i\le C$，所以整个<strong>对偶问题</strong>现在写作：</p>
+<script type="math/tex; mode=display">
+\begin{align}
+&\max_{\alpha}\sum_{i=1}^{n}\alpha_i-\dfrac{1}{2}\sum_{i,j=1}^{n}\alpha_i\alpha_j\boldsymbol{y}_i\boldsymbol{y}_j\langle\boldsymbol{x}_i,\boldsymbol{x}_j\rangle \tag{2.2}\\
+s.t.,&\quad 0 \le\alpha_i\le C,\quad i=1,2,3,\dots,n\\
+&\quad \sum_{i=1}^{n}\alpha_i\boldsymbol{y}_i=0, \quad i=1,2,3,\dots,n
+\end{align}</script><ul>
+<li>对比式 $(2.1)$ 和式 $(2.2)$ 可以看到唯一的区别就是现在对偶变量 $\alpha$ 多了一个上限 $C$  </li>
+<li>而 <strong>Kernel</strong> 化的非线性形式也是一样的，只要把 $\langle\boldsymbol{x}_i,\boldsymbol{x}_j\rangle$ 换成 $\kappa(\boldsymbol{x}_i,\boldsymbol{x}_j)$ 即可</li>
+</ul>
+<p>这样一来，一个完整的，可以处理线性和非线性并能容忍噪音和异常点 的支持向量机才终于介绍完毕了。</p>
+<h3 id="S-2-4-小结"><a href="#S-2-4-小结" class="headerlink" title="$\S$ 2.4 $ $ 小结"></a>$\S$ 2.4 $ $ 小结</h3><p>不准确的说，SVM它本质上即是一个分类方法</p>
+<ul>
+<li>用 $\omega^T\boldsymbol{x}+b$ 定义分类函数，于是求 $\omega$、$b$，为寻最大间隔，引出 $\dfrac{1}{2}\left | \omega\right |^2$，</li>
+<li>继而引入拉格朗日因子，化为对拉格朗日乘子 $\alpha$ 的求解（求解过程中会涉及到一系列最优化或凸二次规划等问题），如此，求 $\omega$、$b$与求 $\alpha$ 等价，而 $\alpha$ 的求解可以用一种快速学习算法<strong>SMO</strong></li>
+<li>至于核函数，是为处理非线性情况，若直接映射到高维计算恐维度爆炸，故在低维计算，等效高维表现。</li>
+</ul>
+<h2 id="S-3-证明SVM"><a href="#S-3-证明SVM" class="headerlink" title="$\S$ 3 $ $ 证明SVM"></a>$\S$ 3 $ $ 证明SVM</h2><h3 id="S-3-1-线性学习器"><a href="#S-3-1-线性学习器" class="headerlink" title="$\S$ 3.1 $ $ 线性学习器"></a>$\S$ 3.1 $ $ 线性学习器</h3><h4 id="S-3-1-1-感知机算法"><a href="#S-3-1-1-感知机算法" class="headerlink" title="$\S$ 3.1.1 $ $ 感知机算法"></a>$\S$ 3.1.1 $ $ 感知机算法</h4><p>感知机算法是1956年提出的，该算法可以用来不断的训练试错以期寻找一个合适的超平面</p>
+<blockquote>
+<p>给定线性可分的数据集 $S$ 和学习率 $\eta\in \mathbb{R}^+$<br>$\omega_0 \leftarrow 0$ ；$b_0 \leftarrow 0$ ；$k \leftarrow 0$<br>$R \leftarrow \displaystyle\max_{1 \le i \le l} \left |\boldsymbol{x}_i \right |$<br>重复<br>$\quad\quad for \quad i =1\quad to \quad l $<br>$\quad\quad\quad\quad if \quad \boldsymbol{y}_i(\langle\omega_k,\boldsymbol{x}_i\rangle+b_k) \le0 \quad then$<br>$\quad\quad\quad\quad\quad\quad\quad\quad \omega_{k+1} \leftarrow \omega_k + \eta\boldsymbol{y}_i\boldsymbol{x}_i$<br>$\quad\quad\quad\quad\quad\quad\quad\quad b_{k+1} \leftarrow b_k + \eta\boldsymbol{y}_iR^2$<br>$\quad\quad\quad\quad\quad\quad\quad\quad k \leftarrow k + 1$<br>$\quad\quad\quad\quad end \quad if$<br>$\quad\quad end \quad for$<br>直到在 $for$ 循环中没有错误发生<br>返回 $(\omega_k,b_k)$ ，这里 $k$ 是错误次数</p>
+</blockquote>
+<p>如下图所示，凭我们的直觉可以看出，图中的红线是最优超平面，蓝线则是根据感知机算法在不断的训练中，最终，若蓝线能通过不断的训练移动到红线位置上，则代表训练成功。</p>
+<div align="center"> 
+<img src="/2018/06/01/SVM-算法/pic_Algo_5.11.png" width="350" height="250">
+</div>
+
+<p>既然需要通过不断的训练以让蓝线最终成为最优分类超平面，那么，到底<font color="red">需要训练多少次呢？</font><strong>Novikoff 定理</strong>告诉我们当间隔是正的时候感知机算法会在有限次数的迭代中收敛，也就是说<strong>Novikoff 定理</strong>证明了感知机算法的收敛性，即能得到一个界，不至于无穷循环下去。</p>
+<ul>
+<li><strong>Novikoff 定理</strong>：如果分类超平面存在， 仅需在序列 $S$ 上迭代几次，在界为 $\Big(\dfrac{2R}{\gamma}\Big)$ 的错误次数下就可以找到分类超平面，算法停止</li>
+<li>这里 $R = \displaystyle\max_{1 \le i \le l} \left |\boldsymbol{x}_i \right |$，$\gamma$ 为扩充间隔。根据误分次数公式可知, 迭代次数与对应于扩充(包括偏置)权重的训练集的间隔有关</li>
+<li>扩充间隔 $\gamma$ ，$\gamma$ 即为样本到分类间隔的距离，即从 $\gamma$ 引出的最大分类间隔（见 $\S$ <strong>1.3</strong>）</li>
+</ul>
+<p>同时有一点得注意：感知机算法虽然可以通过简单迭代对线性可分数据生成正确分类的超平面，<font color="red">但不是最优效果</font>，那怎样才能得到最优效果呢，就是  $\S$ <strong>1.4</strong> 所讲的寻找最大分类间隔超平面。此外，<strong>Novikoff 定理</strong>的证明请见<a href="http://101.96.10.64/www.cs.columbia.edu/~mcollins/courses/6998-2012/notes/perc.converge.pdf" target="_blank" rel="external">这里</a>。</p>
+<h3 id="S-3-2-非线性学习器"><a href="#S-3-2-非线性学习器" class="headerlink" title="$\S$ 3.2 $ $ 非线性学习器"></a>$\S$ 3.2 $ $ 非线性学习器</h3><h4 id="S-3-2-1-Mercer-定理"><a href="#S-3-2-1-Mercer-定理" class="headerlink" title="$\S$ 3.2.1 $ $ Mercer 定理"></a>$\S$ 3.2.1 $ $ Mercer 定理</h4><p><strong>Mercer 定理</strong> ：如果函数 $\kappa$ 是 $\mathbb{R}^n \times \mathbb{R}^n \rightarrow \mathbb{R}$ 上的映射（也就是从两个 $n$ 维向量映射到实数域）。那么如果 $\kappa$ 是一个有效核函数（也称为<strong>Mercer 核函数</strong>），那么当且仅当对于训练样例 $\{x^{(1)},x^{(2)},\dots,x^{(n)}\}$，其相应的核函数矩阵是对称半正定的。 </p>
+<h3 id="S-3-3-损失函数"><a href="#S-3-3-损失函数" class="headerlink" title="$\S$ 3.3 $ $ 损失函数"></a>$\S$ 3.3 $ $ 损失函数</h3><p><strong>SVM</strong> 通过寻求结构化风险最小来提高学习机泛化能力，实现经验风险和置信范围的最小化，从而达到在统计样本量较少的情况下，亦能获得良好统计规律的目的。</p>
+<p><strong>SVM</strong> 有第二种理解，即最优化+损失最小(损失函数见<strong>Statistics</strong>)</p>
+<h3 id="S-3-4-最小二乘法"><a href="#S-3-4-最小二乘法" class="headerlink" title="$\S$ 3.4 $ $ 最小二乘法"></a>$\S$ 3.4 $ $ 最小二乘法</h3><p>求解最小二乘法与求解 <strong>SVM</strong> 问题相似，尤其是定义损失函数，而后通过偏导求得极值(最小二乘法见<strong>Statistics</strong>)。</p>
+
+    </article>
+    <!-- license  -->
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2018/07/01/决策树-算法/" title= 决策树 算法 >
+                    <div class="nextTitle">决策树 算法</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/05/01/GMM-算法/" title= GMM 算法 >
+                    <div class="prevTitle">GMM 算法</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC和WAP自适应版-->
+
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:Chern.Tsui@gmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/ChernTau" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/example_qr.jpeg" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SVM-算法"><span class="toc-number">1.</span> <span class="toc-text">SVM 算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#S-1-Logistic回归"><span class="toc-number">1.1.</span> <span class="toc-text">$\S$ 1 $ $ Logistic回归</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#S-1-1-原理"><span class="toc-number">1.1.1.</span> <span class="toc-text">$\S$ 1.1 $ $ 原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#S-1-2-例子"><span class="toc-number">1.1.2.</span> <span class="toc-text">$\S$ 1.2 $ $ 例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#S-1-3-函数间隔与几何间隔"><span class="toc-number">1.1.3.</span> <span class="toc-text">$\S$ 1.3 $ $ 函数间隔与几何间隔</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#S-1-4-最大间隔分类器"><span class="toc-number">1.1.4.</span> <span class="toc-text">$\S$ 1.4 $ $ 最大间隔分类器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#S-2-深入SVM"><span class="toc-number">1.2.</span> <span class="toc-text">$\S$ 2 $ $ 深入SVM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#S-2-1-从线性可分到线性不可分"><span class="toc-number">1.2.1.</span> <span class="toc-text">$\S$ 2.1 $ $ 从线性可分到线性不可分</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#S-2-1-1-从原始问题到对偶问题的求解"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">$\S$ 2.1.1 $ $ 从原始问题到对偶问题的求解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#S-2-1-2-KKT条件"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">$\S$ 2.1.2 $ $ KKT条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#S-2-1-3-对偶问题求解的3个步骤"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">$\S$ 2.1.3 $ $ 对偶问题求解的3个步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#S-2-1-4-线性不可分的情况"><span class="toc-number">1.2.1.4.</span> <span class="toc-text">$\S$ 2.1.4 $ $ 线性不可分的情况</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#S-2-2-核函数（Kernel）"><span class="toc-number">1.2.2.</span> <span class="toc-text">$\S$ 2.2 $ $ 核函数（Kernel）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#S-2-2-1-特征空间的隐式映射：核函数"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">$\S$ 2.2.1 $ $ 特征空间的隐式映射：核函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#S-2-2-2-核函数：如何处理非线性数据"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">$\S$ 2.2.2 $ $ 核函数：如何处理非线性数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#S-2-2-3-几个核函数"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">$\S$ 2.2.3 $ $ 几个核函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#S-2-2-4-核函数的本质"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">$\S$ 2.2.4 $ $ 核函数的本质</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#S-2-3-使用松弛变量处理异常值"><span class="toc-number">1.2.3.</span> <span class="toc-text">$\S$ 2.3 $ $ 使用松弛变量处理异常值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#S-2-4-小结"><span class="toc-number">1.2.4.</span> <span class="toc-text">$\S$ 2.4 $ $ 小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#S-3-证明SVM"><span class="toc-number">1.3.</span> <span class="toc-text">$\S$ 3 $ $ 证明SVM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#S-3-1-线性学习器"><span class="toc-number">1.3.1.</span> <span class="toc-text">$\S$ 3.1 $ $ 线性学习器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#S-3-1-1-感知机算法"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">$\S$ 3.1.1 $ $ 感知机算法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#S-3-2-非线性学习器"><span class="toc-number">1.3.2.</span> <span class="toc-text">$\S$ 3.2 $ $ 非线性学习器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#S-3-2-1-Mercer-定理"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">$\S$ 3.2.1 $ $ Mercer 定理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#S-3-3-损失函数"><span class="toc-number">1.3.3.</span> <span class="toc-text">$\S$ 3.3 $ $ 损失函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#S-3-4-最小二乘法"><span class="toc-number">1.3.4.</span> <span class="toc-text">$\S$ 3.4 $ $ 最小二乘法</span></a></li></ol></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 11
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/01</span><a class="archive-post-title" href= "/2018/07/01/决策树-算法/" >决策树 算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/01</span><a class="archive-post-title" href= "/2018/06/01/SVM-算法/" >SVM 算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/GMM-算法/" >GMM 算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/Baum-Welch-算法/" >Baum-Welch 算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2018/03/01/EM-算法/" >EM 算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/24</span><a class="archive-post-title" href= "/2018/01/24/Install shiny-server on macOS/" >Install shiny-server on MacOS</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2017/10/01/Awesome Mac/" >Awesome Mac</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/14</span><a class="archive-post-title" href= "/2017/09/14/I-love-Xumengyue/" >One Day Traveling in Yinxing Lake</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/08</span><a class="archive-post-title" href= "/2017/08/08/Web crawling CSI 300 index using Python/" >Web crawling CSI 300 index using Python</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2017/08/07/Install Hadoop on Ubuntu/" >Install Hadoop on Ubuntu</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2017/08/07/Install-R-and-RStudio-in-Ubuntu/" >Install R and RStudio in Ubuntu</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="Baum-Welch"><span class="iconfont-archer">&#xe606;</span>Baum-Welch</span>
+    
+        <span class="sidebar-tag-name" data-tags="EM"><span class="iconfont-archer">&#xe606;</span>EM</span>
+    
+        <span class="sidebar-tag-name" data-tags="隐马尔可夫"><span class="iconfont-archer">&#xe606;</span>隐马尔可夫</span>
+    
+        <span class="sidebar-tag-name" data-tags="极大似然估计"><span class="iconfont-archer">&#xe606;</span>极大似然估计</span>
+    
+        <span class="sidebar-tag-name" data-tags="隐变量"><span class="iconfont-archer">&#xe606;</span>隐变量</span>
+    
+        <span class="sidebar-tag-name" data-tags="Jensen 不等式"><span class="iconfont-archer">&#xe606;</span>Jensen 不等式</span>
+    
+        <span class="sidebar-tag-name" data-tags="高斯分布"><span class="iconfont-archer">&#xe606;</span>高斯分布</span>
+    
+        <span class="sidebar-tag-name" data-tags="聚类"><span class="iconfont-archer">&#xe606;</span>聚类</span>
+    
+        <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
+    
+        <span class="sidebar-tag-name" data-tags="对偶"><span class="iconfont-archer">&#xe606;</span>对偶</span>
+    
+        <span class="sidebar-tag-name" data-tags="拉格朗日乘子"><span class="iconfont-archer">&#xe606;</span>拉格朗日乘子</span>
+    
+        <span class="sidebar-tag-name" data-tags="核函数"><span class="iconfont-archer">&#xe606;</span>核函数</span>
+    
+        <span class="sidebar-tag-name" data-tags="分类"><span class="iconfont-archer">&#xe606;</span>分类</span>
+    
+        <span class="sidebar-tag-name" data-tags="信息增益"><span class="iconfont-archer">&#xe606;</span>信息增益</span>
+    
+        <span class="sidebar-tag-name" data-tags="剪枝"><span class="iconfont-archer">&#xe606;</span>剪枝</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="算法"><span class="iconfont-archer">&#xe60a;</span>算法</span>
+    
+        <span class="sidebar-category-name" data-categories="测试"><span class="iconfont-archer">&#xe60a;</span>测试</span>
+    
+        <span class="sidebar-category-name" data-categories="杂谈"><span class="iconfont-archer">&#xe60a;</span>杂谈</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "Chern Tau"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
+
+

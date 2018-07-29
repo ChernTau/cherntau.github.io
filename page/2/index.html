@@ -6,7 +6,7 @@
 
 
 <head>
-    <meta charset="utf-8">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
     <meta name="author" content="Chern Tau">
     <meta name="renderer" content="webkit">
@@ -189,13 +189,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
     <!-- 百度统计  -->
     
-    <!-- 谷歌统计  -->
+    <!-- 谷歌统计  --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
     
 </head>
 
     
+        <body class="home-body">
     
-<header class="header">
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="header index-header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
@@ -213,21 +215,34 @@
 
 
 
+height:50vh;
+
 >
     
     <!-- 主页  -->
+    
+    
+    <!-- 文章页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
+            Chern's Studio.
+            <!-- 文章页  -->
+            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
+            
+            
+                it's better to burn out than to fade away
+            
+            <!-- 文章页  -->
             
         </p>
         <!-- 文章页meta -->
@@ -339,45 +354,106 @@
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2018/03/01/EM-算法/" >
+        <a class="abstract-title" href = "/2017/08/07/Install Hadoop on Ubuntu/" >
             
-                <span>1.EM 算法</span>
+                <span>Install Hadoop on Ubuntu</span>
         </a>
         <div class="abstract-content">
-            EM 算法给定的训练样本是 $\{x^{(1)}, x^{(2)},\dots,x^{(m)}\}$ ，样例间独立，我们想找到每个样例隐含的类别 $z$ ，能使得 $p(x,z)$ 最大。 $p(x,z)$ 的最大似然估计如下：
-
-\begin{align*}
-l(\theta)&= \sum_{i=1}^{m}\log p(x;\theta)\\
-&=\sum_{i=1}^{m}\log \sum_z p(x,z;\theta)
-\end{align*}
-第一步是对极大似然取对数
-
-第二步是对每个样例的每个可能类别 $z$ 求联合分布概率和。但是直接求 $\theta$ 一般比较困难，...
+            Install JDKVisit http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html and download jre-8u121-linux-x64.tar.gz file to Home.
+Open terminal, get root and create new folder on the home1234sudo passwd root # set root passwordsu      # get rootgedit /etc/sudoers  # add c...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2018/03/01</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2017/08/07</span>
             </div>
             <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "EM">EM</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "机器学习">机器学习</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Jensen 不等式">Jensen 不等式</a>
-    
-</div>
             
         </div>
     </article>
     
     <!-- paginator  -->
     
+    <nav class="page-nav">
+        <a class="extend prev" rel="prev" href="/">&#60; PREV</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    </nav>
+    
 </main>
             <!-- profile -->
+            
+            <div class="profile">
+    <img class="profile-avatar" src= /avatar/kumamon.jpg >
+    <div class="profile-name">Chern</div>
+    
+    <div class="profile-signature">
+        witness me
+    </div>
+    
+    
+    <div class="profile-social">
+        
+    
+        
+            
+                <a href="mailto:Chern.Tsui@gmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/ChernTau" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/example_qr.jpeg" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    
+    
+        <div class="about-me">
+            <a href = "/about" >ABOUT ME</a>
+        </div>
+    
+</div>
             
         </div>
         <footer class="footer footer-unloaded">
@@ -546,9 +622,47 @@ l(\theta)&= \sum_{i=1}^{m}\log p(x;\theta)\\
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 9
+        Total : 11
         </div>
         <!-- search  -->
         
@@ -564,17 +678,27 @@ l(\theta)&= \sum_{i=1}^{m}\log p(x;\theta)\\
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/GMM 算法/" >3. GMM 算法</a>
+            <span class="archive-post-date">07/01</span><a class="archive-post-title" href= "/2018/07/01/决策树-算法/" >决策树 算法</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/Baum-Welch 算法/" >2. Baum-Welch 算法</a>
+            <span class="archive-post-date">06/01</span><a class="archive-post-title" href= "/2018/06/01/SVM-算法/" >SVM 算法</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2018/03/01/EM-算法/" >1.EM 算法</a>
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/GMM-算法/" >GMM 算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/Baum-Welch-算法/" >Baum-Welch 算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2018/03/01/EM-算法/" >EM 算法</a>
         </li>
     
     
@@ -608,12 +732,12 @@ l(\theta)&= \sum_{i=1}^{m}\log p(x;\theta)\\
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2017/08/07/Install-R-and-RStudio-in-Ubuntu/" >Install R and RStudio in Ubuntu</a>
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2017/08/07/Install Hadoop on Ubuntu/" >Install Hadoop on Ubuntu</a>
         </li>
     
     
         <li class="archive-post-item">
-            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2017/08/07/Install Hadoop on Ubuntu/" >Install Hadoop on Ubuntu</a>
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2017/08/07/Install-R-and-RStudio-in-Ubuntu/" >Install R and RStudio in Ubuntu</a>
         </li>
     
     </div>
@@ -621,21 +745,35 @@ l(\theta)&= \sum_{i=1}^{m}\log p(x;\theta)\\
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="高斯分布"><span class="iconfont-archer">&#xe606;</span>高斯分布</span>
+        <span class="sidebar-tag-name" data-tags="Baum-Welch"><span class="iconfont-archer">&#xe606;</span>Baum-Welch</span>
     
         <span class="sidebar-tag-name" data-tags="EM"><span class="iconfont-archer">&#xe606;</span>EM</span>
     
-        <span class="sidebar-tag-name" data-tags="聚类"><span class="iconfont-archer">&#xe606;</span>聚类</span>
-    
-        <span class="sidebar-tag-name" data-tags="Baum-Welch"><span class="iconfont-archer">&#xe606;</span>Baum-Welch</span>
-    
         <span class="sidebar-tag-name" data-tags="隐马尔可夫"><span class="iconfont-archer">&#xe606;</span>隐马尔可夫</span>
     
-        <span class="sidebar-tag-name" data-tags="机器学习"><span class="iconfont-archer">&#xe606;</span>机器学习</span>
+        <span class="sidebar-tag-name" data-tags="极大似然估计"><span class="iconfont-archer">&#xe606;</span>极大似然估计</span>
+    
+        <span class="sidebar-tag-name" data-tags="隐变量"><span class="iconfont-archer">&#xe606;</span>隐变量</span>
     
         <span class="sidebar-tag-name" data-tags="Jensen 不等式"><span class="iconfont-archer">&#xe606;</span>Jensen 不等式</span>
     
-        <span class="sidebar-tag-name" data-tags="嘿嘿"><span class="iconfont-archer">&#xe606;</span>嘿嘿</span>
+        <span class="sidebar-tag-name" data-tags="高斯分布"><span class="iconfont-archer">&#xe606;</span>高斯分布</span>
+    
+        <span class="sidebar-tag-name" data-tags="聚类"><span class="iconfont-archer">&#xe606;</span>聚类</span>
+    
+        <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
+    
+        <span class="sidebar-tag-name" data-tags="对偶"><span class="iconfont-archer">&#xe606;</span>对偶</span>
+    
+        <span class="sidebar-tag-name" data-tags="拉格朗日乘子"><span class="iconfont-archer">&#xe606;</span>拉格朗日乘子</span>
+    
+        <span class="sidebar-tag-name" data-tags="核函数"><span class="iconfont-archer">&#xe606;</span>核函数</span>
+    
+        <span class="sidebar-tag-name" data-tags="分类"><span class="iconfont-archer">&#xe606;</span>分类</span>
+    
+        <span class="sidebar-tag-name" data-tags="信息增益"><span class="iconfont-archer">&#xe606;</span>信息增益</span>
+    
+        <span class="sidebar-tag-name" data-tags="剪枝"><span class="iconfont-archer">&#xe606;</span>剪枝</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -672,7 +810,7 @@ jsonContent:
     
         <span class="sidebar-category-name" data-categories="算法"><span class="iconfont-archer">&#xe60a;</span>算法</span>
     
-        <span class="sidebar-category-name" data-categories="哈哈哈"><span class="iconfont-archer">&#xe60a;</span>哈哈哈</span>
+        <span class="sidebar-category-name" data-categories="测试"><span class="iconfont-archer">&#xe60a;</span>测试</span>
     
         <span class="sidebar-category-name" data-categories="杂谈"><span class="iconfont-archer">&#xe60a;</span>杂谈</span>
     
@@ -723,7 +861,7 @@ jsonContent:
             all[i].SourceElement().parentNode.className += ' has-jax';
     });
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 </body>
 </html>

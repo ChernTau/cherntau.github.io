@@ -1,0 +1,1825 @@
+<!DOCTYPE html>
+<html>
+    <!-- title -->
+
+
+
+
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="Chern Tau">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Chern Tau">
+    <meta name="keywords" content="Knowledge Has NO Limit | Chern Tau">
+    <meta name="description" content="">
+    <meta name="Cache-Control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>决策树 算法 · Chern&#39;s Studio</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s 1;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= /css/style.css?v=20180721 as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= /css/mobile.css?v=20180721 media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+    
+</head>
+
+    
+        <body class="post-body">
+    
+    
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >Chern&#39;s Studio.</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">决策树 算法</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>Chern's Studio.</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style=
+
+
+
+
+
+
+
+
+height:50vh;
+
+>
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            决策树 算法
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "分类">分类</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "信息增益">信息增益</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "剪枝">剪枝</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>Word count: <span class="post-count">6,997</span> / Reading time: <span class="post-count">26 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/07/01</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="决策树算法"><a href="#决策树算法" class="headerlink" title="决策树算法"></a>决策树算法</h1><h2 id="S-1-从分类问题开始"><a href="#S-1-从分类问题开始" class="headerlink" title="$\S$ 1 $ $ 从分类问题开始"></a>$\S$ 1 $ $ 从分类问题开始</h2><p><strong>分类（Classification）</strong> 任务就是<font color="red">确定对象属于哪个预定义的目标类</font>。分类问题不仅是一个普遍存在的问题，而且是其他更加复杂的决策问题的基础，更是机器学习和数据挖掘技术中最庞大的一类算法家族。我们前面介绍过的很多算法（例如 <strong>SVM</strong>，朴素贝叶斯等）都可以用来解决分类问题。作为本文的开始，我们首先来简单回顾一下什么是分类。</p>
+<p>假设我们现在有如下表所示的一个<strong>属性集（feature set）</strong>，它收集了几个病患的症状和对应的病症。症状包括：</p>
+<ul>
+<li>头疼的程度</li>
+<li>咳嗽的程度</li>
+<li>体温</li>
+<li>咽喉是否肿痛</li>
+<li>病症（<strong>Cold</strong>、<strong>Flu</strong>）</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Headache</th>
+<th style="text-align:center">Cough</th>
+<th style="text-align:center">Temperature</th>
+<th style="text-align:center">Score</th>
+<th style="text-align:center">Diagnosis </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">severe</td>
+<td style="text-align:center">mild</td>
+<td style="text-align:center">high</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">Flu </td>
+</tr>
+<tr>
+<td style="text-align:center">no</td>
+<td style="text-align:center">severe</td>
+<td style="text-align:center">normal</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">Cold </td>
+</tr>
+<tr>
+<td style="text-align:center">mild</td>
+<td style="text-align:center">mild</td>
+<td style="text-align:center">normal</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">Flu </td>
+</tr>
+<tr>
+<td style="text-align:center">mild</td>
+<td style="text-align:center">no</td>
+<td style="text-align:center">normal</td>
+<td style="text-align:center">no</td>
+<td style="text-align:center">Cold </td>
+</tr>
+<tr>
+<td style="text-align:center">severe</td>
+<td style="text-align:center">severe</td>
+<td style="text-align:center">normal</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">Flu </td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>分类问题的本质就是当给定这样一个数据集后，要求我们训练出（或建立）一个模型 $f$<br>。当出现一组新的特征向量时，要求我们预测（或判断）拥有这样一组特征向量的对象应当属于哪个类别。<br>假设你是一名医生，现在收治了一位新的病患，然后你通过问诊得知他的一些症状（包括头疼的程度、咳嗽的程度、体温以及咽喉是否肿痛），然后你就要根据你已经建立好的模型来判断该病人得的到底是 <strong>Cold</strong>（普通感冒）还是 <strong>Flu</strong>（流行性感冒）。</p>
+<p>分类问题的类别数目可以是两类也可以是多类。二分类问题是最简单的分类问题，而多分类问题模型可以在二分类模型的基础上进行构建。</p>
+<h2 id="S-2-决策树基础"><a href="#S-2-决策树基础" class="headerlink" title="$\S$ 2 $ $ 决策树基础"></a>$\S$ 2 $ $ 决策树基础</h2><p><strong>决策树</strong>是一种用于对实例进行分类的树形结构。决策树由<strong>节点（node）</strong> 和<strong>有向边（directed edge）</strong> 组成。节点的类型有两种：<strong>内部节点</strong>和<strong>叶子节点</strong>。</p>
+<ul>
+<li><strong>内部节点</strong>表示一个特征或属性的测试条件（用于分开具有不同特性的记录）</li>
+<li><strong>叶子节点</strong>表示一个分类。</li>
+</ul>
+<p>一旦我们构造了一个决策树模型，以它为基础来进行分类将是非常容易的。具体做法是：</p>
+<ul>
+<li>从根节点开始，对实例的某一特征进行测试，根据测试结构将实例分配到其子节点（也就是选择适当的分支）</li>
+<li>沿着该分支可能达到叶子节点或者到达另一个内部节点时，那么就使用新的测试条件递归执行下去，直到抵达一个叶子节点</li>
+<li>当到达叶子节点时，我们便得到了最终的分类结果。</li>
+</ul>
+<p>下图是一个决策树的示例（注意我们仅用了两个特征就对数据集中的 $5$ 个记录实现了准确的分类）：</p>
+<div align="center"> 
+<img src="/2018/07/01/决策树-算法/pic_Algo_6.1.png" width="300" height="250">
+<br><br>
+</div>
+
+<h2 id="S-3-Hunt-算法"><a href="#S-3-Hunt-算法" class="headerlink" title="$\S$ 3 $ $ Hunt 算法"></a>$\S$ 3 $ $ Hunt 算法</h2><h3 id="S-3-1-理论"><a href="#S-3-1-理论" class="headerlink" title="$\S$ 3.1 $ $ 理论"></a>$\S$ 3.1 $ $ 理论</h3><p><strong>Hunt 算法</strong>是一种采用局部最优策略的决策树构建算法，它同时也是许多决策树算法的基础，包括 <strong>ID3</strong>、<strong>C4.5</strong> 和 <strong>CART</strong> 等。该算法的具体执行步骤如下：<br>在<strong>Hunt 算法</strong>中，通过将训练记录相继划分成较<strong>纯</strong>的子集，以递归方式建立决策树。设 $D_t$ 是与结点 $t$ 相关联的训练记录集，而 $y=\{y_1,y_2,\cdots,y_c\}$ 是类标号，<strong>Hunt 算法</strong>的递归定义如下： </p>
+<ul>
+<li>如果 $D_t$ 中所有记录都属于同一个类，则 $t$ 是叶结点，用 $y_t$ 标记</li>
+<li>如果 $D_t$ 中包含属于多个类的记录，则选择一个<strong>属性测试条件（attribute test condition）</strong>，将记录划分成较小的子集。对于测试条件的每个输出，创建一个子女结点，并根据测试结果将 $D_t$ 中的记录分布到子女结点中。然后，对于每个子女结点，递归地调用该算法</li>
+</ul>
+<h3 id="S-3-2-例子"><a href="#S-3-2-例子" class="headerlink" title="$\S$ 3.2 $ $ 例子"></a>$\S$ 3.2 $ $ 例子</h3><p>预测贷款申请者是会按时归还贷款，还是会拖欠贷款。对于这个问题，训练数据集可以通过考察以前贷款者的贷款记录来构造。在下图所示的例子中，每条记录都包含贷款者的个人信息，以及贷款者是否拖欠贷款的类标号。 </p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Tid</th>
+<th style="text-align:center">有房者</th>
+<th style="text-align:center">婚姻状况</th>
+<th style="text-align:center">年收入</th>
+<th style="text-align:center">拖欠贷款者 </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">单身</td>
+<td style="text-align:center">125K</td>
+<td style="text-align:center">否 </td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">已婚</td>
+<td style="text-align:center">100K</td>
+<td style="text-align:center">否 </td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">单身</td>
+<td style="text-align:center">70K</td>
+<td style="text-align:center">否 </td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">已婚</td>
+<td style="text-align:center">120K</td>
+<td style="text-align:center">否 </td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">离异</td>
+<td style="text-align:center">95K</td>
+<td style="text-align:center">是 </td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">已婚</td>
+<td style="text-align:center">60K</td>
+<td style="text-align:center">否 </td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:center">是</td>
+<td style="text-align:center">离异</td>
+<td style="text-align:center">220K</td>
+<td style="text-align:center">否 </td>
+</tr>
+<tr>
+<td style="text-align:center">8</td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">单身</td>
+<td style="text-align:center">85K</td>
+<td style="text-align:center">是 </td>
+</tr>
+<tr>
+<td style="text-align:center">9</td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">已婚</td>
+<td style="text-align:center">75K</td>
+<td style="text-align:center">否 </td>
+</tr>
+<tr>
+<td style="text-align:center">10</td>
+<td style="text-align:center">否</td>
+<td style="text-align:center">单身</td>
+<td style="text-align:center">90K</td>
+<td style="text-align:center">是 </td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>&lt;/center &gt;</p>
+<p>该分类问题的初始决策树只有一个结点。</p>
+<ul>
+<li>类标号为“拖欠货款者＝否”（见图 $(a)$），意味大多数贷款者都按时归还贷款</li>
+<li>然而，该树需要进一步的细化，因为根结点包含两个类的记录。根据“有房者”测试条件，这些记录被划分为较小的子集，如图 $(b)$所示</li>
+<li>接下来，对根结点的每个子女递归地调用 <strong>Hunt</strong> 算法。从下图给出的训练数据集可以看出，有房的贷款者都按时偿还了贷款，因此，根结点的<strong>左子女</strong>为叶结点，标记为“拖欠货款者=否”（见图$(b)$)</li>
+<li>对于<strong>右子女</strong>，我们需要继续递归调用 <strong>Hunt</strong> 算法，直到所有的记录都属于同一个类为止。每次递归调用所形成的决策树显示在图 $(c)$和图 $(d)$中。</li>
+</ul>
+<div align="center"> 
+<img src="/2018/07/01/决策树-算法/pic_Algo_6.2.png" width="500" height="350">
+</div>
+
+<h3 id="S-3-3-总结"><a href="#S-3-3-总结" class="headerlink" title="$\S$ 3.3 $ $ 总结"></a>$\S$ 3.3 $ $ 总结</h3><p>如果属性值的每种组合都在训练数据中出现，并且每种组合都具有<strong>唯一</strong>的类标号，则 <strong>Hunt</strong> 算法是有效的。但是对于大多数实际情况，这些假设太苛刻了，因此，需要附加的条件来处理以下的情况：</p>
+<ul>
+<li>算法的第二步所创建的子女结点可能为空，即不存在与这些结点相关联的记录。如果没有一个训练记录包含与这样的结点相关联的属性值组合，这种情形就可能发生。这时，该结点成为叶结点，类标号为其父结点上训练记录中的多数类</li>
+<li>在第二步，如果与 $D_t$ 相关联的所有记录都具有相同的属性值（目标属性除外），则不可能进一步划分这些记录。在这种情况下，该结点为叶结点，其标号为与该结点相关联的训练记录中的多数类。</li>
+</ul>
+<p>此外，在上面这个算法过程中，<font color="red">依据什么原则来选取属性测试条件</font>，例如为什第一次选择“有房者”来作为测试条件。事实上，如果我们选择的属性测试条件不同，那么对于同一数据集来说所建立的决策树可能相差很大。如下图所示为基于前面预测病人是患了 <strong>Cold</strong> 还是 <strong>Flu</strong> 的数据集所构建出来的另外两种情况的决策树：</p>
+<div align="center"> 
+<img src="/2018/07/01/决策树-算法/pic_Algo_6.3.png" width="500" height="250">
+<br><br>
+</div>
+
+<p>事实上，在构建决策树时我们需要关心的问题包括：</p>
+<ul>
+<li>如何建立最优决策树</li>
+<li>如何在每个决策点（节点）选择属性值</li>
+<li>如何选择每个节点的分支数和分区数据的属性值</li>
+<li>什么时候停止树的生长</li>
+</ul>
+<h2 id="S-4-Gini-测度与划分"><a href="#S-4-Gini-测度与划分" class="headerlink" title="$\S$ 4 $ $ Gini 测度与划分"></a>$\S$ 4 $ $ Gini 测度与划分</h2><p>构建一棵最优的决策树只能采用一些启发式策略来解决：</p>
+<ul>
+<li>选择一个属性来分割节点上的数据，使得每个分区尽可能是同类的。这意味着我们希望看到每个分区中的大多数实例属于尽可能少的类，并且每个分区都应该尽可能大</li>
+<li>如果所有叶节点主要由单个类（即叶节点几乎是纯的）支配，我们可以停止树的生长</li>
+</ul>
+<p>如何评估节点的<strong>不纯度（Impurity）</strong>？通常可以使用的指标有如下三个（实际应用时，只要选其中一个即可）</p>
+<ul>
+<li>基尼指数（Gini Index）</li>
+<li>熵（Entropy）</li>
+<li>误分类误差（Misclassification error）</li>
+</ul>
+<p>第一个可以用来评估节点不纯度的指标是 <strong>Gini</strong> 系数。对于一个给定的节点 $t$，它的 <strong>Gini</strong> 系数计算公式如下： </p>
+<script type="math/tex; mode=display">
+Gini(t)=1-\sum_j[p(j\ |\ t)]^2</script><ul>
+<li>$p(j | t)$ 表示给定节点 $t$ 中属于类 $j$ 的记录所占的比例。通过这个计算公式你可以看出：</li>
+<li>基尼指数的最大值为 $(1-\dfrac{1}{n_c})$ 当记录在所有类中均匀分布时，意味着分类是最不纯的</li>
+<li>当所有记录属于一个类时，最小值是 $0$，这意味着分类是最纯的</li>
+</ul>
+<p>选择最佳划分的度量通常是根据划分后子女结点不纯性的程度。<br>不纯的程度越低，类分布就越倾斜。例如，类分布为 $(0, 1)$ 的结点具有<strong>零不纯性</strong>，而均衡分布 $(0.5, 0.5)$ 的结点具有最高的不纯性。<br>现在我们回过头来看一个具体的计算例子。现在我们一共有 $6$ 个记录，以二元分类问题不纯性度量值的比较为例，下图的意思表示有四个节点，然后分别计算了每一个节点的 $Gini$ 系数值：</p>
+<div align="center"> 
+<img src="/2018/07/01/决策树-算法/pic_Algo_6.4.png" width="500" height="100">
+</div>
+
+<p>从上面的例子可以看出，第一个结点，具有最低的不纯性度量值，接下来节点的不纯度度量值依次递增。<br>为了确定测试条件的效果，我们需要<font color="red">比较父结点（划分前）的不纯程度和子女结点（划分后） 的不纯程度</font>，它们的差越大，测试条件的效果就越好。增益 $\Delta$ 是一种可以用来确定划分效果的标准：</p>
+<script type="math/tex; mode=display">
+\Delta=I(parent)-\sum^k_{j=1}\frac{N(v_j)}{N}I(v_j)</script><ul>
+<li>$I(\cdot)$ 是给定结点的不纯性度量，$N$ 是父结点上的记录总数，$k$ 是属性值的个数，$N(v_j)$ 是与子女结点 $v_j$ 相关联的记录个数</li>
+<li>决策树构建算法通常选择最大化增益 $\Delta$ 的测试条件，因为对所有的测试条件来说，$I(parent)$ 是一个不变的值，所以<strong>最大化增益等价于最小化子女结点的不纯性度量的加权平均值</strong></li>
+</ul>
+<p>考虑下面这个划分的例子。假设有两种方法将数据划分成较小的子集。划分前，<strong>Gini</strong> 系数等于 $0.5$，因为属于两个类（ $C0$ 和 $C1$）的记录个数相等。</p>
+<ul>
+<li>如果选择属性 $A$ 来划分数据，节点 $N_1$ 的 <strong>Gini</strong> 系数为 $1−(4/7)^2−(3/7)^2=0.4898$，$N_2$ 的 <strong>Gini</strong> 系数为 $1−(2/5)^2−(3/5)^2=0.48$</li>
+<li>属性 $A$ 的 <strong>Gini</strong> 系数的加权平均为 $(7/12)×0.4898+(5/12)×0.48=0.486$</li>
+<li>同理，我们还可以计算属性 $B$ 的 <strong>Gini</strong> 系数的加权平均为 $(7/12)×0.408+(5/12)×0.32=0.371$</li>
+<li>因为属性 $B$ 具有更小的 <strong>Gini</strong> 系数，所以它比属性 $A$ 更可取</li>
+</ul>
+<div align="center"> 
+<img src="/2018/07/01/决策树-算法/pic_Algo_6.5.png" width="500" height="400">
+</div>
+
+<h3 id="S-4-1-考虑多分类的情况"><a href="#S-4-1-考虑多分类的情况" class="headerlink" title="$\S$ 4.1 $ $ 考虑多分类的情况"></a>$\S$ 4.1 $ $ 考虑多分类的情况</h3><p>标称属性可以产生二元划分也可以产生多路划分，如下图所示。</p>
+<p>二元划分的 <strong>Gini</strong> 系数的计算与二元属性类似。</p>
+<ul>
+<li><p>对于车型属性第一种二元分类，$Gini($ $\{$<strong>家用</strong>，<strong>豪华</strong>$\}$ $)=0.4922$，而 $Gini($ $\{$<strong>家用</strong>$\}$ $)=0.375$。这个划分的 <strong>Gini</strong> 系数加权平均是： </p>
+<script type="math/tex; mode=display">(16/20)\times 0.4922+(4/20)\times0.375=0.468</script></li>
+<li><p>类似地，对第二种二元划分 $\{$<strong>运动</strong>$\}$ 和$\{$<strong>家用</strong>，<strong>豪华</strong>$\}$， <strong>Gini</strong> 系数加权平均是 $0.167$</p>
+</li>
+<li>第二种划分的 <strong>Gini</strong> 系数相对更低，因为其对应的子集的纯度更高。</li>
+</ul>
+<p>对于多路划分，需要计算每个属性值的 <strong>Gini</strong> 系数。</p>
+<ul>
+<li>$Gini($ $\{$<strong>家用</strong>$\}$ $)=0.375$，$Gini($ $\{$<strong>运动</strong>$\}$ $)=0$，$Gini($ $\{$<strong>豪华</strong>$\}$ $)=0.219$，所以多路划分的 <strong>Gini</strong> 系数加权平均值为： <script type="math/tex; mode=display">(4/20)\times 0.375+(8/20)\times 0+(8/20)\times 0.219=0.163</script></li>
+</ul>
+<p>多路划分的 <strong>Gini</strong> 系数比两个二元划分都小。这是因为二元划分实际上合并了多路划分的某些输出，自然降低了子集的纯度。 </p>
+<div align="center"> 
+<img src="/2018/07/01/决策树-算法/pic_Algo_6.6.png" width="500" height="100">
+</div>
+
+
+<h3 id="S-4-2-考虑特征值连续的情况"><a href="#S-4-2-考虑特征值连续的情况" class="headerlink" title="$\S$ 4.2 $ $ 考虑特征值连续的情况"></a>$\S$ 4.2 $ $ 考虑特征值连续的情况</h3><p>考虑下图所示的例子，其中测试条件 “<strong>年收入$\le \upsilon$</strong>” 用来划分拖欠贷款分类问题的训练记录。</p>
+<p>用<strong>穷举法</strong>确定 $\upsilon$ 的值，将 $N$ 个记录中所有的属性值都作为候选划分点</p>
+<ul>
+<li>对每个候选 $\upsilon$，都要扫描一次数据集，统计年收入大于和小于 $\upsilon$ 的记录数，然后计算每个候迭的 <strong>Gini</strong> 系数，并从中选择具有最小值的候选划分点</li>
+<li>这种方法的计算代价显然是高昂的，因为对每个候选划分点计算 <strong>Gini</strong> 系数需要 $O(N)$ 次操作，由于有 $N$ 个候选，总的计算复杂度为 $O(N^2)$ </li>
+</ul>
+<p>为了降低计算复杂度</p>
+<ul>
+<li>按照<strong>年收入将训练记录排序</strong>，所需要的时间为 $O(N\log N)$ ，从两个相邻的排过序的属性值中选择<strong>中间值作为候选划分点</strong>，得到候选划分点$55$， $65$， $72$等</li>
+<li>无论如何，与穷举方法不同，在计算候选划分点的 <strong>Gini</strong> 指标时，不需考察所有 $N$ 个记录</li>
+</ul>
+<div align="center"> 
+<img src="/2018/07/01/决策树-算法/pic_Algo_6.7.png" width="500" height="200">
+</div>
+
+
+<p>对第一个候选 $\upsilon=55$</p>
+<ul>
+<li>没有年收入小于 $55K$ 的记录，所以<strong>年收入$＜55K$</strong> 的派生结点的 <strong>Gini</strong> 系数是 $0$</li>
+<li>另一方面，<strong>年收入$\ge 55K$</strong> 的样本记录数目分别为 $3$（类 <strong>Yes</strong>）和$7$（类 <strong>No</strong>)。如此一来，该结点的 <strong>Gini</strong> 系数是 $0.420$。该候选划分的 <strong>Gini</strong> 系数的加权平均就等于 $0×0+1×0.42=0.42$</li>
+</ul>
+<p>对第二个候选 $\upsilon=65$</p>
+<ul>
+<li><p>通过更新上一个候选的类分布，就可以得到该候选的类分布。更具体地说，新的分布通过考察具有最低年收入（即 $60K$）的记录的类标号得到。因为该记录的类标号是 <strong>No</strong> 所以类 <strong>No</strong> 的计数从 $0$ 增加到 $1$（对于年收入$\le 65K$），和从 $7$ 降到$6$（对于年收入 $&gt;<br>65K$），类 <strong>Yes</strong> 的分布保持不变。新的候选划分点的加权平均 <strong>Gini</strong> 系数为 $0.4$ 重复这样的计算，直到算出所有候选的 <strong>Gini</strong> 系数值</p>
+</li>
+<li><p>最佳的划分点对应于产生最小 <strong>Gini</strong> 系数值的点，即 $\upsilon=97$。该过程代价相对较低，因为更新每个候选划分点的类分布所需的时间是一个常数</p>
+</li>
+<li><p>该过程还可以进一步优化：<strong>仅考虑位于具有不同类标号的两个相邻记录之间的候选划分点</strong></p>
+</li>
+<li><p>例如，因为前三个排序后的记录（分别具有年收入 $60K$、 $70K$ 和 $75K$)具有相同的类标号，所以最佳划分点肯定不会在 $60K$和 $75K$ 之间，因此，候选划分点 $\upsilon<br>= 55K$、 $65K$、 $72K$、 $87K$、 $92K$、 $110K$、 $122K$、 $172K$ 和 $230K$ 都将被忽略，因为它们都位于具有相同类标号的相邻记录之间。该方法使得候选划分点的个数从 $11$ 个降到 $2$ 个</p>
+</li>
+</ul>
+<h2 id="S-5-信息熵与信息增益"><a href="#S-5-信息熵与信息增益" class="headerlink" title="$\S$ 5 $ $ 信息熵与信息增益"></a>$\S$ 5 $ $ 信息熵与信息增益</h2><p>在信息论中，<strong>熵是表示随机变量不确定性的度量</strong>。<font color="red">熵的取值越大，随机变量的不确定性也越大</font>。<br>设 $X$ 是一个取有限个值的离散随机变量，其概率分布为：</p>
+<script type="math/tex; mode=display">P(X=x_i)=p_i,\ i=1,2,\cdots,n</script><p>则随机变量 $X$ 的熵定义为 </p>
+<script type="math/tex; mode=display">H(X)=-\sum^n_{i=1}p_i\log p_i</script><p>在上式中，如果 $p_i=0$，则定义 $0\log0=0$。通常，上式中的对数以 $2$ 为底或以 $e$<br>为底，这时熵的单位分别是比特（<strong>bit</strong>）或纳特（<strong>nat</strong>）。由定义可知，熵只依赖于 $X$ 的分布，而与 $X$ 的取值无关，所以也可以将 $X$ 的熵记作 $H(p)$，即 </p>
+<script type="math/tex; mode=display">H(p)=-\sum^n_{i=1}p_i\log p_i</script><p>条件熵 $H(Y|X)$ 表示在已知随机变量 $X$ 的条件下随机变量 $Y$ 的不确定性，随机变量 $X$ 给定的条件下随机变量 $Y$ 的<strong>条件熵（conditional entropy）</strong>$H(Y|X)$，定义为 $X$ 给定条件下 $Y$ 的条件概率分布的熵对 $X$ 的数学期望： </p>
+<script type="math/tex; mode=display">
+H(Y|X)=\sum^n_{j=1}P(X=x_j)H(Y|X=x_j)</script><p>就我们当前所面对的问题而言，如果给定一个节点 $t$，它的（条件）熵计算公式如下： </p>
+<script type="math/tex; mode=display">
+Entropy(t)=-\sum_jp(j\ |\ t)\log p(j\ |\ t)</script><p>其中，$p(j | t)$ 表示给定节点 $t$ 中属于类 $j$ 的记录所占的比例。通过这个计算公式你可以看出：</p>
+<ul>
+<li>最大值（$\log n_c$）当记录在所有类别中均匀分布时，意味着最少的信息</li>
+<li>最小（$0$）当所有记录属于一个类时，意味着大部分信息</li>
+</ul>
+<p>还是来看一个具体的计算例子，如下图所示（基本情况与前面介绍 <strong>Gini</strong> 系数时的例子类似，我们不再赘述）：</p>
+<div align="center"> 
+<img src="/2018/07/01/决策树-算法/pic_Algo_6.8.png" width="500" height="200">
+</div>
+
+<p>以此为基础，我们要来定义<strong>信息增益（Information Gain）</strong> 如下： </p>
+<script type="math/tex; mode=display">GAIN = Entropy(p)-\big[\sum^k_{i=1}\frac{n_i}{n}Entropy(i)\big]</script><ul>
+<li>父节点中 $p$ 被分成 $i$ 个部分</li>
+<li>$n_i$ 是 第 $i$ 部分的记录数</li>
+</ul>
+<p>使用<strong>信息增益的缺点</strong>在于：信息增益的大小是相对于训练数据集而言的。在<strong>分类问题困难</strong>时，即训练数据集的经验熵比较大时，信息增益会偏大。反之，信息增益会偏小。</p>
+<p>使用<strong>信息增益比（Information gain ratio）</strong> 可以对这一问题进行校正。</p>
+<script type="math/tex; mode=display">SplitINFO=-\sum^k_{i=1}\frac{n_i}{n}\log\frac{n_i}{n}</script><script type="math/tex; mode=display">GainRatio_{split}=\frac{GAIN}{SplitINFO}</script><p>于是，更高熵分区（大量小分区）受到惩罚！</p>
+<h2 id="S-6-分类误差"><a href="#S-6-分类误差" class="headerlink" title="$\S$ 6 $ $ 分类误差"></a>$\S$ 6 $ $ 分类误差</h2><p>给定一个节点 $t$，它的分类误差定义为： </p>
+<script type="math/tex; mode=display">
+Error(t)=1-\max_iP(i\ |\ t)</script><p>由此公式可知：</p>
+<ul>
+<li>最大值（$1-\dfrac{1}{n_c}$）当记录在所有类中均匀分布时，意味着信息越不纯</li>
+<li>最小（$0$）当所有记录属于一个类时，意味着大部分信息</li>
+</ul>
+<p>一个简单的算例： </p>
+<div align="center"> 
+<img src="/2018/07/01/决策树-算法/pic_Algo_6.9.png" width="500" height="200">
+</div>
+
+<p>下图给出了二分类模型中，熵、<strong>Gini</strong> 系数、分类误差的比较情况。如果我们采用二分之一熵 $\dfrac{1}{2}H(p)$ 的时候，你会发现它与 <strong>Gini</strong> 系数将会相当接近。 </p>
+<div align="center"> 
+<img src="/2018/07/01/决策树-算法/pic_Algo_6.10.png" width="400" height="300">
+</div>
+
+<p>我们最后再来看一个 <strong>Gini</strong> 系数和分类误差对比的例子：</p>
+<div align="center"> 
+<img src="/2018/07/01/决策树-算法/pic_Algo_6.11.png" width="500" height="100">
+</div>
+
+<p>来计算一下加权平均的 <strong>Gini</strong> 系数： </p>
+<script type="math/tex; mode=display">
+Gini(N1) = 1 – (3/3)^2 – (0/3)^2 = 0 \\
+Gini(N2) = 1 – (4/7)^2 – (3/7)^2 = 0.489 \\
+Gini(Children) = (3/10) \times 0 + (7/10) \times 0.489= 0.342</script><p>再来计算一下分类误差： </p>
+<script type="math/tex; mode=display">
+MissClass(N1) = 1 –(3/3) = 0\\
+MissClass(N2) = 1 – 4/7 = 3/7\\
+MissClass =(3/10)\times 0+(7/10)\times(3/7)=0.3</script><p>可见在这个例子中，<strong>Gini</strong> 指标提升了，然而分类误差未变。</p>
+<h2 id="S-7-ID3-算法"><a href="#S-7-ID3-算法" class="headerlink" title="$\S$ 7 $ $ ID3 算法"></a>$\S$ 7 $ $ ID3 算法</h2><p><strong>ID3</strong> 算法的核心是在决策树<font color="red">各个结点上应用信息增益准则选择特征</font>，递归地构建决策树。</p>
+<p>具体方法是：</p>
+<ul>
+<li>从<strong>根结点（root node）</strong> 开始，对结点计算所有可能的特征的信息增益，选择信息增益最大的特征作为结点的特征，由该特征的不同取值建立子结点</li>
+<li>再对子结点递归地调用以上方法，构建决策树</li>
+<li>直到所有特征的信息增益均很小或没有特征可以选择为止，最后得到一棵决策树</li>
+</ul>
+<p><strong>ID3</strong> 相当于用极大似然法进行概率模型的选择。 下面我们给出一个更加正式的 <strong>ID3</strong> 算法的描述：</p>
+<p>输入：训练数据集 $D$，特征集 $A$，阈值 $\epsilon$<br>输出：决策树 $T$</p>
+<ul>
+<li><p>若 $D$ 中所有实例属于同一类 $C_k$，则 $T$ 为单结点树，并将类 $C_k$ 作为该结点的类标记，返回 $T$；</p>
+</li>
+<li><p>若 $A=\varnothing$，则 $T$ 为单结点树，并将 $D$ 中实例数最大的类 $C_k$ 作为该结点的类标记，返回 $T$</p>
+</li>
+<li><p>否则，计算 $A$ 中各特征对 $D$ 的信息增益，选择信息增益最大的特征 $A_g$ </p>
+</li>
+</ul>
+<ol>
+<li>如果 $A_g$的信息增益小于阈值 $\epsilon$ ，则置 $T$ 为单结点树，并将 $D$<br>中实例数最大的类 $C_k$ 作为该结点的类标记，返回 $T$</li>
+<li>否则，对 $A_g$  的每一可能值 $a_i$ ，依 $A_g=a_i$ 将 $D$ 分割为若干非空子集 $D_i$，将 $D_i$ 中实例数最大的类作为标记，构建子结点，由结点及其子结点构成树 $T$，返回 $T$ </li>
+</ol>
+<ul>
+<li>对第 $i$ 个子结点，以 $D_i$ 为训练集，以 $A−{A_g}$ 为特征集，递归地调用步骤 $(1)$ 至 $(3)$，得到子树 $T_i$ ，返回 $T_i$</li>
+</ul>
+<p>下面我们来看一个具体的例子，我们的任务是根据天气情况计划是否要外出打球： </p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Day</th>
+<th style="text-align:center">Outlook</th>
+<th style="text-align:center">Temperature</th>
+<th style="text-align:center">Humidity</th>
+<th style="text-align:center">Wind</th>
+<th style="text-align:center">play ball</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">D1</td>
+<td style="text-align:center">Sunny</td>
+<td style="text-align:center">Hot</td>
+<td style="text-align:center">High</td>
+<td style="text-align:center">Weak</td>
+<td style="text-align:center">No </td>
+</tr>
+<tr>
+<td style="text-align:center">D2</td>
+<td style="text-align:center">Sunny</td>
+<td style="text-align:center">Hot</td>
+<td style="text-align:center">High</td>
+<td style="text-align:center">Strong</td>
+<td style="text-align:center">No</td>
+</tr>
+<tr>
+<td style="text-align:center">D3</td>
+<td style="text-align:center">Overcast</td>
+<td style="text-align:center">Hot</td>
+<td style="text-align:center">High</td>
+<td style="text-align:center">Weak</td>
+<td style="text-align:center">Yes </td>
+</tr>
+<tr>
+<td style="text-align:center">D4</td>
+<td style="text-align:center">Rainy</td>
+<td style="text-align:center">Mild</td>
+<td style="text-align:center">High</td>
+<td style="text-align:center">Weak</td>
+<td style="text-align:center">Yes </td>
+</tr>
+<tr>
+<td style="text-align:center">D5</td>
+<td style="text-align:center">Rainy</td>
+<td style="text-align:center">Cool</td>
+<td style="text-align:center">Normal</td>
+<td style="text-align:center">Weak</td>
+<td style="text-align:center">Yes </td>
+</tr>
+<tr>
+<td style="text-align:center">D6</td>
+<td style="text-align:center">Rainy</td>
+<td style="text-align:center">Cool</td>
+<td style="text-align:center">Normal</td>
+<td style="text-align:center">Strong</td>
+<td style="text-align:center">No </td>
+</tr>
+<tr>
+<td style="text-align:center">D7</td>
+<td style="text-align:center">Overcast</td>
+<td style="text-align:center">Cool</td>
+<td style="text-align:center">Normal</td>
+<td style="text-align:center">Strong</td>
+<td style="text-align:center">Yes </td>
+</tr>
+<tr>
+<td style="text-align:center">D8</td>
+<td style="text-align:center">Sunny</td>
+<td style="text-align:center">Mild</td>
+<td style="text-align:center">High</td>
+<td style="text-align:center">Weak</td>
+<td style="text-align:center">No </td>
+</tr>
+<tr>
+<td style="text-align:center">D9</td>
+<td style="text-align:center">Sunny</td>
+<td style="text-align:center">Cool</td>
+<td style="text-align:center">Normal</td>
+<td style="text-align:center">Weak</td>
+<td style="text-align:center">Yes </td>
+</tr>
+<tr>
+<td style="text-align:center">D10</td>
+<td style="text-align:center">Rainy</td>
+<td style="text-align:center">Mild</td>
+<td style="text-align:center">Normal</td>
+<td style="text-align:center">Weak</td>
+<td style="text-align:center">Yes </td>
+</tr>
+<tr>
+<td style="text-align:center">D11</td>
+<td style="text-align:center">Sunny</td>
+<td style="text-align:center">Mild</td>
+<td style="text-align:center">Normal</td>
+<td style="text-align:center">Strong</td>
+<td style="text-align:center">Yes </td>
+</tr>
+<tr>
+<td style="text-align:center">D12</td>
+<td style="text-align:center">Overcast</td>
+<td style="text-align:center">Mild</td>
+<td style="text-align:center">High</td>
+<td style="text-align:center">Strong</td>
+<td style="text-align:center">Yes </td>
+</tr>
+<tr>
+<td style="text-align:center">D13</td>
+<td style="text-align:center">Overcast</td>
+<td style="text-align:center">Hot</td>
+<td style="text-align:center">Normal</td>
+<td style="text-align:center">Weak</td>
+<td style="text-align:center">Yes </td>
+</tr>
+<tr>
+<td style="text-align:center">D14</td>
+<td style="text-align:center">Rainy</td>
+<td style="text-align:center">Mild</td>
+<td style="text-align:center">High</td>
+<td style="text-align:center">Strong</td>
+<td style="text-align:center">No </td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>首先来算一下根节点的熵：<br>$$
+\begin{align*}
+Entropy(Play Ball)&=Entropy(5,9)\\
+&=Engropy(0.36,0.64)\\
+&=-(0.36\log_20.36)-(0.64\log_20.64)\\
+&=0.94
+\end{align*}
+$$</p>
+<p>然后再分别计算每一种划分的信息熵，比方说我们选择 <strong>Outlook</strong> 这个特征来做划分，那么得到的信息熵为 </p>
+<div align="center">
+<style>
+    table,table tr th, table tr td {border:1px solid #ddd;}
+</style>
+<table cellpadding="0" cellspacing="0" width="489" style="border-collapse:collapse;border:1px solid #ddd">
+ <colgroup>
+ <col width="60">
+ <col width="80">
+ <col width="60">
+ <col width="60" span="2">
+ </colgroup>
+ <tbody>
+ <tr height="35">
+  <td colspan="2" rowspan="2" height="48">　</td>
+  <td colspan="2" align="center" bgcolor="#f8f8f8"><b>Play ball</b></td>
+  <td rowspan="2" align="center">　</td>
+ </tr>
+ <tr height="35">
+  <td align="center">Yes</td>
+  <td align="center">No</td>
+ </tr>
+ <tr height="35">
+  <td rowspan="3" align="center"><b>Outlook</b></td>
+  <td align="center">Sunny</td>
+  <td align="center">3</td>
+  <td align="center">2</td>
+  <td align="center">5</td>
+ </tr>
+ <tr height="35">
+  <td align="center">Overcast</td>
+  <td align="center">4</td>
+  <td align="center">0</td>
+  <td align="center">4</td>
+ </tr>
+ <tr height="35">
+  <td align="center">Rainy</td>
+  <td align="center">2</td>
+  <td align="center">3</td>
+  <td align="center">5</td>
+ </tr>
+ <tr height="35">
+  <td colspan="2">　</td>
+  <td align="center">　</td>
+  <td align="center">　</td>
+  <td align="center">14</td>
+ </tr>
+</tbody>
+</table>
+</div>
+<div style="clear:both">
+ <br><br>
+</div>
+
+$$
+\begin{align}
+\mathbb{E}(Play\ ball,Outlook)&=P(Sunny)\cdot \mathbb{E}(3,2)+P(Overcast)\cdot \mathbb{E}(4,0)+P(Rainy)\cdot \mathbb{E}(2,3)\\
+&=\frac{5}{14}\times 0.971+\frac{4}{14}\times 0.0+\frac{5}{14}\times 0.971\\
+&=0.693
+\end{align}
+$$
+<p>据此可计算采用 <strong>Outlook</strong> 这个特征来做划分时的信息增益为：</p>
+$$
+\begin{align}
+G(Play\ ball, Outlook)&=\mathbb{E}(Play\ ball)-\mathbb{E}(Play\ ball, Outlook)\\
+&=0.94-0.693\\
+&=0.247
+\end{align}
+$$
+<div align="center">
+<div style="float:left; width:40%;margin-left: 8%;">
+<table align="center" border="1" ,border-collapse="" collapse"="" cellpadding="0" cellspacing="0" border-color="#ddd">
+ <colgroup>
+ <col width="60">
+ <col width="80">
+ <col width="60">
+ <col width="60" span="2">
+ </colgroup>
+ <tbody>
+ <tr height="35">
+  <td colspan="2" rowspan="2" height="48">　</td>
+  <td colspan="2" align="center" bgcolor="#f8f8f8"><b>Play ball</b></td>
+ </tr>
+ <tr height="35">
+  <td align="center">Yes</td>
+  <td align="center">No</td>
+ </tr>
+ <tr height="35">
+  <td rowspan="3" align="center"><b>Outlook</b></td>
+  <td align="center">Sunny</td>
+  <td align="center">3</td>
+  <td align="center">2</td>
+ </tr>
+ <tr height="35">
+  <td align="center">Overcast</td>
+  <td align="center">4</td>
+  <td align="center">0</td>
+ </tr>
+ <tr height="35">
+  <td align="center">Rainy</td>
+  <td align="center">2</td>
+  <td align="center">3</td>
+ </tr>
+ <tr height="35">
+  <td colspan="4" align="center"><b>Gini=0.247</b></td>
+ </tr>
+</tbody>
+</table>
+</div>
+
+
+
+<div style="float:right; width:40%; margin-right: 8%;">
+<table align="center" border="1" ,border-collapse="" collapse"="" cellpadding="0" cellspacing="0" border-color="#ddd">
+ <colgroup>
+ <col width="60">
+ <col width="80">
+ <col width="60">
+ <col width="60" span="2">
+ </colgroup>
+ <tbody>
+ <tr height="35">
+  <td colspan="2" rowspan="2" height="48">　</td>
+  <td colspan="2" align="center" bgcolor="#f8f8f8"><b>Play ball</b></td>
+ </tr>
+ <tr height="35">
+  <td align="center">Yes</td>
+  <td align="center">No</td>
+ </tr>
+ <tr height="35">
+  <td rowspan="3" align="center"><b>Temp.</b></td>
+  <td align="center">Sunny</td>
+  <td align="center">2</td>
+  <td align="center">2</td>
+ </tr>
+ <tr height="35">
+  <td align="center">Overcast</td>
+  <td align="center">4</td>
+  <td align="center">2</td>
+ </tr>
+ <tr height="35">
+  <td align="center">Rainy</td>
+  <td align="center">3</td>
+  <td align="center">1</td>
+ </tr>
+ <tr height="35">
+  <td colspan="4" align="center"><b>Gini=0.029</b></td>
+ </tr>
+</tbody>
+</table>
+</div>
+</div>
+<div style="clear:both">
+ <br><br>
+</div>
+
+<div align="center">
+<div style="float:left; width:40%;margin-left: 8%;">
+<table align="center" border="1" ,border-collapse="" collapse"="" cellpadding="0" cellspacing="0" border-color="#ddd">
+ <colgroup>
+ <col width="60">
+ <col width="80">
+ <col width="60">
+ <col width="60" span="2">
+ </colgroup>
+ <tbody>
+ <tr height="35">
+  <td colspan="2" rowspan="2" height="48">　</td>
+  <td colspan="2" align="center" bgcolor="#f8f8f8"><b>Play ball</b></td>
+ </tr>
+ <tr height="35">
+  <td align="center">Yes</td>
+  <td align="center">No</td>
+ </tr>
+ <tr height="35">
+  <td rowspan="2" align="center"><b>Humidity</b></td>
+  <td align="center">High</td>
+  <td align="center">3</td>
+  <td align="center">4</td>
+ </tr>
+ <tr height="35">
+  <td align="center">Normal</td>
+  <td align="center">6</td>
+  <td align="center">1</td>
+ </tr>
+ <tr height="35">
+  <td colspan="4" align="center"><b>Gini=0.152</b></td>
+ </tr>
+</tbody>
+</table>
+</div>
+
+
+
+<div style="float:right; width:40%; margin-right: 8%;">
+<table align="center" border="1" ,border-collapse="" collapse"="" cellpadding="0" cellspacing="0" border-color="#ddd">
+ <colgroup>
+ <col width="60">
+ <col width="80">
+ <col width="60">
+ <col width="60" span="2">
+ </colgroup>
+ <tbody>
+ <tr height="35">
+  <td colspan="2" rowspan="2" height="48">　</td>
+  <td colspan="2" align="center" bgcolor="#f8f8f8"><b>Play ball</b></td>
+ </tr>
+ <tr height="35">
+  <td align="center">Yes</td>
+  <td align="center">No</td>
+ </tr>
+ <tr height="35">
+  <td rowspan="2" align="center"><b>Windy</b></td>
+  <td align="center">False</td>
+  <td align="center">6</td>
+  <td align="center">2</td>
+ </tr>
+ <tr height="35">
+  <td align="center">True</td>
+  <td align="center">3</td>
+  <td align="center">3</td>
+ </tr>
+ <tr height="35">
+  <td colspan="4" align="center"><b>Gini=0.048</b></td>
+ </tr>
+</tbody>
+</table>
+</div>
+</div>
+<div style="clear:both">
+ <br><br>
+</div>
+
+<p>取其中具有最大信息增益的特征来作为划分的标准，然后你会发现其中一个分支的熵为零（时间中阈值可以设定来惩罚过拟合），所以把它变成叶子，即得</p>
+<div align="center"> 
+<br><br>
+<img src="/2018/07/01/决策树-算法/pic_Algo_6.12.png" width="500" height="200">
+<br><br>
+</div>
+
+
+<p>对于其他熵不为零（或者大于预先设定的阈值）的分支，那么则需要做进一步的划分 </p>
+<div align="center"> 
+<br><br>
+<img src="/2018/07/01/决策树-算法/pic_Algo_6.13.png" width="500" height="200">
+<br><br>
+</div>
+根据上述的规则继续递归地执行下去。最终，我们得到了如下一棵决策树。
+<div align="center"> 
+<br><br>
+<img src="/2018/07/01/决策树-算法/pic_Algo_6.14.png" width="500" height="200">
+<br><br>
+</div>
+
+<h2 id="S-8-C4-5-算法"><a href="#S-8-C4-5-算法" class="headerlink" title="$\S$ 8 $ $ C4.5 算法"></a>$\S$ 8 $ $ C4.5 算法</h2><p><strong>C4.5</strong> 算法与 <strong>ID3</strong> 算法相似，<strong>C4.5</strong> 算法是由 <strong>C4.5</strong> 算法演进而来的。<strong>C4.5</strong> 在生成的过程中，用<font color="red">信息增益比来选择特征</font>。下面我们给出一个更加正式的 <strong>C4.5</strong> 算法的描述：</p>
+<p>输入：训练数据集 $D$，特征集 $A$，阈值 $\epsilon$<br>输出：决策树 $T$</p>
+<ul>
+<li><p>若 $D$ 中所有实例属于同一类 $C_k$，则 $T$ 为单结点树，并将类 $C_k$ 作为该结点的类标记，返回 $T$；</p>
+</li>
+<li><p>若 $A=\varnothing$，则 $T$ 为单结点树，并将 $D$ 中实例数最大的类 $C_k$ 作为该结点的类标记，返回 $T$</p>
+</li>
+<li><p>否则，计算 $A$ 中各特征对 $D$ 的信息增益比，选择信息增益比最大的特征 $A_g$ </p>
+</li>
+</ul>
+<ol>
+<li>如果 $A_g$的信息增益比小于阈值 $\epsilon$ ，则置 $T$ 为单结点树，并将 $D$<br>中实例数最大的类 $C_k$ 作为该结点的类标记，返回 $T$</li>
+<li>否则，对 $A_g$  的每一可能值 $a_i$ ，依 $A_g=a_i$ 将 $D$ 分割为若干非空子集 $D_i$，将 $D_i$ 中实例数最大的类作为标记，构建子结点，由结点及其子结点构成树 $T$，返回 $T$ </li>
+</ol>
+<ul>
+<li>对第 $i$ 个子结点，以 $D_i$ 为训练集，以 $A−{A_g}$ 为特征集，递归地调用步骤 $(1)$ 至 $(3)$，得到子树 $T_i$ ，返回 $T_i$</li>
+</ul>
+<h2 id="S-9-CART-算法"><a href="#S-9-CART-算法" class="headerlink" title="$\S$ 9 $ $ CART 算法"></a>$\S$ 9 $ $ CART 算法</h2><p><strong>分类回归树(classification and regression tree，CART)</strong> 同样由特征选择、树的生成以及剪枝组成，既可以用于分类也可以用于回归。同样属于决策树的一种。</p>
+<h3 id="S-9-1-算法思想"><a href="#S-9-1-算法思想" class="headerlink" title="$\S$ 9.1 $ $ 算法思想"></a>$\S$ 9.1 $ $ 算法思想</h3><p><strong>CART</strong> 算法采用的是一种二分递归分割的技术，将当前样本分成两个子样本集，使得生成的非叶子节点都有两个分支。因此 <strong>CART</strong> 实际上是一颗二叉树。</p>
+<p><strong>CART</strong> 树的特点：</p>
+<ul>
+<li><strong>CART</strong> 是一颗二叉树</li>
+<li><strong>CART</strong> 既是分类树又是回归树</li>
+<li>当 <strong>CART</strong> 是分类树的时候，采用 <strong>Gini</strong> 值作为分裂节点的依据，当 <strong>CART</strong> 作为回归树的时候，使用样本的最小方差作为分裂节点的依据</li>
+</ul>
+<h3 id="S-9-2-回归树的生成"><a href="#S-9-2-回归树的生成" class="headerlink" title="$\S$ 9.2 $ $ 回归树的生成"></a>$\S$ 9.2 $ $ 回归树的生成</h3><h4 id="S-9-2-1-最小二乘法回归树生成算法"><a href="#S-9-2-1-最小二乘法回归树生成算法" class="headerlink" title="$\S$ 9.2.1 $ $ 最小二乘法回归树生成算法"></a>$\S$ 9.2.1 $ $ 最小二乘法回归树生成算法</h4><p>输入：训练数据集 $D$<br>输出：回归树 $f(x)$</p>
+<p>在训练数据集所在的输入空间中，递归得将每一个区域划分为两个子区域并决定每个子区域上的输出值，构建二叉决策树： </p>
+<ul>
+<li>选择最优切分变量 $j$ 和切分点 $s$，求解：<script type="math/tex; mode=display">
+\min_{j,s}\big[\min_{c_1}\sum_{x_i\in R_1(j,s)}(y_i-c_1)^2+\min_{c_2}\sum_{x_i\in R_2(j,s)}(y_i-c_2)^2\big]</script></li>
+</ul>
+<p>遍历变量 $j$，对固定的切分变量 $j$ 扫描切分点 $s$，选择使上式达到误差最小的变量 $(j,s)$，其中 $R_1$ 和 $R_2$ 表示的是划分之后的空间。</p>
+<ul>
+<li><p>用选定的 $(j,s)$ 划分区域并决定响应的输出值</p>
+<script type="math/tex; mode=display">
+R_1(j,s)=\{x^{(j)}\}\leq s,\quad R_2(j,s)=\{x|x^{(j)}>s\}</script><script type="math/tex; mode=display">
+c_m=\frac{1}{N_m}\sum_{x_i\in R_m(j,s)}y_i,\quad x\in R_m,m=1,2</script></li>
+<li><p>继续对两个子区域调用步骤 $(1)$，$(2)$，直到满足停止条件</p>
+</li>
+<li>将输入空间划分为 $M$ 个区域 $\{R_1,R_2,R_3,\cdots\,R_M\}$，生成决策树： <script type="math/tex; mode=display">
+f(x)=\sum_{m=1}^Mc_mI(x\in R_m)</script></li>
+</ul>
+<p>下面我们举出一个例子方便理解：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">看电视时长</th>
+<th style="text-align:center">婚姻状况</th>
+<th style="text-align:center">职业</th>
+<th style="text-align:center">年龄</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">未婚</td>
+<td style="text-align:center">学生</td>
+<td style="text-align:center">12</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">未婚</td>
+<td style="text-align:center">学生</td>
+<td style="text-align:center">18</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">已婚</td>
+<td style="text-align:center">老师</td>
+<td style="text-align:center">26</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:center">已婚</td>
+<td style="text-align:center">上班族</td>
+<td style="text-align:center">47</td>
+</tr>
+<tr>
+<td style="text-align:center">2.5</td>
+<td style="text-align:center">已婚</td>
+<td style="text-align:center">上班族</td>
+<td style="text-align:center">36</td>
+</tr>
+<tr>
+<td style="text-align:center">3.5</td>
+<td style="text-align:center">未婚</td>
+<td style="text-align:center">老师</td>
+<td style="text-align:center">29</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">已婚</td>
+<td style="text-align:center">学生</td>
+<td style="text-align:center">21</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>下面我们将利用上面的数据对<strong>年龄</strong>进行预测。</p>
+<p>首先将 $j$ 的属性选为职业，则有三种划分情况：</p>
+<ul>
+<li>$\{$“<strong>老师</strong>”，“<strong>学生</strong>”$\}$、$\{$“<strong>上班族</strong>”$\}$</li>
+<li>$\{$“<strong>老师</strong>”，“<strong>上班族</strong>”$\}$、$\{$“<strong>学生</strong>”$\}$</li>
+<li>$\{$“<strong>学生</strong>”，“<strong>上班族</strong>”$\}$、$\{$“<strong>老师</strong>”$\}$</li>
+</ul>
+<ol>
+<li>第一种情况 $R_1 =\{$“<strong>学生</strong>”$\}$，$R_2=\{$“<strong>老师</strong>”，”<strong>上班族</strong>”$\}$<br>&lt;/div&gt;<div align="center"> 
+<br><br>
+<img src="/2018/07/01/决策树-算法/pic_Algo_6.15.png" width="500" height="300">
+</div>
+
+</li>
+</ol>
+<p>此时有</p>
+<script type="math/tex; mode=display">
+c_1=\frac{12+18+21}{3}=17\\
+c_2=\frac{26+47+36+29}{4}=34.5\\
+m=\min\big[\sum_{y_i\in R_1}(y_i-c_1)^2+\min\sum_{y_i\in R_2}(y_i-c_2)^2\big]</script><ul>
+<li>其中 $y_i\in (\{12,18,21\},\{26,47,36,29\})$</li>
+</ul>
+<p>最小平方误差计算得: </p>
+<script type="math/tex; mode=display">
+m=42+261=303</script><ol>
+<li>当 $R_1 =\{$“<strong>老师</strong>”$\}$，$R_2=\{$“<strong>学生</strong>”，”<strong>上班族</strong>”$\}$<br>&lt;/div&gt;<div align="center"> 
+<br><br>
+<img src="/2018/07/01/决策树-算法/pic_Algo_6.16.png" width="500" height="300">
+<br><br>
+</div>
+
+</li>
+</ol>
+<script type="math/tex; mode=display">
+c_1=27.5,\quad c_2=26.5\\
+m=4.5+738.16=742.66</script><ol>
+<li>当划分情况为 $R_1 =\{$“<strong>上班族</strong>”$\}$，$R_2=\{$“<strong>学生</strong>”，”<strong>老师</strong>”$\}$<br>&lt;/div&gt;<div align="center"> 
+<br><br>
+<img src="/2018/07/01/决策树-算法/pic_Algo_6.17.png" width="500" height="300">
+<br><br>
+</div>
+
+
+</li>
+</ol>
+<script type="math/tex; mode=display">
+c_1=41.5,\quad c_2=21.2\\
+m=60.5+178.8=238.8</script><p>根据上面的计算得到第三种划分方式误差最小。因此此时的决策树为：</p>
+<script type="math/tex; mode=display">
+f(x)=\left\{
+\begin{array}{rcl}
+41.5       &      & \{"上班族"\}\\
+21.2     &      & \{"老师","学生"\}\\
+\end{array} \right.</script><p>这只是一个特征情况下的分类，按照同样的方法对其他特征情况进行划分计算。找到最合适的划分点。 </p>
+<h3 id="S-9-3-分类树的生成"><a href="#S-9-3-分类树的生成" class="headerlink" title="$\S$ 9.3 $ $ 分类树的生成"></a>$\S$ 9.3 $ $ 分类树的生成</h3><p>分类树是用 <strong>Gini</strong> 指数选择最优特征，同时决定该特征的最优二值切分点。</p>
+<h4 id="S-9-3-1-分类树生成算法"><a href="#S-9-3-1-分类树生成算法" class="headerlink" title="$\S$ 9.3.1 $ $ 分类树生成算法"></a>$\S$ 9.3.1 $ $ 分类树生成算法</h4><p>输入：训练数据集 $D$，停止计算的条件<br>输出：<strong>CART</strong> 决策树<br>具体步骤: </p>
+<ul>
+<li>计算现有特征对该数据集的基尼指数，对于每一个特征 $A$，可以对样本点 $A$ 是否为 $a$ 可以将数据集 $D$ 分成数据集 $D1$，$D2$</li>
+<li>对于所有的特征A和所有可能的切分点 $a$，选择基尼指数最小的特征以及相对应的切分点作为最优特征和最佳切分点 </li>
+<li>对最优子树递归调用 $(1)$$(2)$，直到满足停止条件</li>
+<li>生成 <strong>CART</strong> 分类树。 </li>
+</ul>
+<p>还是基于前面的三种划分情况来预测是否已婚。<br>以上面的第一种情况为例 $R_1 =\{$“<strong>学生</strong>”$\}$，$R_2=\{$“<strong>老师</strong>”，”<strong>上班族</strong>”$\}$<br>&lt;/div&gt;</p>
+<div align="center"> 
+<br><br>
+<img src="/2018/07/01/决策树-算法/pic_Algo_6.15.png" width="500" height="300">
+</div>
+
+<script type="math/tex; mode=display">
+Gini(D,A)=\sum_{i=1}^k=p_iGini(D_i)</script><p>所以有</p>
+<script type="math/tex; mode=display">
+Gini(D,A)=\frac{3}{7}\big(1-(\frac{1}{3})^2-(\frac{2}{3})^2\big)+\frac{4}{7}\big(1-(\frac{3}{4})^2-(\frac{1}{4})^2\big)=\frac{17}{42}</script><p>同理可以求其他两种方式。所以我们只需要在其中选择 <strong>Gini</strong> 指数最小的情况。</p>
+<h4 id="S-7-4-剪枝处理"><a href="#S-7-4-剪枝处理" class="headerlink" title="$\S$ 7.4 $ $剪枝处理"></a>$\S$ 7.4 $ $剪枝处理</h4><p>剪枝是决策树学习算法中对付<strong>过拟合</strong>的主要手段。<br>主要是从已生成的树中剪掉一些子树或者叶子节点，并将根节点或者父节点作为新的叶子节点，从而简化分类树模型。决策树的剪枝往往是通过<font color="red">极小化决策树的整体损失函数或者代价函数</font>。<br>设树T的叶子节点数为 $|T|$，叶子节点 $t$ 上有 $N_t$ 个样本点，其中 $k$ 类的样本点数为 $N_{kt}$，$H_t(T)$ 为结点 $t$ 上的经验熵，$\alpha\ge 0 $为参数，所以损失函数定义为： </p>
+<script type="math/tex; mode=display">
+C_{\alpha}(T)=\sum_{t=1}^{|T|}N_tH_t(T)+\alpha|T|</script><ul>
+<li>其中经验熵为 <script type="math/tex; mode=display">
+H_t(T)=-\sum_{k}\frac{N_{tk}}{N_t}\log\frac{N_{tk}}{N_t}</script></li>
+</ul>
+<p>此时令 </p>
+<script type="math/tex; mode=display">
+C(T)=-\sum_{t=1}^{|T|}\sum_{k=1}^{K}N_{tk}\log\frac{N_{tk}}{N_t}</script><p>所以：</p>
+<script type="math/tex; mode=display">
+C_{\alpha}(T)=C(T)+\alpha|T|</script><ul>
+<li>$C(T)$ 表示对训练数据的预测误差</li>
+<li>$|T|$ 表示模型的复杂度</li>
+<li>损失函数其实正好表达了两者的平衡。</li>
+</ul>
+<p>所以决策树生成的具体流程：</p>
+<ul>
+<li><p>计算每一个结点的经验熵 $T_{\alpha}$</p>
+</li>
+<li><p>递归的从叶子节点开始<strong>往上遍历</strong>，减掉叶子节点，然后判断损失函数的值是否减少，如果减少，则将父节点作为新的叶子节点。 </p>
+</li>
+<li>重复$(2)$，直到完全不能剪枝。</li>
+</ul>
+
+    </article>
+    <!-- license  -->
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/06/01/SVM-算法/" title= SVM 算法 >
+                    <div class="prevTitle">SVM 算法</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!--PC和WAP自适应版-->
+
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:Chern.Tsui@gmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/ChernTau" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/example_qr.jpeg" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#决策树算法"><span class="toc-number">1.</span> <span class="toc-text">决策树算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#S-1-从分类问题开始"><span class="toc-number">1.1.</span> <span class="toc-text">$\S$ 1 $ $ 从分类问题开始</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#S-2-决策树基础"><span class="toc-number">1.2.</span> <span class="toc-text">$\S$ 2 $ $ 决策树基础</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#S-3-Hunt-算法"><span class="toc-number">1.3.</span> <span class="toc-text">$\S$ 3 $ $ Hunt 算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#S-3-1-理论"><span class="toc-number">1.3.1.</span> <span class="toc-text">$\S$ 3.1 $ $ 理论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#S-3-2-例子"><span class="toc-number">1.3.2.</span> <span class="toc-text">$\S$ 3.2 $ $ 例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#S-3-3-总结"><span class="toc-number">1.3.3.</span> <span class="toc-text">$\S$ 3.3 $ $ 总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#S-4-Gini-测度与划分"><span class="toc-number">1.4.</span> <span class="toc-text">$\S$ 4 $ $ Gini 测度与划分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#S-4-1-考虑多分类的情况"><span class="toc-number">1.4.1.</span> <span class="toc-text">$\S$ 4.1 $ $ 考虑多分类的情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#S-4-2-考虑特征值连续的情况"><span class="toc-number">1.4.2.</span> <span class="toc-text">$\S$ 4.2 $ $ 考虑特征值连续的情况</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#S-5-信息熵与信息增益"><span class="toc-number">1.5.</span> <span class="toc-text">$\S$ 5 $ $ 信息熵与信息增益</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#S-6-分类误差"><span class="toc-number">1.6.</span> <span class="toc-text">$\S$ 6 $ $ 分类误差</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#S-7-ID3-算法"><span class="toc-number">1.7.</span> <span class="toc-text">$\S$ 7 $ $ ID3 算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#S-8-C4-5-算法"><span class="toc-number">1.8.</span> <span class="toc-text">$\S$ 8 $ $ C4.5 算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#S-9-CART-算法"><span class="toc-number">1.9.</span> <span class="toc-text">$\S$ 9 $ $ CART 算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#S-9-1-算法思想"><span class="toc-number">1.9.1.</span> <span class="toc-text">$\S$ 9.1 $ $ 算法思想</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#S-9-2-回归树的生成"><span class="toc-number">1.9.2.</span> <span class="toc-text">$\S$ 9.2 $ $ 回归树的生成</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#S-9-2-1-最小二乘法回归树生成算法"><span class="toc-number">1.9.2.1.</span> <span class="toc-text">$\S$ 9.2.1 $ $ 最小二乘法回归树生成算法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#S-9-3-分类树的生成"><span class="toc-number">1.9.3.</span> <span class="toc-text">$\S$ 9.3 $ $ 分类树的生成</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#S-9-3-1-分类树生成算法"><span class="toc-number">1.9.3.1.</span> <span class="toc-text">$\S$ 9.3.1 $ $ 分类树生成算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#S-7-4-剪枝处理"><span class="toc-number">1.9.3.2.</span> <span class="toc-text">$\S$ 7.4 $ $剪枝处理</span></a></li></ol></li></ol></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 11
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/01</span><a class="archive-post-title" href= "/2018/07/01/决策树-算法/" >决策树 算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/01</span><a class="archive-post-title" href= "/2018/06/01/SVM-算法/" >SVM 算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/01</span><a class="archive-post-title" href= "/2018/05/01/GMM-算法/" >GMM 算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/01</span><a class="archive-post-title" href= "/2018/04/01/Baum-Welch-算法/" >Baum-Welch 算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/01</span><a class="archive-post-title" href= "/2018/03/01/EM-算法/" >EM 算法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/24</span><a class="archive-post-title" href= "/2018/01/24/Install shiny-server on macOS/" >Install shiny-server on MacOS</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/01</span><a class="archive-post-title" href= "/2017/10/01/Awesome Mac/" >Awesome Mac</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/14</span><a class="archive-post-title" href= "/2017/09/14/I-love-Xumengyue/" >One Day Traveling in Yinxing Lake</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/08</span><a class="archive-post-title" href= "/2017/08/08/Web crawling CSI 300 index using Python/" >Web crawling CSI 300 index using Python</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2017/08/07/Install Hadoop on Ubuntu/" >Install Hadoop on Ubuntu</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/07</span><a class="archive-post-title" href= "/2017/08/07/Install-R-and-RStudio-in-Ubuntu/" >Install R and RStudio in Ubuntu</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="Baum-Welch"><span class="iconfont-archer">&#xe606;</span>Baum-Welch</span>
+    
+        <span class="sidebar-tag-name" data-tags="EM"><span class="iconfont-archer">&#xe606;</span>EM</span>
+    
+        <span class="sidebar-tag-name" data-tags="隐马尔可夫"><span class="iconfont-archer">&#xe606;</span>隐马尔可夫</span>
+    
+        <span class="sidebar-tag-name" data-tags="极大似然估计"><span class="iconfont-archer">&#xe606;</span>极大似然估计</span>
+    
+        <span class="sidebar-tag-name" data-tags="隐变量"><span class="iconfont-archer">&#xe606;</span>隐变量</span>
+    
+        <span class="sidebar-tag-name" data-tags="Jensen 不等式"><span class="iconfont-archer">&#xe606;</span>Jensen 不等式</span>
+    
+        <span class="sidebar-tag-name" data-tags="高斯分布"><span class="iconfont-archer">&#xe606;</span>高斯分布</span>
+    
+        <span class="sidebar-tag-name" data-tags="聚类"><span class="iconfont-archer">&#xe606;</span>聚类</span>
+    
+        <span class="sidebar-tag-name" data-tags="测试"><span class="iconfont-archer">&#xe606;</span>测试</span>
+    
+        <span class="sidebar-tag-name" data-tags="对偶"><span class="iconfont-archer">&#xe606;</span>对偶</span>
+    
+        <span class="sidebar-tag-name" data-tags="拉格朗日乘子"><span class="iconfont-archer">&#xe606;</span>拉格朗日乘子</span>
+    
+        <span class="sidebar-tag-name" data-tags="核函数"><span class="iconfont-archer">&#xe606;</span>核函数</span>
+    
+        <span class="sidebar-tag-name" data-tags="分类"><span class="iconfont-archer">&#xe606;</span>分类</span>
+    
+        <span class="sidebar-tag-name" data-tags="信息增益"><span class="iconfont-archer">&#xe606;</span>信息增益</span>
+    
+        <span class="sidebar-tag-name" data-tags="剪枝"><span class="iconfont-archer">&#xe606;</span>剪枝</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="算法"><span class="iconfont-archer">&#xe60a;</span>算法</span>
+    
+        <span class="sidebar-category-name" data-categories="测试"><span class="iconfont-archer">&#xe60a;</span>测试</span>
+    
+        <span class="sidebar-category-name" data-categories="杂谈"><span class="iconfont-archer">&#xe60a;</span>杂谈</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "Chern Tau"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
+
+
